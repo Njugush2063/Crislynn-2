@@ -1,544 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Experience — Crislynn Ventures</title>
-  <meta name="description" content="">
-
-  <!-- OG tags — filled dynamically -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Crislynn Ventures">
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
-  <meta property="og:image" content="">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --gold: #B8893A;
-      --gold-light: #D4A85A;
-      --gold-pale: #E8C98A;
-      --dark: #1A1510;
-      --dark-mid: #2A2018;
-      --cream: #F5F0E8;
-      --text-dark: #2C2416;
-      --text-mid: #6B5E4A;
-      --text-light: #9A8C7A;
-      --maroon: #551516;
-      --green: #02423E;
-      --white: #FFFFFF;
-      --nav-h: 80px;
-    }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--text-dark); }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--nav-h);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 48px;
-      transition: background 0.4s, box-shadow 0.4s;
-    }
-    nav.scrolled { background: var(--maroon); box-shadow: 0 1px 0 #a7703a; }
-    .nav-logo img { height: 50px; width: auto; display: block; }
-    .nav-back {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.8); text-decoration: none;
-      display: flex; align-items: center; gap: 8px;
-      transition: color 0.3s;
-    }
-    .nav-back:hover { color: var(--gold-pale); }
-    .nav-back-arrow { font-size: 18px; line-height: 1; }
-
-    /* ── HERO ── */
-    .exp-hero {
-      height: 92vh; min-height: 600px;
-      position: relative; overflow: hidden;
-      display: flex; align-items: flex-end;
-    }
-    .exp-hero-media {
-      position: absolute; inset: 0;
-      background: var(--dark); /* fallback */
-    }
-    .exp-hero-media img,
-    .exp-hero-media video {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .exp-hero-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,8,5,0.85) 0%, rgba(10,8,5,0.35) 50%, rgba(10,8,5,0.1) 100%);
-    }
-    .exp-hero-content {
-      position: relative; z-index: 2;
-      padding: 0 10vw 80px;
-      max-width: 900px;
-    }
-    .exp-hero-eyebrow {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold-light); margin-bottom: 16px; display: block;
-    }
-    .exp-hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(40px, 6vw, 80px);
-      font-weight: 300; color: var(--white);
-      line-height: 1.08; margin-bottom: 20px;
-    }
-    .exp-hero-desc {
-      font-size: 16px; font-weight: 300;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.75; max-width: 560px;
-    }
-
-    /* ── LOADING / ERROR ── */
-    .state-screen {
-      min-height: 60vh; display: flex;
-      flex-direction: column; align-items: center; justify-content: center;
-      gap: 16px; text-align: center; padding: 48px;
-    }
-    .state-screen .icon { font-size: 40px; }
-    .state-screen h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 32px; font-weight: 300; color: var(--text-dark);
-    }
-    .state-screen p { font-size: 14px; font-weight: 300; color: var(--text-mid); }
-    .spinner {
-      width: 32px; height: 32px;
-      border: 2px solid rgba(184,137,58,0.2);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── CONTENT BODY ── */
-    .exp-body {
-      max-width: 1100px; margin: 0 auto;
-      padding: 80px 48px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    /* left: about + itinerary */
-    .exp-about-label {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 16px; display: block;
-    }
-    .exp-about-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 300; color: var(--text-dark);
-      line-height: 1.2; margin-bottom: 24px;
-    }
-    .exp-about-body {
-      font-size: 15px; font-weight: 300;
-      color: var(--text-mid); line-height: 1.85;
-      margin-bottom: 48px;
-    }
-
-    /* itinerary */
-    .itinerary-heading {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 24px; display: block;
-      padding-top: 40px;
-      border-top: 1px solid rgba(107,94,74,0.15);
-    }
-    .itinerary-list { list-style: none; }
-    .itinerary-item {
-      display: flex; gap: 16px; align-items: flex-start;
-      padding: 14px 0;
-      border-bottom: 1px solid rgba(107,94,74,0.1);
-    }
-    .itinerary-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--gold); flex-shrink: 0; margin-top: 6px;
-    }
-    .itinerary-text {
-      font-size: 14px; font-weight: 300;
-      color: var(--text-mid); line-height: 1.6;
-    }
-
-    /* right: booking card */
-    .booking-card {
-      background: var(--white);
-      border: 1px solid rgba(107,94,74,0.12);
-      padding: 36px 32px;
-      position: sticky; top: 100px;
-    }
-    .booking-tag {
-      display: inline-block;
-      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-      background: var(--maroon); color: var(--white);
-      padding: 5px 12px; margin-bottom: 20px;
-    }
-    .booking-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 26px; font-weight: 300; color: var(--text-dark);
-      line-height: 1.2; margin-bottom: 8px;
-    }
-    .booking-price {
-      font-size: 13px; font-weight: 300; color: var(--text-light);
-      margin-bottom: 28px;
-    }
-    .booking-price strong {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 36px; font-weight: 300; color: var(--text-dark);
-    }
-    .booking-divider { height: 1px; background: rgba(107,94,74,0.12); margin: 0 0 24px; }
-    .booking-detail { display: flex; justify-content: space-between; margin-bottom: 14px; }
-    .booking-detail-label { font-size: 11px; color: var(--text-light); letter-spacing: 0.05em; }
-    .booking-detail-value { font-size: 13px; font-weight: 500; color: var(--text-dark); }
-    .booking-includes {
-      margin: 24px 0;
-      padding: 20px;
-      background: rgba(184,137,58,0.06);
-    }
-    .booking-includes-label {
-      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 12px; display: block;
-    }
-    .booking-include-item {
-      font-size: 13px; font-weight: 300; color: var(--text-mid);
-      padding: 5px 0;
-      display: flex; gap: 8px; align-items: center;
-    }
-    .booking-include-item::before {
-      content: '✓'; color: var(--green);
-      font-size: 12px; font-weight: 500; flex-shrink: 0;
-    }
-    .booking-cta {
-      display: block; width: 100%; text-align: center;
-      background: var(--maroon); color: var(--white);
-      padding: 16px 24px;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-      text-decoration: none; border: none; cursor: pointer;
-      transition: background 0.3s; margin-top: 8px;
-    }
-    .booking-cta:hover { background: var(--dark); }
-    .booking-note {
-      font-size: 11px; font-weight: 300; color: var(--text-light);
-      text-align: center; margin-top: 12px; line-height: 1.5;
-    }
-
-    /* ── GALLERY ── */
-    .exp-gallery {
-      max-width: 1100px; margin: 0 auto;
-      padding: 0 48px 80px;
-    }
-    .gallery-label {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
-      text-transform: uppercase; color: var(--gold);
-      margin-bottom: 24px; display: block;
-    }
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-    .gallery-img {
-      aspect-ratio: 4/3; object-fit: cover;
-      width: 100%; display: block;
-      transition: opacity 0.3s;
-    }
-    .gallery-img:hover { opacity: 0.88; }
-
-    /* ── FOOTER STRIP ── */
-    .exp-footer-strip {
-      background: var(--dark-mid);
-      padding: 60px 48px;
-      text-align: center;
-    }
-    .exp-footer-strip h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 300; color: var(--white);
-      margin-bottom: 12px;
-    }
-    .exp-footer-strip p {
-      font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5);
-      margin-bottom: 32px;
-    }
-    .btn-primary {
-      background: var(--gold); color: var(--white);
-      padding: 16px 40px;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-      text-decoration: none; display: inline-block;
-      transition: background 0.3s;
-    }
-    .btn-primary:hover { background: var(--maroon); }
-    .btn-outline {
-      background: transparent; color: var(--white);
-      padding: 16px 40px;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
-      text-decoration: none; display: inline-block;
-      border: 1px solid rgba(255,255,255,0.4);
-      margin-left: 12px;
-      transition: border-color 0.3s, background 0.3s;
-    }
-    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
-
-    /* responsive */
-    @media (max-width: 900px) {
-      .exp-body { grid-template-columns: 1fr; padding: 60px 24px; gap: 48px; }
-      .booking-card { position: static; }
-      .exp-gallery { padding: 0 24px 60px; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 600px) {
-      nav { padding: 0 24px; }
-      .exp-hero-content { padding: 0 6vw 60px; }
-      .gallery-grid { grid-template-columns: 1fr; }
-      .exp-footer-strip { padding: 60px 24px; }
-    }
-  </style>
+  <meta name="description" content="Boutique travel experiences on the Kenyan Coast." />
+  <meta property="og:title" content="Experience — Crislynn Ventures" />
+  <meta property="og:image" content="https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg" />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
 </head>
-<body>
+<body class="experience-page">
 
-<!-- NAV -->
-<nav id="navbar">
-  <div class="nav-logo">
-    <img src="images/Crislynn-logo.png" alt="Crislynn Ventures">
+  <!-- NAV -->
+  <nav class="exp-nav">
+    <a href="index.html">
+      <img src="https://via.placeholder.com/130x38/1a0a0a/c9a96e?text=CRISLYNN" alt="Crislynn Ventures" class="exp-logo" />
+    </a>
+    <a href="index.html#experiences" class="back-link">← ALL EXPERIENCES</a>
+  </nav>
+
+  <!-- LOADING STATE -->
+  <div id="exp-loading" class="exp-loading">
+    <div class="loading-spinner"></div>
+    <p>Loading experience…</p>
   </div>
-  <a href="index.html" class="nav-back">
-    <span class="nav-back-arrow">←</span> All Experiences
-  </a>
-</nav>
 
-<!-- HERO — filled by JS -->
-<section class="exp-hero" id="expHero">
-  <div class="exp-hero-media" id="expMedia"></div>
-  <div class="exp-hero-overlay"></div>
-  <div class="exp-hero-content">
-    <span class="exp-hero-eyebrow" id="expCategory">Crislynn Ventures</span>
-    <h1 class="exp-hero-title" id="expTitle">Loading experience…</h1>
-    <p class="exp-hero-desc" id="expDesc"></p>
+  <!-- ERROR STATE -->
+  <div id="exp-error" class="exp-error" style="display:none;">
+    <h2>Experience not found</h2>
+    <p>We couldn't find that experience. Please check the link or browse all experiences.</p>
+    <a href="index.html#experiences" class="btn-primary">Browse Experiences</a>
   </div>
-</section>
 
-<!-- LOADING STATE -->
-<div class="state-screen" id="loadingState">
-  <div class="spinner"></div>
-  <p>Loading experience details…</p>
-</div>
+  <!-- EXPERIENCE CONTENT -->
+  <main id="exp-content" style="display:none;">
 
-<!-- MAIN CONTENT — hidden until loaded -->
-<div id="mainContent" style="display:none">
-
-  <div class="exp-body">
-    <!-- LEFT -->
-    <div>
-      <span class="exp-about-label">About this experience</span>
-      <h2 class="exp-about-title" id="bodyTitle"></h2>
-      <div class="exp-about-body" id="bodyDesc"></div>
-
-      <span class="itinerary-heading" id="itineraryHeading" style="display:none">What's included</span>
-      <ul class="itinerary-list" id="itineraryList"></ul>
-    </div>
-
-    <!-- RIGHT: booking card -->
-    <div>
-      <div class="booking-card">
-        <span class="booking-tag" id="bookingTag">Full Day</span>
-        <div class="booking-title" id="bookingTitle"></div>
-        <div class="booking-price" id="bookingPrice" style="display:none">
-          From <strong id="priceValue"></strong> per person
-        </div>
-        <div class="booking-divider"></div>
-        <div class="booking-detail">
-          <span class="booking-detail-label">Duration</span>
-          <span class="booking-detail-value" id="bookingDuration">—</span>
-        </div>
-        <div class="booking-detail">
-          <span class="booking-detail-label">Group size</span>
-          <span class="booking-detail-value" id="bookingGroup">Private or small group</span>
-        </div>
-        <div class="booking-detail">
-          <span class="booking-detail-label">Departures</span>
-          <span class="booking-detail-value" id="bookingDepartures">Daily, on request</span>
-        </div>
-        <div class="booking-includes" id="bookingIncludes" style="display:none">
-          <span class="booking-includes-label">Included</span>
-          <div id="includesList"></div>
-        </div>
-        <a href="index.html#contact" class="booking-cta">Book This Experience</a>
-        <p class="booking-note">We respond within 2 hours · No payment required to enquire</p>
+    <!-- HERO -->
+    <div class="exp-hero" id="exp-hero">
+      <div class="exp-hero-overlay"></div>
+      <div class="exp-hero-text">
+        <span class="exp-category" id="exp-category-label"></span>
+        <h1 id="exp-title"></h1>
+        <p id="exp-tagline"></p>
       </div>
     </div>
-  </div>
 
-  <!-- GALLERY -->
-  <div class="exp-gallery" id="gallerySection" style="display:none">
-    <span class="gallery-label">Gallery</span>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </div>
+    <!-- BODY -->
+    <div class="exp-body">
+      <div class="exp-main">
 
-</div>
+        <div class="exp-section">
+          <span class="section-eyebrow">About This Experience</span>
+          <h2 id="exp-title-body"></h2>
+          <p id="exp-long-desc"></p>
+        </div>
 
-<!-- ERROR STATE -->
-<div class="state-screen" id="errorState" style="display:none">
-  <div class="icon">🌊</div>
-  <h2>Experience not found</h2>
-  <p>We couldn't load this experience. Try browsing all our journeys.</p>
-  <a href="index.html#experiences" class="btn-primary" style="margin-top:16px">Browse Experiences</a>
-</div>
+        <div class="exp-section">
+          <span class="section-eyebrow">Your Itinerary</span>
+          <h3>Day by Day</h3>
+          <ul class="exp-itinerary" id="exp-itinerary"></ul>
+        </div>
 
-<!-- FOOTER STRIP -->
-<div class="exp-footer-strip">
-  <h3>Ready to make it yours?</h3>
-  <p>Tell us what you're dreaming of — we'll handle every detail.</p>
-  <a href="index.html#contact" class="btn-primary">Design Your Journey</a>
-  <a href="index.html#experiences" class="btn-outline">Explore More</a>
-</div>
+        <div class="exp-section">
+          <span class="section-eyebrow">Gallery</span>
+          <div class="exp-gallery" id="exp-gallery"></div>
+        </div>
 
-<!-- =============================================
-     SUPABASE CONFIG
-     Replace YOUR_SUPABASE_URL and YOUR_ANON_KEY
-     with your actual Supabase project values
-============================================= -->
-<script>
-const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
+      </div>
 
-// ── Navbar scroll ──
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 60);
-});
+      <!-- BOOKING CARD -->
+      <aside class="exp-sidebar">
+        <div class="booking-card">
+          <span class="booking-tag" id="booking-duration"></span>
+          <h3 id="booking-title"></h3>
+          <div class="booking-price">
+            From <strong id="booking-price"></strong> <span>per person</span>
+          </div>
+          <div class="booking-meta">
+            <div class="booking-meta-item">
+              <span class="meta-label">Group Size</span>
+              <span class="meta-val" id="booking-group"></span>
+            </div>
+            <div class="booking-meta-item">
+              <span class="meta-label">Departures</span>
+              <span class="meta-val" id="booking-departures"></span>
+            </div>
+          </div>
+          <div class="booking-includes">
+            <h5>What's Included</h5>
+            <ul id="booking-includes"></ul>
+          </div>
+          <a href="index.html#contact" class="btn-primary booking-btn">Book This Experience</a>
+        </div>
+      </aside>
+    </div>
 
-// ── Get slug from URL ──
-const params = new URLSearchParams(window.location.search);
-const slug = params.get('slug');
+  </main>
 
-async function loadExperience() {
-  if (!slug) { showError(); return; }
+  <script>
+    const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
 
-  try {
-    const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/experiences?slug=eq.${encodeURIComponent(slug)}&select=*`,
-      {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-          'Content-Type': 'application/json'
-        }
+    // Fallback images per slug if gallery_images is empty
+    const FALLBACK_IMAGES = {
+      'watamu-marine-explorer': [
+        'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'dhow-cruise-malindi': [
+        'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'island-escapades': [
+        'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'malindi-heritage-trail': [
+        'https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/247837/pexels-photo-247837.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3889844/pexels-photo-3889844.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'swahili-bites-tour': [
+        'https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'craft-culture-canyon': [
+        'https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/247837/pexels-photo-247837.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'ancient-stones-mangrove': [
+        'https://images.pexels.com/photos/3889844/pexels-photo-3889844.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'golden-sands-marafa': [
+        'https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'tsavo-east-one-day': [
+        'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'tsavo-amboseli': [
+        'https://images.pexels.com/photos/34098/south-africa-hluhluwe-giraffes-pattern.jpg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'bush-to-beach-maasai-mara': [
+        'https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ],
+      'tsavo-east-west': [
+        'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=800',
+        'https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=800'
+      ]
+    };
+
+    // Hero images per slug
+    const HERO_IMAGES = {
+      'watamu-marine-explorer': 'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'dhow-cruise-malindi': 'https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'island-escapades': 'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'malindi-heritage-trail': 'https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'swahili-bites-tour': 'https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'craft-culture-canyon': 'https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'ancient-stones-mangrove': 'https://images.pexels.com/photos/3889844/pexels-photo-3889844.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'golden-sands-marafa': 'https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'tsavo-east-one-day': 'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'tsavo-amboseli': 'https://images.pexels.com/photos/34098/south-africa-hluhluwe-giraffes-pattern.jpg?auto=compress&cs=tinysrgb&w=1400',
+      'bush-to-beach-maasai-mara': 'https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=1400',
+      'tsavo-east-west': 'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg?auto=compress&cs=tinysrgb&w=1400'
+    };
+
+    async function loadExperience() {
+      const params = new URLSearchParams(window.location.search);
+      const slug = params.get('slug');
+
+      if (!slug) {
+        showError();
+        return;
       }
-    );
 
-    if (!res.ok) throw new Error('Fetch failed');
-    const data = await res.json();
-    if (!data || data.length === 0) { showError(); return; }
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/experiences?slug=eq.${slug}&active=eq.true&select=*`,
+          {
+            headers: {
+              'apikey': SUPABASE_ANON_KEY,
+              'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+            }
+          }
+        );
 
-    render(data[0]);
+        const data = await res.json();
 
-  } catch (err) {
-    console.error('Supabase error:', err);
-    showError();
-  }
-}
+        if (!data || data.length === 0) {
+          showError();
+          return;
+        }
 
-function render(exp) {
-  // update <title> and OG meta — uses your column names: tagline, description
-  document.title = `${exp.title} — Crislynn Ventures`;
-  document.querySelector('meta[name="description"]').setAttribute('content', exp.tagline || exp.description || exp.title);
-  document.querySelector('meta[property="og:title"]').setAttribute('content', exp.title);
-  document.querySelector('meta[property="og:description"]').setAttribute('content', exp.tagline || exp.description || '');
-  if (exp.hero_image) {
-    document.querySelector('meta[property="og:image"]').setAttribute('content', exp.hero_image);
-  }
+        renderExperience(data[0]);
 
-  // hero media
-  const media = document.getElementById('expMedia');
-  if (exp.hero_image) {
-    const img = document.createElement('img');
-    img.src = exp.hero_image;
-    img.alt = exp.title;
-    media.appendChild(img);
-  }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        showError();
+      }
+    }
 
-  // hero text — tagline is the short one-liner, description is the medium paragraph
-  document.getElementById('expCategory').textContent = exp.category || 'Crislynn Ventures';
-  document.getElementById('expTitle').textContent = exp.title;
-  document.getElementById('expDesc').textContent = exp.tagline || '';
+    function renderExperience(exp) {
+      // Update page meta
+      document.title = `${exp.title} — Crislynn Ventures`;
+      document.querySelector('meta[property="og:title"]').setAttribute('content', exp.title);
 
-  // body — long_desc is the full rich paragraph, fallback to description
-  document.getElementById('bodyTitle').textContent = exp.title;
-  document.getElementById('bodyDesc').textContent = exp.long_desc || exp.description || '';
+      // Hero
+      const heroImg = HERO_IMAGES[exp.slug] || 'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=1400';
+      document.getElementById('exp-hero').style.backgroundImage = `url('${exp.hero_image || heroImg}')`;
+      document.getElementById('exp-category-label').textContent = exp.category || '';
+      document.getElementById('exp-title').textContent = exp.title;
+      document.getElementById('exp-tagline').textContent = exp.tagline || exp.description || '';
 
-  // itinerary — JSONB array from Supabase
-  const itinerary = exp.itinerary;
-  if (itinerary && itinerary.length > 0) {
-    document.getElementById('itineraryHeading').style.display = 'block';
-    const list = document.getElementById('itineraryList');
-    itinerary.forEach(item => {
-      const li = document.createElement('li');
-      li.className = 'itinerary-item';
-      li.innerHTML = `<div class="itinerary-dot"></div><span class="itinerary-text">${item}</span>`;
-      list.appendChild(li);
-    });
-  }
+      // Body
+      document.getElementById('exp-title-body').textContent = exp.title;
+      document.getElementById('exp-long-desc').textContent = exp.long_desc || exp.description || '';
 
-  // booking card — duration_tag is your column name
-  document.getElementById('bookingTag').textContent = exp.duration_tag || 'Full Day';
-  document.getElementById('bookingTitle').textContent = exp.title;
-  if (exp.price_from) {
-    document.getElementById('bookingPrice').style.display = 'block';
-    document.getElementById('priceValue').textContent = `KES ${Number(exp.price_from).toLocaleString()}`;
-  }
-  if (exp.duration_tag) document.getElementById('bookingDuration').textContent = exp.duration_tag;
-  if (exp.group_size)   document.getElementById('bookingGroup').textContent = exp.group_size;
-  if (exp.departures)   document.getElementById('bookingDepartures').textContent = exp.departures;
+      // Itinerary
+      const itinEl = document.getElementById('exp-itinerary');
+      const itinerary = exp.itinerary || [];
+      if (itinerary.length > 0) {
+        itinEl.innerHTML = itinerary.map(item => `<li>${item}</li>`).join('');
+      } else {
+        itinEl.innerHTML = '<li>Itinerary details available on booking.</li>';
+      }
 
-  // what's included — JSONB array
-  const includes = exp.includes;
-  if (includes && includes.length > 0) {
-    document.getElementById('bookingIncludes').style.display = 'block';
-    const includesList = document.getElementById('includesList');
-    includes.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'booking-include-item';
-      div.textContent = item;
-      includesList.appendChild(div);
-    });
-  }
+      // Gallery
+      const galleryEl = document.getElementById('exp-gallery');
+      const galleryImgs = (exp.gallery_images && exp.gallery_images.length > 0)
+        ? exp.gallery_images
+        : (FALLBACK_IMAGES[exp.slug] || []);
 
-  // gallery — JSONB array of image URLs
-  const gallery = exp.gallery_images;
-  if (gallery && gallery.length > 0) {
-    document.getElementById('gallerySection').style.display = 'block';
-    const grid = document.getElementById('galleryGrid');
-    gallery.forEach((url, i) => {
-      const img = document.createElement('img');
-      img.src = url;
-      img.alt = `${exp.title} — photo ${i + 1}`;
-      img.className = 'gallery-img';
-      img.loading = 'lazy';
-      grid.appendChild(img);
-    });
-  }
+      if (galleryImgs.length > 0) {
+        galleryEl.innerHTML = galleryImgs.map(src =>
+          `<div class="gallery-img" style="background-image:url('${src}')"></div>`
+        ).join('');
+      }
 
-  // show content, hide loader
-  document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('mainContent').style.display = 'block';
-}
+      // Booking card
+      document.getElementById('booking-duration').textContent = exp.duration_tag || '';
+      document.getElementById('booking-title').textContent = exp.title;
+      document.getElementById('booking-price').textContent = exp.price_from
+        ? `KES ${Number(exp.price_from).toLocaleString()}`
+        : 'Contact us';
+      document.getElementById('booking-group').textContent = exp.group_size || '2–12 people';
+      document.getElementById('booking-departures').textContent = exp.departures || 'Daily';
 
-function showError() {
-  document.getElementById('loadingState').style.display = 'none';
-  document.getElementById('errorState').style.display = 'flex';
-  document.getElementById('expTitle').textContent = 'Experience not found';
-}
+      const includesEl = document.getElementById('booking-includes');
+      const includes = exp.includes || [];
+      if (includes.length > 0) {
+        includesEl.innerHTML = includes.map(item => `<li>✓ ${item}</li>`).join('');
+      }
 
-loadExperience();
-</script>
+      // Show content
+      document.getElementById('exp-loading').style.display = 'none';
+      document.getElementById('exp-content').style.display = 'block';
+    }
+
+    function showError() {
+      document.getElementById('exp-loading').style.display = 'none';
+      document.getElementById('exp-error').style.display = 'flex';
+    }
+
+    loadExperience();
+  </script>
+
 </body>
 </html>
