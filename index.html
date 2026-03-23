@@ -77,6 +77,7 @@
 
 <!-- ── VISUAL STORYTELLING STRIP ── -->
 <section id="visual-strip">
+  <div class="strip-intro">Every Journey, A Different Story</div>
   <div class="strip-grid">
     <a class="strip-card" href="#experiences" aria-label="Sail — Coast & Islands experiences">
       <div class="strip-img" style="background-image:url('images/Sail.jpeg')"></div>
@@ -202,6 +203,15 @@ Curated coastal escapes, cultural encounters, island hideaways, and signature sa
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Watamu Marine Explorer</h4>
 <p class="exp-card-desc">Coral gardens and turquoise waters.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Morning pick-up and transfer to Watamu</li>
+  <li>Traditional dhow cruise across the marine park</li>
+  <li>Guided snorkeling with vibrant marine life</li>
+  <li>Explore scenic tidal creeks with birdwatching</li>
+  <li>Lunch at a renowned seafood restaurant</li>
+  <li>Optional kayaking or beach relaxation</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=watamu-marine-explorer"
 data-title="Watamu Marine Explorer"
@@ -219,6 +229,14 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Dhow Cruise Experience</h4>
 <p class="exp-card-desc">Sail the Indian Ocean the timeless Swahili way.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Afternoon pick-up and transfer to departure point</li>
+  <li>Welcome aboard followed by a relaxed coastal sail</li>
+  <li>Opportunities for swimming and photography</li>
+  <li>Spectacular sunset views across the water</li>
+  <li>Evening return transfer</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=dhow-cruise"
 data-title="Dhow Cruise Experience"
@@ -236,6 +254,14 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Island Escapades</h4>
 <p class="exp-card-desc">Secluded shores and island time at its finest.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Morning pick-up and transfer to departure point</li>
+  <li>Boat ride to Robinson or Sardenya Island</li>
+  <li>Time to swim, snorkel, beachcomb, or unwind</li>
+  <li>Fresh coastal lunch on the island</li>
+  <li>Afternoon leisure before return transfer</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=island-escapades"
 data-title="Island Escapades"
@@ -253,6 +279,15 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Golden Sands & Marafa Sand Dunes</h4>
 <p class="exp-card-desc">Sculpted canyons, golden dunes, and island calm — one unforgettable coastal journey.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Morning pick-up with brief tour orientation</li>
+  <li>Scenic drive to Marafa Canyon ("Hell's Kitchen")</li>
+  <li>Continue to the Mambrui Sand Dunes</li>
+  <li>Lunch at a beachside or local restaurant</li>
+  <li>Afternoon relaxation at Robinson Island</li>
+  <li>Late afternoon return transfer</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=golden-sands-marafa"
 data-title="Golden Sands & Marafa Sand Dunes"
@@ -297,6 +332,15 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Swahili Bites & Henna Delight</h4>
 <p class="exp-card-desc">Taste, create and connect with the vibrant spirit of the Swahili coast.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Pick-up and introduction to Swahili culture</li>
+  <li>Guided visit to local markets</li>
+  <li>Henna artistry with optional hair braiding</li>
+  <li>Hands-on cooking session and tasting experience</li>
+  <li>Cultural storytelling and shopping time</li>
+  <li>Return transfer</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=swahili-bites-henna"
 data-title="Swahili Bites & Henna Delight"
@@ -314,6 +358,15 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Malindi Heritage, Falconry & Culture Circuit</h4>
 <p class="exp-card-desc">Step into centuries of history while experiencing living coastal traditions.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Morning pick-up and coastal drive</li>
+  <li>Guided tour of Malindi's historical sites</li>
+  <li>Falconry demonstration with local handlers</li>
+  <li>Lunch at a heritage restaurant</li>
+  <li>Visit a cultural village for living traditions</li>
+  <li>Return transfer</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=malindi-heritage-falconry"
 data-title="Malindi Heritage, Falconry & Culture Circuit"
@@ -331,6 +384,15 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Craft, Culture & Canyon Tour</h4>
 <p class="exp-card-desc">Artistry, heritage and nature woven into one enriching day.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Morning pick-up and drive to craft village</li>
+  <li>Hands-on demonstration with local artisans</li>
+  <li>Guided canyon walk through dramatic scenery</li>
+  <li>Lunch at a local restaurant</li>
+  <li>Visit a heritage cultural site</li>
+  <li>Return transfer</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=craft-culture-canyon"
 data-title="Craft, Culture & Canyon Tour"
@@ -348,6 +410,15 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Ancient Stones to Mangrove Forest</h4>
 <p class="exp-card-desc">From ancient ruins to whispering mangroves - a journey through time and nature.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Morning pick-up and scenic coastal drive</li>
+  <li>Guided tour of the ancient Gedi Ruins</li>
+  <li>Lunch at a nearby restaurant</li>
+  <li>Guided walk along the Mida Creek boardwalk</li>
+  <li>Learn about mangrove ecosystems and conservation</li>
+  <li>Return transfer</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=ancient-stones-mangrove"
 data-title="Ancient Stones to Mangrove Forest"
@@ -392,6 +463,14 @@ Explore Experience ›
 <div class="exp-card-tag">Full Day</div>
 <h4 class="exp-card-title">Tsavo East One-Day Safari</h4>
 <p class="exp-card-desc">A single day. Africa's wilderness. Endless possibility.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Pick-up from Malindi; scenic drive to Tsavo East</li>
+  <li>Morning game drive through the park</li>
+  <li>Lunch at a safari lodge or tented camp</li>
+  <li>Afternoon game drive</li>
+  <li>Return to Malindi</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=tsavo-east-one-day"
 data-title="Tsavo East One-Day Safari"
@@ -409,6 +488,13 @@ Explore Experience ›
 <div class="exp-card-tag">4 days · 3 nights</div>
 <h4 class="exp-card-title">Tsavo - Amboseli Safari</h4>
 <p class="exp-card-desc">Wild landscapes crowned by Kilimanjaro.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Day 1: Arrival; transfer to Tsavo East; afternoon game drive</li>
+  <li>Day 2: Full day Tsavo East game drives; overnight</li>
+  <li>Day 3: Transfer to Amboseli; afternoon game drive; overnight</li>
+  <li>Day 4: Morning game drive; return to Malindi</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=tsavo-amboseli"
 data-title="Tsavo - Amboseli Safari"
@@ -426,6 +512,16 @@ Explore Experience ›
 <div class="exp-card-tag">7 days · 6 nights</div>
 <h4 class="exp-card-title">Bush to Beach — Maasai Mara & Malindi</h4>
 <p class="exp-card-desc">From the drama of the savannah to the calm of the ocean.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Day 1: Arrival in Nairobi; transfer to hotel; overnight</li>
+  <li>Day 2: Transfer to Maasai Mara; afternoon game drive; overnight</li>
+  <li>Day 3: Full day Maasai Mara game drives; overnight</li>
+  <li>Day 4: Optional balloon safari; afternoon game drive; overnight</li>
+  <li>Day 5: Morning game drive; return to Nairobi</li>
+  <li>Day 6: Flight to Malindi; transfer to beach resort; overnight</li>
+  <li>Day 7: Beach leisure; transfer to airport</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=bush-to-beach-maasai-mara"
 data-title="Bush to Beach — Maasai Mara & Malindi"
@@ -443,6 +539,12 @@ Explore Experience ›
 <div class="exp-card-tag">3 days · 2 nights</div>
 <h4 class="exp-card-title">Tsavo East & West Safari</h4>
 <p class="exp-card-desc">Two legendary parks. One unforgettable safari.</p>
+<button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
+<ul class="exp-itinerary">
+  <li>Day 1: Pick-up from Malindi; Tsavo East game drive; overnight</li>
+  <li>Day 2: Morning game drive; transfer to Tsavo West; afternoon game drive; overnight</li>
+  <li>Day 3: Morning game drive; breakfast; return to Malindi</li>
+</ul>
 <a class="exp-toggle exp-link"
 href="experience.html?slug=tsavo-east-west"
 data-title="Tsavo East & West Safari"
@@ -714,4 +816,15 @@ Explore Experience ›
       <p style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:12px;">@CrislynnVentures</p>
     </div>
   </div>
-  <div class="footer-bottom"
+  <div class="footer-bottom">
+    <p>© 2026 Crislynn Ventures Ltd. All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
