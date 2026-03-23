@@ -1,0 +1,124 @@
+/* =============================================
+   CRISLYNN VENTURES — experience.css
+   Experience page specific styles
+   Supplements styles.css
+   Brand palette defined in styles.css :root
+   ============================================= */
+
+/* Breadcrumb / back nav accent */
+.exp-nav .back-link {
+  border: 1px solid rgba(167,112,58,0.35);
+  padding: 0.45rem 1rem;
+  border-radius: 2px;
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.exp-nav .back-link:hover {
+  background: rgba(167,112,58,0.15);
+  border-color: var(--gold);
+  color: var(--gold-pale);
+}
+
+/* Hero gradient — deeper maroon tint at base */
+.exp-hero-overlay {
+  background: linear-gradient(
+    170deg,
+    rgba(61,15,16,0.15) 0%,
+    rgba(61,15,16,0.45) 50%,
+    rgba(61,15,16,0.92) 100%
+  );
+}
+
+/* Category eyebrow in hero — gold-pale on dark */
+.exp-cat-label {
+  display: inline-block;
+  background: rgba(167,112,58,0.2);
+  border: 1px solid rgba(167,112,58,0.45);
+  padding: 0.3rem 0.85rem;
+  border-radius: 2px;
+  color: var(--gold-pale);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* About / description section */
+.exp-section .section-eyebrow {
+  color: var(--gold);
+}
+
+/* Itinerary list — green left accent for Swahili coast identity */
+.exp-itinerary li {
+  border-left: 3px solid var(--green);
+  position: relative;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.exp-itinerary li:hover {
+  background: #f0faf9;
+  border-left-color: var(--maroon);
+}
+
+/* Gallery hover */
+.gallery-img {
+  cursor: zoom-in;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* Booking card — maroon top border + gold price */
+.booking-card {
+  border-top: 4px solid var(--maroon);
+}
+.booking-price strong {
+  color: var(--maroon);
+}
+
+/* Includes checkmarks — green ticks */
+.booking-includes li::before {
+  content: '✓ ';
+  color: var(--green);
+  font-weight: 700;
+}
+
+/* Book CTA — full-width maroon */
+.booking-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--maroon);
+  color: var(--white);
+  padding: 1rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  border-radius: var(--radius);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+.booking-btn:hover {
+  background: var(--maroon-mid);
+  transform: translateY(-2px);
+}
+
+/* Error state */
+.exp-error h2 {
+  color: var(--maroon-deep);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+.exp-error p {
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .exp-gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+  .booking-card {
+    margin-top: 2rem;
+  }
+  .exp-cat-label {
+    font-size: 0.62rem;
+  }
+}
