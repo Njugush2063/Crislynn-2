@@ -407,8 +407,8 @@
      with your actual Supabase project values
 ============================================= -->
 <script>
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
 
 // ── Navbar scroll ──
 const navbar = document.getElementById('navbar');
@@ -448,11 +448,11 @@ async function loadExperience() {
 }
 
 function render(exp) {
-  // update <title> and OG meta
+  // update <title> and OG meta — uses your column names: tagline, description
   document.title = `${exp.title} — Crislynn Ventures`;
-  document.querySelector('meta[name="description"]').setAttribute('content', exp.short_desc || exp.title);
+  document.querySelector('meta[name="description"]').setAttribute('content', exp.tagline || exp.description || exp.title);
   document.querySelector('meta[property="og:title"]').setAttribute('content', exp.title);
-  document.querySelector('meta[property="og:description"]').setAttribute('content', exp.short_desc || '');
+  document.querySelector('meta[property="og:description"]').setAttribute('content', exp.tagline || exp.description || '');
   if (exp.hero_image) {
     document.querySelector('meta[property="og:image"]').setAttribute('content', exp.hero_image);
   }
@@ -466,20 +466,19 @@ function render(exp) {
     media.appendChild(img);
   }
 
-  // hero text
+  // hero text — tagline is the short one-liner, description is the medium paragraph
   document.getElementById('expCategory').textContent = exp.category || 'Crislynn Ventures';
   document.getElementById('expTitle').textContent = exp.title;
-  document.getElementById('expDesc').textContent = exp.short_desc || '';
+  document.getElementById('expDesc').textContent = exp.tagline || '';
 
-  // body
+  // body — long_desc is the full rich paragraph, fallback to description
   document.getElementById('bodyTitle').textContent = exp.title;
-  document.getElementById('bodyDesc').textContent = exp.long_desc || exp.short_desc || '';
+  document.getElementById('bodyDesc').textContent = exp.long_desc || exp.description || '';
 
-  // itinerary
-  const itinerary = exp.itinerary; // expects array of strings
+  // itinerary — JSONB array from Supabase
+  const itinerary = exp.itinerary;
   if (itinerary && itinerary.length > 0) {
-    const heading = document.getElementById('itineraryHeading');
-    heading.style.display = 'block';
+    document.getElementById('itineraryHeading').style.display = 'block';
     const list = document.getElementById('itineraryList');
     itinerary.forEach(item => {
       const li = document.createElement('li');
@@ -489,20 +488,19 @@ function render(exp) {
     });
   }
 
-  // booking card
-  document.getElementById('bookingTag').textContent = exp.duration_label || 'Full Day';
+  // booking card — duration_tag is your column name
+  document.getElementById('bookingTag').textContent = exp.duration_tag || 'Full Day';
   document.getElementById('bookingTitle').textContent = exp.title;
   if (exp.price_from) {
-    const priceEl = document.getElementById('bookingPrice');
-    priceEl.style.display = 'block';
+    document.getElementById('bookingPrice').style.display = 'block';
     document.getElementById('priceValue').textContent = `KES ${Number(exp.price_from).toLocaleString()}`;
   }
-  if (exp.duration_label) document.getElementById('bookingDuration').textContent = exp.duration_label;
-  if (exp.group_size) document.getElementById('bookingGroup').textContent = exp.group_size;
-  if (exp.departures) document.getElementById('bookingDepartures').textContent = exp.departures;
+  if (exp.duration_tag) document.getElementById('bookingDuration').textContent = exp.duration_tag;
+  if (exp.group_size)   document.getElementById('bookingGroup').textContent = exp.group_size;
+  if (exp.departures)   document.getElementById('bookingDepartures').textContent = exp.departures;
 
-  // included items
-  const includes = exp.includes; // expects array of strings
+  // what's included — JSONB array
+  const includes = exp.includes;
   if (includes && includes.length > 0) {
     document.getElementById('bookingIncludes').style.display = 'block';
     const includesList = document.getElementById('includesList');
@@ -514,8 +512,8 @@ function render(exp) {
     });
   }
 
-  // gallery
-  const gallery = exp.gallery_images; // expects array of image URLs
+  // gallery — JSONB array of image URLs
+  const gallery = exp.gallery_images;
   if (gallery && gallery.length > 0) {
     document.getElementById('gallerySection').style.display = 'block';
     const grid = document.getElementById('galleryGrid');
