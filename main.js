@@ -2,52 +2,56 @@
 // CRISLYNN VENTURES — main.js
 // =============================================
 
-// NAV SCROLL
+// NAV SCROLL — transparent → maroon
 const navbar = document.getElementById('navbar');
 if (navbar) {
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 60);
-  });
+  const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll(); // run on load in case page is already scrolled
 }
 
 // HAMBURGER
 const hamburger = document.getElementById('hamburger');
 const navLinks  = document.getElementById('navLinks');
 if (hamburger && navLinks) {
-  hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('open');
-  });
-  navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => navLinks.classList.remove('open'));
-  });
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(link =>
+    link.addEventListener('click', () => navLinks.classList.remove('open'))
+  );
 }
 
-// STAT COUNTERS
+// STAT COUNTERS — animated on scroll with suffix support
 function animateCounters() {
   document.querySelectorAll('.stat-num').forEach(el => {
-    const target = parseInt(el.getAttribute('data-target'), 10);
-    const duration = 1200;
-    const start = performance.now();
-    const from = 0;
+    const target   = parseInt(el.getAttribute('data-target'), 10);
+    const suffix   = el.getAttribute('data-suffix') || '';
+    const duration = 1400;
+    const start    = performance.now();
+    el.textContent = '0' + suffix;
+
     function update(now) {
       const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      el.textContent = Math.round(from + (target - from) * eased);
+      const eased    = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased) + suffix;
       if (progress < 1) requestAnimationFrame(update);
     }
     requestAnimationFrame(update);
   });
 }
 
-// Run counters when About section enters view
+// Trigger counters when about section enters viewport
 const aboutSection = document.querySelector('.about');
 if (aboutSection) {
+  let triggered = false;
   const observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
+    if (entries[0].isIntersecting && !triggered) {
+      triggered = true;
+      // Trigger stat fade-in
+      document.querySelectorAll('.stat').forEach(s => s.classList.add('in-view'));
       animateCounters();
       observer.disconnect();
     }
-  }, { threshold: 0.3 });
+  }, { threshold: 0.35 });
   observer.observe(aboutSection);
 }
 
@@ -58,16 +62,13 @@ function slide(id, dir) {
   if (!track) return;
   const card = track.querySelector('.exp-card');
   if (!card) return;
-  const cardWidth = card.offsetWidth + 24; // gap
-  const cards = track.querySelectorAll('.exp-card').length;
-  const visible = Math.floor(track.offsetWidth / cardWidth);
-  const max = Math.max(0, cards - visible);
-
+  const cardWidth = card.offsetWidth + 24;
+  const cards     = track.querySelectorAll('.exp-card').length;
+  const visible   = Math.floor(track.offsetWidth / cardWidth);
+  const max       = Math.max(0, cards - visible);
   sliderOffsets[id] = Math.min(Math.max((sliderOffsets[id] || 0) + dir, 0), max);
   track.style.transform = `translateX(-${sliderOffsets[id] * cardWidth}px)`;
   track.style.transition = 'transform 0.4s ease';
-
-  // Update button states
   const wrapper = track.closest('.slider-wrapper');
   if (wrapper) {
     wrapper.querySelector('.prev').disabled = sliderOffsets[id] === 0;
