@@ -15,10 +15,9 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <img src="https://via.placeholder.com/160x45/1a3a2a/c9a96e?text=CRISLYNN" alt="Crislynn Ventures Logo" />
+      <span class="logo-text">CRISLYNN <em>VENTURES</em></span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#home">HOME</a></li>
@@ -32,11 +31,8 @@
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">&#9776;</button>
   </nav>
 
-  <!-- HERO -->
   <section class="hero" id="home">
-    <video autoplay muted loop playsinline poster="https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg">
-      <source src="https://www.pexels.com/download/video/1739010/" type="video/mp4" />
-    </video>
+    <div class="hero-bg" style="background-image:url('https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=1920')"></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Malindi · Kenyan Coast · Est. 2018</p>
@@ -53,7 +49,6 @@
     </div>
   </section>
 
-  <!-- ABOUT / OUR STORY -->
   <section class="about" id="about">
     <div class="about-inner">
       <div class="about-image">
@@ -84,26 +79,24 @@
     </div>
   </section>
 
-  <!-- STRIP: Every Journey A Different Story -->
   <div class="strip-intro">
     <p>Every Journey, <em>A Different Story</em></p>
   </div>
 
-  <!-- SAIL / DISCOVER / WANDER / PAUSE -->
   <section class="experience-strip">
     <a href="#experiences" class="strip-card" style="background-image:url('https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=800')">
       <div class="strip-overlay"></div>
       <div class="strip-content">
         <span class="strip-label">Sail</span>
-        <span class="strip-sub">Ocean & Dhow</span>
+        <span class="strip-sub">Ocean &amp; Dhow</span>
         <span class="strip-cta">Explore →</span>
       </div>
     </a>
-    <a href="#experiences" class="strip-card" style="background-image:url('https://images.pexels.com/photos/247837/pexels-photo-247837.jpeg?auto=compress&cs=tinysrgb&w=800')">
+    <a href="#experiences" class="strip-card" style="background-image:url('https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=800')">
       <div class="strip-overlay"></div>
       <div class="strip-content">
         <span class="strip-label">Discover</span>
-        <span class="strip-sub">Culture & Heritage</span>
+        <span class="strip-sub">Culture &amp; Heritage</span>
         <span class="strip-cta">Explore →</span>
       </div>
     </a>
@@ -111,269 +104,32 @@
       <div class="strip-overlay"></div>
       <div class="strip-content">
         <span class="strip-label">Wander</span>
-        <span class="strip-sub">Safari & Bush</span>
+        <span class="strip-sub">Safari &amp; Bush</span>
         <span class="strip-cta">Explore →</span>
       </div>
     </a>
-    <a href="#experiences" class="strip-card" style="background-image:url('https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800')">
+    <a href="#experiences" class="strip-card" style="background-image:url('https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=800')">
       <div class="strip-overlay"></div>
       <div class="strip-content">
         <span class="strip-label">Pause</span>
-        <span class="strip-sub">Beach & Relaxation</span>
+        <span class="strip-sub">Beach &amp; Relaxation</span>
         <span class="strip-cta">Explore →</span>
       </div>
     </a>
   </section>
 
-  <!-- EXPERIENCES -->
   <section class="experiences" id="experiences">
     <div class="experiences-header">
       <span class="section-eyebrow">What We Offer</span>
       <h2>Our Experiences</h2>
     </div>
-
-    <!-- COAST & ISLANDS -->
-    <div class="exp-category">
-      <h3 class="category-title">Coast &amp; Islands</h3>
-      <div class="slider-wrapper">
-        <button class="slider-btn prev" onclick="slide('coast',-1)">&#8249;</button>
-        <div class="cards-track" id="coast">
-
-          <div class="exp-card" onclick="goToExperience('watamu-marine-explorer')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Full Day</span>
-              <h4>Watamu Marine Explorer</h4>
-              <p>Coral gardens, turquoise waters, and the quiet rhythm of the ocean.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-watamu')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-watamu">
-                <li>Morning pick-up and transfer to Watamu</li>
-                <li>Traditional dhow cruise over coral gardens</li>
-                <li>Guided snorkelling with marine experts</li>
-                <li>Seafood lunch on the beach</li>
-                <li>Return transfer to Malindi</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('dhow-cruise-malindi')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1001682/pexels-photo-1001682.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Half Day</span>
-              <h4>Dhow Cruise & Sunset Experience</h4>
-              <p>Sail the Indian Ocean at dusk on a traditional wooden dhow.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-dhow')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-dhow">
-                <li>Afternoon pick-up from your accommodation</li>
-                <li>Board a traditional Swahili dhow</li>
-                <li>Sunset cruise with snacks and drinks</li>
-                <li>Fish spotting and dolphin watching</li>
-                <li>Return by sunset</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('island-escapades')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Full Day</span>
-              <h4>Island Escapades</h4>
-              <p>Pristine sandbanks, mangrove channels, and untouched shore life.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-island')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-island">
-                <li>Early morning boat departure</li>
-                <li>Visit secluded sandbank islands</li>
-                <li>Mangrove channel exploration by kayak</li>
-                <li>Beach picnic lunch</li>
-                <li>Late afternoon return</li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-        <button class="slider-btn next" onclick="slide('coast',1)">&#8250;</button>
-      </div>
+    <div id="exp-loading-indicator" class="exp-page-loading">
+      <div class="loading-spinner"></div>
+      <p>Loading experiences…</p>
     </div>
-
-    <!-- CULTURE & HERITAGE -->
-    <div class="exp-category">
-      <h3 class="category-title">Culture &amp; Heritage</h3>
-      <div class="slider-wrapper">
-        <button class="slider-btn prev" onclick="slide('culture',-1)">&#8249;</button>
-        <div class="cards-track" id="culture">
-
-          <div class="exp-card" onclick="goToExperience('malindi-heritage-trail')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Full Day</span>
-              <h4>Malindi Heritage Trail</h4>
-              <p>Portuguese ruins, Swahili old town, and the living pulse of Malindi.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-malindi')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-malindi">
-                <li>Vasco da Gama Pillar & Portuguese chapel</li>
-                <li>Malindi Old Town walking tour</li>
-                <li>Local market visit with guide</li>
-                <li>Swahili lunch at a heritage restaurant</li>
-                <li>Gede Ruins exploration</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('swahili-bites-tour')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Half Day</span>
-              <h4>Swahili Bites Food Tour</h4>
-              <p>Pilipili, coconut, tamarind — the coast on a plate.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-swahili')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-swahili">
-                <li>Meet your food guide at Malindi market</li>
-                <li>Street food tasting walk</li>
-                <li>Coastal cooking demonstration</li>
-                <li>Sit-down Swahili lunch</li>
-                <li>Spice shop visit</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('craft-culture-canyon')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/2325446/pexels-photo-2325446.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Full Day</span>
-              <h4>Craft, Culture &amp; Canyon Tour</h4>
-              <p>Artisan villages, the Marafa Depression, and red canyon sunsets.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-craft')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-craft">
-                <li>Visit local artisan carving village</li>
-                <li>Drive to Marafa Depression (Hell's Kitchen)</li>
-                <li>Guided canyon walk and photography</li>
-                <li>Packed lunch with canyon views</li>
-                <li>Return via coastal road</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('ancient-stones-mangrove')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/3889844/pexels-photo-3889844.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Full Day</span>
-              <h4>Ancient Stones to Mangrove Forest</h4>
-              <p>Gede Ruins, Arabuko-Sokoke Forest, and Mida Creek at low tide.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-ancient')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-ancient">
-                <li>Morning visit to Gede Ruins</li>
-                <li>Arabuko-Sokoke Forest birding walk</li>
-                <li>Mida Creek boardwalk at low tide</li>
-                <li>Mangrove canoe experience</li>
-                <li>Sunset over the creek</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('golden-sands-marafa')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/1421903/pexels-photo-1421903.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Full Day</span>
-              <h4>Golden Sands &amp; Marafa Adventure</h4>
-              <p>Beach sunrise, canyon exploration, and a day of coastal contrasts.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-golden')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-golden">
-                <li>Sunrise beach walk at Watamu</li>
-                <li>Drive north to Marafa Depression</li>
-                <li>Guided canyon hike</li>
-                <li>Bush picnic lunch</li>
-                <li>Return along the coast road</li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-        <button class="slider-btn next" onclick="slide('culture',1)">&#8250;</button>
-      </div>
-    </div>
-
-    <!-- SAFARI & WILDLIFE -->
-    <div class="exp-category">
-      <h3 class="category-title">Safari &amp; Wildlife</h3>
-      <div class="slider-wrapper">
-        <button class="slider-btn prev" onclick="slide('safari',-1)">&#8249;</button>
-        <div class="cards-track" id="safari">
-
-          <div class="exp-card" onclick="goToExperience('tsavo-east-one-day')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">Full Day</span>
-              <h4>Tsavo East One-Day Safari</h4>
-              <p>Red elephants, vast plains, and the raw wild of Kenya's largest park.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-tsavo1')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-tsavo1">
-                <li>Pre-dawn departure from Malindi</li>
-                <li>Tsavo East gate entry by sunrise</li>
-                <li>Morning game drive (Big 5 pursuit)</li>
-                <li>Bush lunch at a scenic spot</li>
-                <li>Afternoon drive and return by evening</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('tsavo-amboseli')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/34098/south-africa-hluhluwe-giraffes-pattern.jpg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">3 Days</span>
-              <h4>Tsavo – Amboseli Safari</h4>
-              <p>Elephants beneath Kilimanjaro — Africa's most iconic backdrop.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-amboseli')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-amboseli">
-                <li>Day 1: Tsavo East game drives</li>
-                <li>Day 2: Transfer to Amboseli via scenic route</li>
-                <li>Day 2 afternoon: Amboseli game drive</li>
-                <li>Day 3: Morning Kilimanjaro views & drive</li>
-                <li>Day 3 evening: Return to Malindi</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('bush-to-beach-maasai-mara')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">5 Days</span>
-              <h4>Bush to Beach — Maasai Mara &amp; Malindi</h4>
-              <p>The Great Migration, Maasai culture, then the Indian Ocean.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-mara')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-mara">
-                <li>Day 1–2: Fly to Maasai Mara</li>
-                <li>Day 2: Migration game drives</li>
-                <li>Day 3: Maasai village cultural visit</li>
-                <li>Day 4: Fly to Malindi coast</li>
-                <li>Day 5: Dhow cruise & farewell beach dinner</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="exp-card" onclick="goToExperience('tsavo-east-west')">
-            <div class="card-img" style="background-image:url('https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg?auto=compress&cs=tinysrgb&w=600')"></div>
-            <div class="card-body">
-              <span class="card-tag">2 Days</span>
-              <h4>Tsavo East &amp; West Safari</h4>
-              <p>Two parks, one wilderness — diverse landscapes on either side of the highway.</p>
-              <button class="itinerary-toggle" onclick="toggleItinerary(event, 'itin-tsavo2')">View Itinerary ›</button>
-              <ul class="itinerary-preview" id="itin-tsavo2">
-                <li>Day 1: Tsavo East — red dust plains & elephants</li>
-                <li>Day 1: Night at a bush camp</li>
-                <li>Day 2: Tsavo West — Mzima Springs</li>
-                <li>Day 2: Hippo pool & volcanic landscape</li>
-                <li>Day 2 evening: Return to Malindi</li>
-              </ul>
-            </div>
-          </div>
-
-        </div>
-        <button class="slider-btn next" onclick="slide('safari',1)">&#8250;</button>
-      </div>
-    </div>
+    <div id="exp-categories"></div>
   </section>
 
-  <!-- SERVICES -->
   <section class="services" id="services">
     <div class="services-inner">
       <span class="section-eyebrow">What We Do</span>
@@ -403,7 +159,6 @@
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
   <section class="testimonials" id="stories">
     <div class="testimonials-inner">
       <span class="section-eyebrow">Guest Stories</span>
@@ -412,32 +167,22 @@
         <div class="testimonial-card">
           <div class="stars">★★★★★</div>
           <p>"The Watamu Marine Explorer day was the highlight of our entire Kenya trip. Our guide knew every coral head by name — and somehow found us a sea turtle on cue."</p>
-          <div class="reviewer">
-            <strong>Sarah M.</strong>
-            <span>United Kingdom</span>
-          </div>
+          <div class="reviewer"><strong>Sarah M.</strong><span>United Kingdom</span></div>
         </div>
         <div class="testimonial-card">
           <div class="stars">★★★★★</div>
           <p>"We did the Tsavo East safari and the Dhow Cruise back to back. Crislynn made it feel completely seamless — logistics, meals, transfers, everything was perfect."</p>
-          <div class="reviewer">
-            <strong>James & Priya K.</strong>
-            <span>Canada</span>
-          </div>
+          <div class="reviewer"><strong>James &amp; Priya K.</strong><span>Canada</span></div>
         </div>
         <div class="testimonial-card">
           <div class="stars">★★★★★</div>
           <p>"The Swahili Bites tour opened up a side of Malindi we would never have found alone. We ate things we couldn't name and loved every bite. Absolutely book this."</p>
-          <div class="reviewer">
-            <strong>Amara O.</strong>
-            <span>Nigeria</span>
-          </div>
+          <div class="reviewer"><strong>Amara O.</strong><span>Nigeria</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
   <section class="contact" id="contact">
     <div class="contact-inner">
       <div class="contact-text">
@@ -453,38 +198,23 @@
       <form class="contact-form" id="contactForm">
         <input type="text" placeholder="Your Name" required />
         <input type="email" placeholder="Your Email" required />
-        <select>
-          <option value="">Select an Experience</option>
-          <option>Watamu Marine Explorer</option>
-          <option>Dhow Cruise & Sunset</option>
-          <option>Island Escapades</option>
-          <option>Malindi Heritage Trail</option>
-          <option>Swahili Bites Food Tour</option>
-          <option>Craft, Culture & Canyon</option>
-          <option>Tsavo East Safari</option>
-          <option>Bush to Beach</option>
-          <option>Custom Journey</option>
-        </select>
+        <select id="expSelect"><option value="">Select an Experience</option></select>
         <textarea placeholder="Tell us about your dream trip..." rows="4"></textarea>
         <button type="submit" class="btn-primary">Send Message</button>
-        <p class="form-success" id="formSuccess" style="display:none;color:#c9a96e;margin-top:1rem;">✓ Message sent! We'll be in touch within 24 hours.</p>
+        <p class="form-success" id="formSuccess" style="display:none;">✓ Message sent! We'll be in touch within 24 hours.</p>
       </form>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="https://via.placeholder.com/140x40/1a3a2a/c9a96e?text=CRISLYNN" alt="Crislynn Ventures" />
+        <span class="logo-text footer-logo">CRISLYNN <em>VENTURES</em></span>
         <p>Boutique travel experiences along the Kenyan Coast since 2018.</p>
       </div>
       <div class="footer-links">
         <h5>Experiences</h5>
-        <a href="experience.html?slug=watamu-marine-explorer">Watamu Marine</a>
-        <a href="experience.html?slug=dhow-cruise-malindi">Dhow Cruise</a>
-        <a href="experience.html?slug=malindi-heritage-trail">Malindi Heritage</a>
-        <a href="experience.html?slug=tsavo-east-one-day">Tsavo East</a>
+        <div id="footer-exp-links"></div>
       </div>
       <div class="footer-links">
         <h5>Company</h5>
@@ -508,5 +238,101 @@
   </footer>
 
   <script src="main.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
+
+    const CATEGORIES = [
+      { key: 'Coast & Islands',    label: 'Coast & Islands',    id: 'coast'   },
+      { key: 'Culture & Heritage', label: 'Culture & Heritage', id: 'culture' },
+      { key: 'Safari & Wildlife',  label: 'Safari & Wildlife',  id: 'safari'  },
+    ];
+
+    async function loadExperiences() {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/experiences?active=eq.true&select=slug,title,tagline,description,card_image,duration_tag,category,itinerary,price_from&order=sort_order.asc`,
+          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+        );
+        const experiences = await res.json();
+        document.getElementById('exp-loading-indicator').style.display = 'none';
+        if (!experiences || experiences.length === 0) return;
+        renderCategories(experiences);
+        populateContactSelect(experiences);
+        populateFooterLinks(experiences);
+      } catch (err) {
+        document.getElementById('exp-loading-indicator').innerHTML = '<p style="color:#888;padding:2rem;">Unable to load experiences. Please refresh.</p>';
+      }
+    }
+
+    function renderCategories(experiences) {
+      const container = document.getElementById('exp-categories');
+      CATEGORIES.forEach(cat => {
+        const catExps = experiences.filter(e => e.category === cat.key);
+        if (!catExps.length) return;
+        const section = document.createElement('div');
+        section.className = 'exp-category';
+        section.innerHTML = `
+          <h3 class="category-title">${cat.label}</h3>
+          <div class="slider-wrapper">
+            <button class="slider-btn prev" onclick="slide('${cat.id}',-1)">&#8249;</button>
+            <div class="cards-track" id="${cat.id}">${catExps.map(renderCard).join('')}</div>
+            <button class="slider-btn next" onclick="slide('${cat.id}',1)">&#8250;</button>
+          </div>`;
+        container.appendChild(section);
+      });
+    }
+
+    function renderCard(exp) {
+      const img = exp.card_image || 'https://images.pexels.com/photos/1320684/pexels-photo-1320684.jpeg?auto=compress&cs=tinysrgb&w=800';
+      const tagline = exp.tagline || exp.description || '';
+      const itinerary = exp.itinerary || [];
+      const itinId = `itin-${exp.slug}`;
+      const itinHtml = itinerary.length ? `
+        <button class="itinerary-toggle" onclick="toggleItinerary(event,'${itinId}')">View Itinerary ›</button>
+        <ul class="itinerary-preview" id="${itinId}">${itinerary.slice(0,5).map(i=>`<li>${i}</li>`).join('')}</ul>` : '';
+      const priceHtml = exp.price_from ? `<span class="card-price">From KES ${Number(exp.price_from).toLocaleString()}</span>` : '';
+
+      return `
+        <div class="exp-card" onclick="goToExperience('${exp.slug}')">
+          <div class="card-img" style="background-image:url('${img}')">
+            <span class="card-duration">${exp.duration_tag || ''}</span>
+            ${priceHtml}
+          </div>
+          <div class="card-body">
+            <h4>${exp.title}</h4>
+            <p>${tagline}</p>
+            ${itinHtml}
+            <a class="card-cta" href="experience.html?slug=${exp.slug}" onclick="event.stopPropagation()">Explore →</a>
+          </div>
+        </div>`;
+    }
+
+    function populateContactSelect(experiences) {
+      const select = document.getElementById('expSelect');
+      experiences.forEach(exp => {
+        const opt = document.createElement('option');
+        opt.value = exp.slug;
+        opt.textContent = exp.title;
+        select.appendChild(opt);
+      });
+      const opt = document.createElement('option');
+      opt.value = 'custom';
+      opt.textContent = 'Custom Journey';
+      select.appendChild(opt);
+    }
+
+    function populateFooterLinks(experiences) {
+      const container = document.getElementById('footer-exp-links');
+      experiences.slice(0, 5).forEach(exp => {
+        const a = document.createElement('a');
+        a.href = `experience.html?slug=${exp.slug}`;
+        a.textContent = exp.title;
+        container.appendChild(a);
+      });
+    }
+
+    loadExperiences();
+  </script>
 </body>
 </html>
