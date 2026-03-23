@@ -150,6 +150,22 @@ if (navBurger) {
   });
 }
 
+// ── ITINERARY TOGGLE ──
+function toggleItinerary(e, btn) {
+  e.stopPropagation(); // don't trigger card click
+  const itinerary = btn.nextElementSibling;
+  const isOpen = itinerary.classList.contains('open');
+  // close all open ones first
+  document.querySelectorAll('.exp-itinerary.open').forEach(el => {
+    el.classList.remove('open');
+    el.previousElementSibling.textContent = 'View Itinerary ›';
+  });
+  if (!isOpen) {
+    itinerary.classList.add('open');
+    btn.textContent = 'Close ×';
+  }
+}
+
 // ── FORM SUBMIT ──
 function handleSubmit(e) {
   e.preventDefault();
