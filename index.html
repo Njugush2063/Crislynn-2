@@ -154,6 +154,14 @@
     </div>
     <div id="exp-categories"></div>
     <div id="exp-search-results" class="exp-search-results" style="display:none;"></div>
+    <div class="view-all-btn-wrap">
+      <a href="experiences.html" class="view-all-btn">
+        <span>View All Experiences</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 8H13M13 8L8.5 3.5M13 8L8.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
   </section>
 
   <section class="services" id="services">
@@ -218,7 +226,7 @@
         <div class="contact-details">
           <p>📍 Apartment 7, Kijani Suites, Lamu Road, P.O. Box 345, 80200 Malindi, Kenya</p>
           <p>📞 +254 794 464 898</p>
-          <p>✉️ <a href="mailto:karibu@crislynnventures.co.ke">karibu@crislynnventures.co.ke</a></p>
+          <p>✉️ <a href="/cdn-cgi/l/email-protection#0b606a7962697e4b68796278677265657d6e657f7e796e7825686425606e"><span class="__cf_email__" data-cfemail="d3b8b2a1bab1a693b0a1baa0bfaabdbda5b6bda7a6a1b6a0fdb0bcfdb8b6">[email&#160;protected]</span></a></p>
         </div>
       </div>
       <form class="contact-form" id="contactForm">
@@ -264,7 +272,7 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="main.js"></script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="main.js"></script>
   <script>
     const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
@@ -446,13 +454,4 @@
             (e.category || '').toLowerCase().includes(q);
         });
         results.innerHTML = filtered.length
-          ? '<div class="search-results-grid">' + filtered.map(renderCard).join('') + '</div>'
-          : '<p class="no-results">No experiences found for "<em>' + q + '</em>"</p>';
-        results.style.display = 'block';
-      });
-    }
-
-    loadExperiences();
-  </script>
-</body>
-</html>
+          ? '<div class="sea

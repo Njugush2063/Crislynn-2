@@ -1,0 +1,288 @@
+/* =============================================
+   CRISLYNN VENTURES — experiences-page.css
+   All Experiences page styles
+   ============================================= */
+
+body.all-experiences-page {
+  background: var(--cream);
+}
+
+/* ── PAGE HERO ─────────────────────────────────────────────────── */
+.all-exp-hero {
+  height: 52vh;
+  min-height: 340px;
+  background-image: url('https://images.pexels.com/photos/3703465/pexels-photo-3703465.jpeg?auto=compress&cs=tinysrgb&w=1920');
+  background-size: cover;
+  background-position: center 40%;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  margin-top: 0;
+}
+.all-exp-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(61,15,16,0.92) 0%,
+    rgba(61,15,16,0.45) 55%,
+    rgba(0,0,0,0.2) 100%
+  );
+}
+.all-exp-hero-content {
+  position: relative;
+  z-index: 2;
+  color: var(--white);
+  padding: 3rem 4rem;
+  max-width: 760px;
+}
+.all-exp-hero-content .section-eyebrow {
+  color: var(--gold);
+  margin-bottom: 0.75rem;
+}
+.all-exp-hero-content h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 400;
+  margin-bottom: 1rem;
+  line-height: 1.15;
+}
+.all-exp-hero-content p {
+  font-size: 1rem;
+  font-weight: 300;
+  opacity: 0.85;
+  max-width: 540px;
+  line-height: 1.7;
+}
+
+/* ── CONTROLS BAR ──────────────────────────────────────────────── */
+.all-exp-controls {
+  background: var(--white);
+  border-bottom: 1px solid var(--cream-mid);
+  position: sticky;
+  top: 60px;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(85,21,22,0.06);
+}
+.all-exp-controls-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.1rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.all-exp-controls .exp-search-bar {
+  max-width: 300px;
+  margin: 0;
+  flex-shrink: 0;
+}
+.all-exp-controls .exp-filter-tabs {
+  justify-content: flex-start;
+}
+
+/* ── MAIN GRID ─────────────────────────────────────────────────── */
+.all-exp-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3.5rem 3rem 5rem;
+}
+.all-exp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+/* ── EXPERIENCE CARD (full detail) ────────────────────────────── */
+.all-exp-card {
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(85,21,22,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.all-exp-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(85,21,22,0.15);
+}
+
+/* Card image */
+.all-card-img {
+  position: relative;
+  height: 240px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+.all-card-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background 0.3s ease;
+}
+.all-exp-card:hover .all-card-img::after { background: rgba(0,0,0,0.1); }
+
+/* Duration tag */
+.all-card-img .card-duration {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 2;
+}
+
+/* Category badge */
+.all-card-category {
+  position: absolute;
+  bottom: 0.85rem;
+  left: 0.85rem;
+  background: rgba(61,15,16,0.82);
+  color: var(--gold-pale);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.7rem;
+  border-radius: 2px;
+  font-family: 'Inter', sans-serif;
+  z-index: 2;
+}
+
+/* Wishlist + share buttons */
+.all-card-img .card-actions {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.4rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.all-exp-card:hover .card-actions { opacity: 1; }
+
+/* Card body */
+.all-card-body {
+  padding: 1.5rem 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.all-card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--maroon-deep);
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  line-height: 1.25;
+}
+.all-card-title:hover { color: var(--gold); }
+
+.all-card-tagline {
+  font-size: 0.875rem;
+  color: var(--text-light);
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+
+/* Itinerary list */
+.all-card-itinerary {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: var(--cream);
+  border-radius: 4px;
+  border-left: 3px solid var(--green);
+}
+.itin-label {
+  font-size: 0.65rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.6rem;
+}
+.all-card-itinerary ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.all-card-itinerary li {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  padding-left: 1rem;
+  position: relative;
+  line-height: 1.5;
+}
+.all-card-itinerary li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* CTA button */
+.all-card-cta {
+  margin-top: auto;
+  display: inline-block;
+  text-align: center;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  padding: 0.85rem 1.5rem;
+}
+
+/* ── BOTTOM CTA SECTION ────────────────────────────────────────── */
+.all-exp-cta {
+  background: var(--maroon-deep);
+  padding: 5rem 3rem;
+  text-align: center;
+  border-top: 3px solid var(--gold);
+}
+.all-exp-cta-inner {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.all-exp-cta h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+.all-exp-cta p {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+/* ── NO RESULTS ────────────────────────────────────────────────── */
+.no-results {
+  text-align: center;
+  color: var(--text-light);
+  padding: 4rem 2rem;
+  font-size: 1rem;
+  grid-column: 1 / -1;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .all-exp-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .all-exp-hero-content { padding: 2rem 1.5rem; }
+  .all-exp-controls-inner { padding: 1rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .all-exp-controls .exp-search-bar { max-width: 100%; width: 100%; }
+  .all-exp-main { padding: 2rem 1.5rem 4rem; }
+  .all-exp-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .all-card-img { height: 200px; }
+  .all-exp-cta { padding: 3.5rem 1.5rem; }
+}

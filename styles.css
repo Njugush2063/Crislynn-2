@@ -594,8 +594,37 @@ a { text-decoration: none; color: inherit; }
   color: var(--white);
 }
 
-/* Search results grid */
-.exp-search-results { padding-top: 1rem; }
+/* View All Experiences button */
+.view-all-btn-wrap {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 1rem;
+}
+.view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 2.4rem;
+  background: transparent;
+  border: 1.5px solid var(--maroon);
+  color: var(--maroon);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.view-all-btn:hover {
+  background: var(--maroon);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(85,21,22,0.2);
+}
+.view-all-btn svg { transition: transform var(--transition); }
+.view-all-btn:hover svg { transform: translateX(4px); }
 .search-results-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
