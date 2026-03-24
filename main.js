@@ -125,7 +125,7 @@ if (contactForm) {
 // SUPABASE CONFIGURATION
 // =============================================
 const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzU3MzY2OSwiZXhwIjoyMDg5MTQ5NjY5fQ.ErXmaJT4i-5b4MaIGMSOg2xNJTf58JYovTL1i5_lKu8';
 
 let allExperiences = [];
 
