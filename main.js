@@ -53,7 +53,6 @@ if (aboutSection) {
   const observer = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting && !triggered) {
       triggered = true;
-      // Trigger stat fade-in
       document.querySelectorAll('.stat').forEach(s => s.classList.add('in-view'));
       animateCounters();
       observer.disconnect();
@@ -125,44 +124,73 @@ if (contactForm) {
 // SUPABASE CONFIGURATION
 // =============================================
 const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc3MzU3MzY2OSwiZXhwIjoyMDg5MTQ5NjY5fQ.ErXmaJT4i-5b4MaIGMSOg2xNJTf58JYovTL1i5_lKu8';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
 
 let allExperiences = [];
 
 // =============================================
 // FETCH EXPERIENCES FROM SUPABASE
+// FIX 1: Use `is.true` instead of `eq.true` for boolean columns in PostgREST
+// FIX 2: Added fallback — if `active` filter returns nothing, fetch all rows
+//         so you can verify data exists before debugging RLS/column issues
 // =============================================
 async function loadExperiences() {
     const container = document.getElementById('experiences-grid');
     if (!container) return;
-    
-    // Show loading state
+
     container.innerHTML = `
         <div class="loading-container">
             <div class="loading-spinner"></div>
             <p class="loading-text">Loading experiences...</p>
         </div>
     `;
-    
+
     try {
-        const response = await fetch(
-            `${SUPABASE_URL}/rest/v1/experiences?select=*&active=eq.true`,
-            {
-                headers: {
-                    'apikey': SUPABASE_ANON_KEY,
-                    'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-                }
+        // FIXED: PostgREST boolean syntax is `is.true`, not `eq.true`
+        const url = `${SUPABASE_URL}/rest/v1/experiences?select=*&active=is.true&order=created_at.asc`;
+
+        const response = await fetch(url, {
+            headers: {
+                'apikey': SUPABASE_ANON_KEY,
+                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+                // ADDED: Tell PostgREST to return JSON
+                'Content-Type': 'application/json'
             }
-        );
-        
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
+        });
+
+        if (!response.ok) {
+            // Log the actual error body so you can diagnose it
+            const errorBody = await response.text();
+            console.error('Supabase error response:', response.status, errorBody);
+            throw new Error(`HTTP ${response.status}: ${errorBody}`);
+        }
+
         allExperiences = await response.json();
+
+        // DEBUG HELPER: Log how many rows came back
+        console.log(`Loaded ${allExperiences.length} experience(s) from Supabase`);
+
+        // If active filter returned zero rows, try without the filter
+        // so you know whether the table is empty vs the filter is wrong
+        if (allExperiences.length === 0) {
+            console.warn('No active experiences found — checking if table has any rows at all...');
+            const fallbackResp = await fetch(
+                `${SUPABASE_URL}/rest/v1/experiences?select=id,title,active&limit=5`,
+                {
+                    headers: {
+                        'apikey': SUPABASE_ANON_KEY,
+                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                    }
+                }
+            );
+            const fallbackData = await fallbackResp.json();
+            console.log('Sample rows (no filter):', fallbackData);
+        }
+
         renderExperiences(allExperiences);
-        
-        // Update slider if it exists (for homepage sliders)
+        setupExperienceFilters();
         updateSliders();
-        
+
     } catch (error) {
         console.error('Error loading experiences:', error);
         container.innerHTML = `
@@ -180,7 +208,7 @@ async function loadExperiences() {
 function renderExperiences(experiences) {
     const container = document.getElementById('experiences-grid');
     if (!container) return;
-    
+
     if (!experiences || experiences.length === 0) {
         container.innerHTML = `
             <div class="no-results">
@@ -189,7 +217,7 @@ function renderExperiences(experiences) {
         `;
         return;
     }
-    
+
     container.innerHTML = experiences.map(exp => `
         <div class="exp-card" data-category="${exp.category || ''}" onclick="goToExperience('${exp.slug}')">
             <div class="exp-card-img" style="background-image: url('${exp.hero_image || 'https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=800'}')">
@@ -246,9 +274,9 @@ function searchExperiences(keyword) {
         renderExperiences(allExperiences);
         return;
     }
-    
+
     const searchTerm = keyword.toLowerCase().trim();
-    const filtered = allExperiences.filter(exp => 
+    const filtered = allExperiences.filter(exp =>
         exp.title.toLowerCase().includes(searchTerm) ||
         (exp.tagline && exp.tagline.toLowerCase().includes(searchTerm)) ||
         (exp.description && exp.description.toLowerCase().includes(searchTerm))
@@ -260,7 +288,6 @@ function searchExperiences(keyword) {
 // SET UP FILTER AND SEARCH LISTENERS
 // =============================================
 function setupExperienceFilters() {
-    // Filter buttons
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
@@ -270,8 +297,7 @@ function setupExperienceFilters() {
             filterExperiences(btn.dataset.filter);
         });
     });
-    
-    // Search input
+
     const searchInput = document.getElementById('experience-search');
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
@@ -284,16 +310,12 @@ function setupExperienceFilters() {
 // UPDATE SLIDERS WITH LOADED EXPERIENCES
 // =============================================
 function updateSliders() {
-    // This function updates any homepage sliders with the loaded experiences
-    // If you have category-specific sliders, you can populate them here
-    
     const sliders = document.querySelectorAll('.slider-track');
     sliders.forEach(slider => {
         const category = slider.dataset.category;
         if (category && allExperiences.length) {
             const filtered = allExperiences.filter(exp => exp.category === category);
             if (filtered.length) {
-                // You can customize slider HTML generation here
                 slider.innerHTML = filtered.map(exp => `
                     <div class="exp-card" onclick="goToExperience('${exp.slug}')">
                         <div class="exp-card-img" style="background-image: url('${exp.hero_image || ''}')">
@@ -314,18 +336,14 @@ function updateSliders() {
 // INITIALIZE ON DOM READY
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
-    // Load experiences if the grid container exists
     if (document.getElementById('experiences-grid')) {
         loadExperiences();
-        setupExperienceFilters();
+        // Note: setupExperienceFilters() is now called inside loadExperiences()
+        // after data loads, so filters work on the actual data
     }
-    
-    // Also load experiences for any slider containers that need them
+
     if (document.querySelector('.slider-track')) {
-        // If experiences not loaded yet, they'll load after the main call
-        // This ensures sliders get populated too
         if (!allExperiences.length) {
-            // Wait a bit for experiences to load
             setTimeout(() => {
                 if (allExperiences.length) updateSliders();
             }, 1000);
@@ -335,7 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // =============================================
 // EXPOSE FUNCTIONS TO GLOBAL SCOPE
-// (for onclick handlers in HTML)
 // =============================================
 window.goToExperience = goToExperience;
 window.toggleItinerary = toggleItinerary;
