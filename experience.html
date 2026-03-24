@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Experiences — Crislynn Ventures</title>
-  <meta name="description" content="Browse all Crislynn Ventures experiences — coastal escapes, cultural journeys, island hideaways, and Kenya safaris. Each one crafted around you.">
+  <title>Experience — Crislynn Ventures</title>
+  <meta name="description" content="">
 
+  <!-- OG tags — filled dynamically -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="All Experiences — Crislynn Ventures">
-  <meta property="og:description" content="Coastal escapes, cultural journeys, island hideaways, and Kenya safaris. Each one crafted around you.">
-  <meta property="og:image" content="images/Ourstory.jpeg">
   <meta property="og:site_name" content="Crislynn Ventures">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  <meta property="og:image" content="">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +26,6 @@
       --dark: #1A1510;
       --dark-mid: #2A2018;
       --cream: #F5F0E8;
-      --cream-warm: #EDE6D6;
       --text-dark: #2C2416;
       --text-mid: #6B5E4A;
       --text-light: #9A8C7A;
@@ -48,212 +48,68 @@
     nav.scrolled { background: var(--maroon); box-shadow: 0 1px 0 #a7703a; }
     .nav-logo img { height: 50px; width: auto; display: block; }
     .nav-back {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
-      text-transform: uppercase; color: rgba(255,255,255,0.85);
-      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.8); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
       transition: color 0.3s;
     }
     .nav-back:hover { color: var(--gold-pale); }
+    .nav-back-arrow { font-size: 18px; line-height: 1; }
 
-    /* ── PAGE HERO ── */
-    .page-hero {
-      height: 52vh; min-height: 380px;
+    /* ── HERO ── */
+    .exp-hero {
+      height: 92vh; min-height: 600px;
       position: relative; overflow: hidden;
       display: flex; align-items: flex-end;
     }
-    .page-hero-bg {
+    .exp-hero-media {
       position: absolute; inset: 0;
-      background-image: url('https://njugush2063.github.io/Crislynn/images/Ourstory.jpeg');
-      background-size: cover; background-position: center;
+      background: var(--dark); /* fallback */
     }
-    .page-hero-overlay {
+    .exp-hero-media img,
+    .exp-hero-media video {
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,8,5,0.88) 0%, rgba(10,8,5,0.3) 60%, rgba(10,8,5,0.15) 100%);
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
     }
-    .page-hero-content {
+    .exp-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,8,5,0.85) 0%, rgba(10,8,5,0.35) 50%, rgba(10,8,5,0.1) 100%);
+    }
+    .exp-hero-content {
       position: relative; z-index: 2;
-      padding: 0 10vw 60px; max-width: 800px;
+      padding: 0 10vw 80px;
+      max-width: 900px;
     }
-    .page-hero-eyebrow {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.32em;
-      text-transform: uppercase; color: var(--gold-light);
-      margin-bottom: 14px; display: block;
+    .exp-hero-eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold-light); margin-bottom: 16px; display: block;
     }
-    .page-hero-title {
+    .exp-hero-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(38px, 5.5vw, 72px);
+      font-size: clamp(40px, 6vw, 80px);
       font-weight: 300; color: var(--white);
-      line-height: 1.08; margin-bottom: 16px;
+      line-height: 1.08; margin-bottom: 20px;
     }
-    .page-hero-title em { font-style: italic; color: var(--gold-pale); }
-    .page-hero-sub {
-      font-size: 15px; font-weight: 300;
-      color: rgba(255,255,255,0.65); line-height: 1.7;
-      max-width: 520px;
-    }
-
-    /* ── FILTER BAR ── */
-    .filter-bar {
-      background: var(--white);
-      border-bottom: 1px solid rgba(107,94,74,0.12);
-      position: sticky; top: var(--nav-h); z-index: 50;
-    }
-    .filter-inner {
-      max-width: 1200px; margin: 0 auto;
-      padding: 0 48px;
-      display: flex; align-items: center; gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .filter-inner::-webkit-scrollbar { display: none; }
-    .filter-btn {
-      background: none; border: none; border-bottom: 2px solid transparent;
-      padding: 18px 24px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--text-light);
-      cursor: pointer; white-space: nowrap;
-      transition: color 0.3s, border-color 0.3s;
-    }
-    .filter-btn:hover { color: var(--text-dark); }
-    .filter-btn.active { color: var(--maroon); border-bottom-color: var(--maroon); }
-
-    /* ── MAIN CONTENT ── */
-    .experiences-page {
-      max-width: 1200px; margin: 0 auto;
-      padding: 64px 48px 120px;
+    .exp-hero-desc {
+      font-size: 16px; font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75; max-width: 560px;
     }
 
-    /* category group */
-    .cat-group { margin-bottom: 80px; }
-    .cat-group-header {
-      display: flex; align-items: baseline; gap: 20px;
-      margin-bottom: 36px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--maroon);
-    }
-    .cat-group-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 13px; letter-spacing: 0.2em; color: var(--gold);
-    }
-    .cat-group-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(28px, 3.5vw, 44px);
-      font-weight: 300; color: var(--maroon); line-height: 1.1;
-    }
-    .cat-group-desc {
-      font-size: 13px; font-weight: 300;
-      color: var(--gold); font-style: italic; margin-left: auto;
-    }
-
-    /* card grid */
-    .exp-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    /* card */
-    .exp-card {
-      background: var(--white);
-      border-radius: 4px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
-      display: flex; flex-direction: column;
-    }
-    .exp-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.1);
-    }
-    .exp-card-img {
-      height: 220px;
-      background-size: cover; background-position: center;
-      position: relative; flex-shrink: 0;
-    }
-    .exp-card-img-overlay {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(10,8,5,0.5) 0%, transparent 60%);
-    }
-    .exp-card-tag {
-      position: absolute; bottom: 14px; left: 14px;
-      font-size: 9px; font-weight: 500; letter-spacing: 0.18em;
-      text-transform: uppercase;
-      background: var(--maroon); color: var(--white);
-      padding: 4px 10px;
-    }
-    .exp-card-body {
-      padding: 24px; display: flex; flex-direction: column; flex: 1;
-    }
-    .exp-card-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 400; color: var(--text-dark);
-      line-height: 1.2; margin-bottom: 10px;
-    }
-    .exp-card-desc {
-      font-size: 13px; font-weight: 300; color: var(--text-mid);
-      line-height: 1.7; margin-bottom: 16px; flex: 1;
-    }
-
-    /* itinerary toggle */
-    .exp-itinerary-btn {
-      background: none; border: none;
-      border-bottom: 1px solid rgba(184,137,58,0.4);
-      color: var(--gold); font-size: 11px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0 0 4px; cursor: pointer; margin-bottom: 0;
-      transition: color 0.3s, border-color 0.3s;
-      font-family: 'DM Sans', sans-serif; text-align: left;
-    }
-    .exp-itinerary-btn:hover { color: var(--maroon); border-color: var(--maroon); }
-    .exp-itinerary {
-      list-style: none; max-height: 0; overflow: hidden;
-      transition: max-height 0.45s ease, opacity 0.3s ease, margin 0.3s ease;
-      opacity: 0; margin: 0;
-    }
-    .exp-itinerary.open { max-height: 400px; opacity: 1; margin: 12px 0 8px; }
-    .exp-itinerary li {
-      font-size: 12px; font-weight: 300; color: var(--text-mid);
-      padding: 6px 0; border-bottom: 1px solid rgba(107,94,74,0.08);
-      line-height: 1.5; display: flex; gap: 8px; align-items: flex-start;
-    }
-    .exp-itinerary li::before {
-      content: '—'; color: var(--gold); font-size: 10px;
-      flex-shrink: 0; margin-top: 2px;
-    }
-
-    /* price + CTA row */
-    .exp-card-footer {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      margin-top: 20px; padding-top: 16px;
-      border-top: 1px solid rgba(107,94,74,0.1);
-    }
-    .exp-card-price {
-      font-size: 12px; color: var(--text-light); font-weight: 300;
-    }
-    .exp-card-price strong {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 22px; font-weight: 300; color: var(--text-dark);
-      display: block; line-height: 1;
-    }
-    .exp-card-price span { font-size: 10px; letter-spacing: 0.05em; }
-    .exp-card-link {
-      font-size: 10px; font-weight: 500; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--white);
-      background: var(--maroon); padding: 10px 18px;
-      text-decoration: none; transition: background 0.3s;
-      white-space: nowrap;
-    }
-    .exp-card-link:hover { background: var(--dark); }
-
-    /* loading / error */
+    /* ── LOADING / ERROR ── */
     .state-screen {
-      min-height: 40vh; display: flex;
-      flex-direction: column; align-items: center;
-      justify-content: center; gap: 16px; text-align: center;
+      min-height: 60vh; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 16px; text-align: center; padding: 48px;
     }
+    .state-screen .icon { font-size: 40px; }
+    .state-screen h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px; font-weight: 300; color: var(--text-dark);
+    }
+    .state-screen p { font-size: 14px; font-weight: 300; color: var(--text-mid); }
     .spinner {
       width: 32px; height: 32px;
       border: 2px solid rgba(184,137,58,0.2);
@@ -262,69 +118,188 @@
       animation: spin 0.8s linear infinite;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .state-screen h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 28px; font-weight: 300; color: var(--text-dark);
-    }
-    .state-screen p { font-size: 14px; font-weight: 300; color: var(--text-mid); }
 
-    /* bottom CTA */
-    .page-cta {
-      background: var(--green); padding: 80px 48px; text-align: center;
+    /* ── CONTENT BODY ── */
+    .exp-body {
+      max-width: 1100px; margin: 0 auto;
+      padding: 80px 48px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
+      align-items: start;
     }
-    .page-cta h2 {
+
+    /* left: about + itinerary */
+    .exp-about-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 16px; display: block;
+    }
+    .exp-about-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 4vw, 52px); font-weight: 300;
-      color: var(--white); margin-bottom: 12px;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 300; color: var(--text-dark);
+      line-height: 1.2; margin-bottom: 24px;
     }
-    .page-cta p {
+    .exp-about-body {
       font-size: 15px; font-weight: 300;
-      color: rgba(255,255,255,0.6); margin-bottom: 36px;
-      max-width: 500px; margin-left: auto; margin-right: auto;
-      line-height: 1.75;
+      color: var(--text-mid); line-height: 1.85;
+      margin-bottom: 48px;
+    }
+
+    /* itinerary */
+    .itinerary-heading {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 24px; display: block;
+      padding-top: 40px;
+      border-top: 1px solid rgba(107,94,74,0.15);
+    }
+    .itinerary-list { list-style: none; }
+    .itinerary-item {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(107,94,74,0.1);
+    }
+    .itinerary-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0; margin-top: 6px;
+    }
+    .itinerary-text {
+      font-size: 14px; font-weight: 300;
+      color: var(--text-mid); line-height: 1.6;
+    }
+
+    /* right: booking card */
+    .booking-card {
+      background: var(--white);
+      border: 1px solid rgba(107,94,74,0.12);
+      padding: 36px 32px;
+      position: sticky; top: 100px;
+    }
+    .booking-tag {
+      display: inline-block;
+      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      background: var(--maroon); color: var(--white);
+      padding: 5px 12px; margin-bottom: 20px;
+    }
+    .booking-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; font-weight: 300; color: var(--text-dark);
+      line-height: 1.2; margin-bottom: 8px;
+    }
+    .booking-price {
+      font-size: 13px; font-weight: 300; color: var(--text-light);
+      margin-bottom: 28px;
+    }
+    .booking-price strong {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px; font-weight: 300; color: var(--text-dark);
+    }
+    .booking-divider { height: 1px; background: rgba(107,94,74,0.12); margin: 0 0 24px; }
+    .booking-detail { display: flex; justify-content: space-between; margin-bottom: 14px; }
+    .booking-detail-label { font-size: 11px; color: var(--text-light); letter-spacing: 0.05em; }
+    .booking-detail-value { font-size: 13px; font-weight: 500; color: var(--text-dark); }
+    .booking-includes {
+      margin: 24px 0;
+      padding: 20px;
+      background: rgba(184,137,58,0.06);
+    }
+    .booking-includes-label {
+      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px; display: block;
+    }
+    .booking-include-item {
+      font-size: 13px; font-weight: 300; color: var(--text-mid);
+      padding: 5px 0;
+      display: flex; gap: 8px; align-items: center;
+    }
+    .booking-include-item::before {
+      content: '✓'; color: var(--green);
+      font-size: 12px; font-weight: 500; flex-shrink: 0;
+    }
+    .booking-cta {
+      display: block; width: 100%; text-align: center;
+      background: var(--maroon); color: var(--white);
+      padding: 16px 24px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.3s; margin-top: 8px;
+    }
+    .booking-cta:hover { background: var(--dark); }
+    .booking-note {
+      font-size: 11px; font-weight: 300; color: var(--text-light);
+      text-align: center; margin-top: 12px; line-height: 1.5;
+    }
+
+    /* ── GALLERY ── */
+    .exp-gallery {
+      max-width: 1100px; margin: 0 auto;
+      padding: 0 48px 80px;
+    }
+    .gallery-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 24px; display: block;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .gallery-img {
+      aspect-ratio: 4/3; object-fit: cover;
+      width: 100%; display: block;
+      transition: opacity 0.3s;
+    }
+    .gallery-img:hover { opacity: 0.88; }
+
+    /* ── FOOTER STRIP ── */
+    .exp-footer-strip {
+      background: var(--dark-mid);
+      padding: 60px 48px;
+      text-align: center;
+    }
+    .exp-footer-strip h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 300; color: var(--white);
+      margin-bottom: 12px;
+    }
+    .exp-footer-strip p {
+      font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5);
+      margin-bottom: 32px;
     }
     .btn-primary {
       background: var(--gold); color: var(--white);
-      padding: 16px 40px; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 16px 40px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
       text-decoration: none; display: inline-block;
-      transition: background 0.3s; border: none; cursor: pointer;
+      transition: background 0.3s;
     }
     .btn-primary:hover { background: var(--maroon); }
     .btn-outline {
       background: transparent; color: var(--white);
-      padding: 16px 40px; font-size: 11px; font-weight: 500;
-      letter-spacing: 0.16em; text-transform: uppercase;
+      padding: 16px 40px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
       text-decoration: none; display: inline-block;
-      border: 1px solid rgba(255,255,255,0.4); margin-left: 12px;
-      transition: background 0.3s, border-color 0.3s;
+      border: 1px solid rgba(255,255,255,0.4);
+      margin-left: 12px;
+      transition: border-color 0.3s, background 0.3s;
     }
-    .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: white; }
-
-    /* footer */
-    footer {
-      background: var(--dark-mid, #2A2018);
-      padding: 40px 48px; text-align: center;
-    }
-    footer p {
-      font-size: 11px; color: rgba(255,255,255,0.25); font-weight: 300;
-    }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
 
     /* responsive */
-    @media (max-width: 1024px) {
-      .exp-grid { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 900px) {
+      .exp-body { grid-template-columns: 1fr; padding: 60px 24px; gap: 48px; }
+      .booking-card { position: static; }
+      .exp-gallery { padding: 0 24px 60px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 600px) {
       nav { padding: 0 24px; }
-      .filter-inner { padding: 0 24px; }
-      .experiences-page { padding: 48px 24px 80px; }
-      .page-hero-content { padding: 0 6vw 48px; }
-      .cat-group-desc { display: none; }
-      .page-cta { padding: 60px 24px; }
-    }
-    @media (max-width: 580px) {
-      .exp-grid { grid-template-columns: 1fr; }
-      .btn-outline { margin-left: 0; margin-top: 12px; }
+      .exp-hero-content { padding: 0 6vw 60px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .exp-footer-strip { padding: 60px 24px; }
     }
   </style>
 </head>
@@ -335,215 +310,235 @@
   <div class="nav-logo">
     <img src="https://njugush2063.github.io/Crislynn/images/Crislynn-logo.png" alt="Crislynn Ventures">
   </div>
-  <a href="index.html" class="nav-back">← Back to Home</a>
+  <a href="index.html" class="nav-back">
+    <span class="nav-back-arrow">←</span> All Experiences
+  </a>
 </nav>
 
-<!-- PAGE HERO -->
-<section class="page-hero">
-  <div class="page-hero-bg"></div>
-  <div class="page-hero-overlay"></div>
-  <div class="page-hero-content">
-    <span class="page-hero-eyebrow">Our Experiences</span>
-    <h1 class="page-hero-title">Journeys That<br><em>Stay With You</em></h1>
-    <p class="page-hero-sub">Curated coastal escapes, cultural encounters, island hideaways, and signature safaris — each professionally designed to balance discovery with comfort.</p>
+<!-- HERO — filled by JS -->
+<section class="exp-hero" id="expHero">
+  <div class="exp-hero-media" id="expMedia"></div>
+  <div class="exp-hero-overlay"></div>
+  <div class="exp-hero-content">
+    <span class="exp-hero-eyebrow" id="expCategory">Crislynn Ventures</span>
+    <h1 class="exp-hero-title" id="expTitle">Loading experience…</h1>
+    <p class="exp-hero-desc" id="expDesc"></p>
   </div>
 </section>
 
-<!-- FILTER BAR -->
-<div class="filter-bar">
-  <div class="filter-inner">
-    <button class="filter-btn active" data-filter="all" onclick="filterCategory('all', this)">All Experiences</button>
-    <button class="filter-btn" data-filter="Coast & Islands" onclick="filterCategory('Coast & Islands', this)">Coast & Islands</button>
-    <button class="filter-btn" data-filter="Culture & Heritage" onclick="filterCategory('Culture & Heritage', this)">Culture & Heritage</button>
-    <button class="filter-btn" data-filter="Safaris" onclick="filterCategory('Safaris', this)">Safaris</button>
-  </div>
-</div>
-
-<!-- CONTENT -->
-<main class="experiences-page" id="mainContent" style="display:none">
-  <!-- injected by JS -->
-</main>
-
-<!-- LOADING -->
+<!-- LOADING STATE -->
 <div class="state-screen" id="loadingState">
   <div class="spinner"></div>
-  <p>Loading experiences…</p>
+  <p>Loading experience details…</p>
 </div>
 
-<!-- ERROR -->
+<!-- MAIN CONTENT — hidden until loaded -->
+<div id="mainContent" style="display:none">
+
+  <div class="exp-body">
+    <!-- LEFT -->
+    <div>
+      <span class="exp-about-label">About this experience</span>
+      <h2 class="exp-about-title" id="bodyTitle"></h2>
+      <div class="exp-about-body" id="bodyDesc"></div>
+
+      <span class="itinerary-heading" id="itineraryHeading" style="display:none">What's included</span>
+      <ul class="itinerary-list" id="itineraryList"></ul>
+    </div>
+
+    <!-- RIGHT: booking card -->
+    <div>
+      <div class="booking-card">
+        <span class="booking-tag" id="bookingTag">Full Day</span>
+        <div class="booking-title" id="bookingTitle"></div>
+        <div class="booking-price" id="bookingPrice" style="display:none">
+          From <strong id="priceValue"></strong> per person
+        </div>
+        <div class="booking-divider"></div>
+        <div class="booking-detail">
+          <span class="booking-detail-label">Duration</span>
+          <span class="booking-detail-value" id="bookingDuration">—</span>
+        </div>
+        <div class="booking-detail">
+          <span class="booking-detail-label">Group size</span>
+          <span class="booking-detail-value" id="bookingGroup">Private or small group</span>
+        </div>
+        <div class="booking-detail">
+          <span class="booking-detail-label">Departures</span>
+          <span class="booking-detail-value" id="bookingDepartures">Daily, on request</span>
+        </div>
+        <div class="booking-includes" id="bookingIncludes" style="display:none">
+          <span class="booking-includes-label">Included</span>
+          <div id="includesList"></div>
+        </div>
+        <a href="index.html#contact" class="booking-cta">Book This Experience</a>
+        <p class="booking-note">We respond within 2 hours · No payment required to enquire</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="exp-gallery" id="gallerySection" style="display:none">
+    <span class="gallery-label">Gallery</span>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+
+</div>
+
+<!-- ERROR STATE -->
 <div class="state-screen" id="errorState" style="display:none">
-  <h2>Something went wrong</h2>
-  <p>We couldn't load the experiences. Please try refreshing.</p>
-  <a href="index.html" class="btn-primary" style="margin-top:16px; display:inline-block">Back to Home</a>
+  <div class="icon">🌊</div>
+  <h2>Experience not found</h2>
+  <p>We couldn't load this experience. Try browsing all our journeys.</p>
+  <a href="index.html#experiences" class="btn-primary" style="margin-top:16px">Browse Experiences</a>
 </div>
 
-<!-- BOTTOM CTA -->
-<div class="page-cta" id="pageCta" style="display:none">
-  <h2>Can't find what you're looking for?</h2>
-  <p>Every journey at Crislynn is designed from scratch. Tell us what you have in mind and we'll build it around you.</p>
-  <a href="index.html#contact" class="btn-primary">Design a Custom Journey</a>
-  <a href="index.html" class="btn-outline">Back to Home</a>
+<!-- FOOTER STRIP -->
+<div class="exp-footer-strip">
+  <h3>Ready to make it yours?</h3>
+  <p>Tell us what you're dreaming of — we'll handle every detail.</p>
+  <a href="index.html#contact" class="btn-primary">Design Your Journey</a>
+  <a href="index.html#experiences" class="btn-outline">Explore More</a>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 Crislynn Ventures Ltd. All rights reserved.</p>
-</footer>
-
+<!-- =============================================
+     SUPABASE CONFIG
+     Replace YOUR_SUPABASE_URL and YOUR_ANON_KEY
+     with your actual Supabase project values
+============================================= -->
 <script>
 const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
 
-// navbar scroll
+// ── Navbar scroll ──
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 60);
 });
 
-// all experiences stored after first fetch
-let allExperiences = [];
+// ── Get slug from URL ──
+const params = new URLSearchParams(window.location.search);
+const slug = params.get('slug');
 
-// category order and metadata
-const CATEGORIES = [
-  { key: 'Coast & Islands', num: '01', desc: 'Salt air. Slow time. Endless horizons.' },
-  { key: 'Culture & Heritage', num: '02', desc: 'Stories written in stone, spice, and tradition.' },
-  { key: 'Safaris', num: '03', desc: 'Where the land still leads.' }
-];
+async function loadExperience() {
+  if (!slug) { showError(); return; }
 
-async function loadExperiences() {
   try {
     const res = await fetch(
-      `${SUPABASE_URL}/rest/v1/experiences?active=eq.true&select=*&order=sort_order.asc`,
+      `${SUPABASE_URL}/rest/v1/experiences?slug=eq.${encodeURIComponent(slug)}&select=*`,
       {
         headers: {
           'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json'
         }
       }
     );
+
     if (!res.ok) throw new Error('Fetch failed');
     const data = await res.json();
-    if (!data || data.length === 0) throw new Error('No experiences');
+    if (!data || data.length === 0) { showError(); return; }
 
-    allExperiences = data;
-    renderExperiences(allExperiences, 'all');
-
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'block';
-    document.getElementById('pageCta').style.display = 'block';
+    render(data[0]);
 
   } catch (err) {
-    console.error(err);
-    document.getElementById('loadingState').style.display = 'none';
-    document.getElementById('errorState').style.display = 'flex';
+    console.error('Supabase error:', err);
+    showError();
   }
 }
 
-function renderExperiences(experiences, activeFilter) {
-  const main = document.getElementById('mainContent');
-  main.innerHTML = '';
+function render(exp) {
+  // update <title> and OG meta — uses your column names: tagline, description
+  document.title = `${exp.title} — Crislynn Ventures`;
+  document.querySelector('meta[name="description"]').setAttribute('content', exp.tagline || exp.description || exp.title);
+  document.querySelector('meta[property="og:title"]').setAttribute('content', exp.title);
+  document.querySelector('meta[property="og:description"]').setAttribute('content', exp.tagline || exp.description || '');
+  if (exp.hero_image) {
+    document.querySelector('meta[property="og:image"]').setAttribute('content', exp.hero_image);
+  }
 
-  if (activeFilter === 'all') {
-    // render grouped by category
-    CATEGORIES.forEach(cat => {
-      const group = experiences.filter(e => e.category === cat.key);
-      if (group.length === 0) return;
-      main.appendChild(buildCategoryGroup(cat, group));
+  // hero media
+  const media = document.getElementById('expMedia');
+  if (exp.hero_image) {
+    const img = document.createElement('img');
+    img.src = exp.hero_image;
+    img.alt = exp.title;
+    media.appendChild(img);
+  }
+
+  // hero text — tagline is the short one-liner, description is the medium paragraph
+  document.getElementById('expCategory').textContent = exp.category || 'Crislynn Ventures';
+  document.getElementById('expTitle').textContent = exp.title;
+  document.getElementById('expDesc').textContent = exp.tagline || '';
+
+  // body — long_desc is the full rich paragraph, fallback to description
+  document.getElementById('bodyTitle').textContent = exp.title;
+  document.getElementById('bodyDesc').textContent = exp.long_desc || exp.description || '';
+
+  // itinerary — JSONB array from Supabase
+  const itinerary = exp.itinerary;
+  if (itinerary && itinerary.length > 0) {
+    document.getElementById('itineraryHeading').style.display = 'block';
+    const list = document.getElementById('itineraryList');
+    itinerary.forEach(item => {
+      const li = document.createElement('li');
+      li.className = 'itinerary-item';
+      li.innerHTML = `<div class="itinerary-dot"></div><span class="itinerary-text">${item}</span>`;
+      list.appendChild(li);
     });
-  } else {
-    // render single category — no header, just grid
-    const group = experiences.filter(e => e.category === activeFilter);
-    const cat = CATEGORIES.find(c => c.key === activeFilter);
-    if (cat) main.appendChild(buildCategoryGroup(cat, group));
   }
-}
 
-function buildCategoryGroup(cat, experiences) {
-  const section = document.createElement('div');
-  section.className = 'cat-group';
-  section.dataset.category = cat.key;
-
-  section.innerHTML = `
-    <div class="cat-group-header">
-      <span class="cat-group-num">${cat.num}</span>
-      <h2 class="cat-group-title">${cat.key}</h2>
-      <span class="cat-group-desc">${cat.desc}</span>
-    </div>
-    <div class="exp-grid" id="grid-${cat.key.replace(/[^a-z]/gi, '-')}"></div>
-  `;
-
-  const grid = section.querySelector('.exp-grid');
-  experiences.forEach(exp => grid.appendChild(buildCard(exp)));
-  return section;
-}
-
-function buildCard(exp) {
-  const card = document.createElement('div');
-  card.className = 'exp-card';
-  card.onclick = () => window.location.href = `experience.html?slug=${exp.slug}`;
-
-  // itinerary items
-  const itineraryItems = (exp.itinerary || [])
-    .map(item => `<li>${item}</li>`)
-    .join('');
-
-  // price display
-  const priceHtml = exp.price_from
-    ? `<div class="exp-card-price">
-        <strong>KES ${Number(exp.price_from).toLocaleString()}</strong>
-        <span>per person</span>
-       </div>`
-    : `<div class="exp-card-price"><span>Contact for pricing</span></div>`;
-
-  card.innerHTML = `
-    <div class="exp-card-img" style="background-image:url('${exp.hero_image || ''}')">
-      <div class="exp-card-img-overlay"></div>
-      <div class="exp-card-tag">${exp.duration_tag || 'Full Day'}</div>
-    </div>
-    <div class="exp-card-body">
-      <h3 class="exp-card-title">${exp.title}</h3>
-      <p class="exp-card-desc">${exp.tagline || exp.description || ''}</p>
-      ${itineraryItems ? `
-        <button class="exp-itinerary-btn" onclick="toggleItinerary(event, this)">View Itinerary ›</button>
-        <ul class="exp-itinerary">${itineraryItems}</ul>
-      ` : ''}
-      <div class="exp-card-footer">
-        ${priceHtml}
-        <a href="experience.html?slug=${exp.slug}" class="exp-card-link" onclick="event.stopPropagation()">Explore ›</a>
-      </div>
-    </div>
-  `;
-
-  return card;
-}
-
-function filterCategory(filter, btn) {
-  // update active button
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-
-  // re-render
-  renderExperiences(allExperiences, filter);
-
-  // scroll to top of content
-  document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function toggleItinerary(e, btn) {
-  e.stopPropagation();
-  const itinerary = btn.nextElementSibling;
-  const isOpen = itinerary.classList.contains('open');
-  document.querySelectorAll('.exp-itinerary.open').forEach(el => {
-    el.classList.remove('open');
-    el.previousElementSibling.textContent = 'View Itinerary ›';
-  });
-  if (!isOpen) {
-    itinerary.classList.add('open');
-    btn.textContent = 'Close ×';
+  // booking card — duration_tag is your column name
+  document.getElementById('bookingTag').textContent = exp.duration_tag || 'Full Day';
+  document.getElementById('bookingTitle').textContent = exp.title;
+  if (exp.price_from) {
+    document.getElementById('bookingPrice').style.display = 'block';
+    document.getElementById('priceValue').textContent = `KES ${Number(exp.price_from).toLocaleString()}`;
   }
+  if (exp.duration_tag) document.getElementById('bookingDuration').textContent = exp.duration_tag;
+  if (exp.group_size)   document.getElementById('bookingGroup').textContent = exp.group_size;
+  if (exp.departures)   document.getElementById('bookingDepartures').textContent = exp.departures;
+
+  // what's included — JSONB array
+  const includes = exp.includes;
+  if (includes && includes.length > 0) {
+    document.getElementById('bookingIncludes').style.display = 'block';
+    const includesList = document.getElementById('includesList');
+    includes.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'booking-include-item';
+      div.textContent = item;
+      includesList.appendChild(div);
+    });
+  }
+
+  // gallery — JSONB array of image URLs
+  const gallery = exp.gallery_images;
+  if (gallery && gallery.length > 0) {
+    document.getElementById('gallerySection').style.display = 'block';
+    const grid = document.getElementById('galleryGrid');
+    gallery.forEach((url, i) => {
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = `${exp.title} — photo ${i + 1}`;
+      img.className = 'gallery-img';
+      img.loading = 'lazy';
+      grid.appendChild(img);
+    });
+  }
+
+  // show content, hide loader
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
 }
 
-loadExperiences();
+function showError() {
+  document.getElementById('loadingState').style.display = 'none';
+  document.getElementById('errorState').style.display = 'flex';
+  document.getElementById('expTitle').textContent = 'Experience not found';
+}
+
+loadExperience();
 </script>
 </body>
 </html>
