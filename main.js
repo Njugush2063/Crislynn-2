@@ -1,23 +1,36 @@
 // =============================================
 // CRISLYNN VENTURES — main.js
-// Complete file with Supabase experience loader
+// Consolidated: nav, counters, slider, forms
+// + all experiences logic (moved from inline script)
 // =============================================
 
 // =============================================
-// NAV SCROLL — transparent → maroon
+// SUPABASE CONFIGURATION
+// =============================================
+const SUPABASE_URL     = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
+
+const CATEGORIES = [
+  { key: 'Coast & Islands',    label: 'Coast & Islands',    id: 'coast'   },
+  { key: 'Culture & Heritage', label: 'Culture & Heritage', id: 'culture' },
+  { key: 'Safari & Wildlife',  label: 'Safari & Wildlife',  id: 'safari'  },
+];
+
+// =============================================
+// NAV SCROLL — transparent → maroon on scroll
 // =============================================
 const navbar = document.getElementById('navbar');
 if (navbar) {
   const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 60);
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // run on load in case page is already scrolled
+  onScroll();
 }
 
 // =============================================
 // HAMBURGER MENU
 // =============================================
 const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('navLinks');
+const navLinks   = document.getElementById('navLinks');
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(link =>
@@ -26,7 +39,7 @@ if (hamburger && navLinks) {
 }
 
 // =============================================
-// STAT COUNTERS — animated on scroll with suffix support
+// STAT COUNTERS — animated on scroll
 // =============================================
 function animateCounters() {
   document.querySelectorAll('.stat-num').forEach(el => {
@@ -35,7 +48,6 @@ function animateCounters() {
     const duration = 1400;
     const start    = performance.now();
     el.textContent = '0' + suffix;
-
     function update(now) {
       const progress = Math.min((now - start) / duration, 1);
       const eased    = 1 - Math.pow(1 - progress, 3);
@@ -46,19 +58,18 @@ function animateCounters() {
   });
 }
 
-// Trigger counters when about section enters viewport
 const aboutSection = document.querySelector('.about');
 if (aboutSection) {
   let triggered = false;
-  const observer = new IntersectionObserver((entries) => {
+  const counterObserver = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting && !triggered) {
       triggered = true;
       document.querySelectorAll('.stat').forEach(s => s.classList.add('in-view'));
       animateCounters();
-      observer.disconnect();
+      counterObserver.disconnect();
     }
   }, { threshold: 0.35 });
-  observer.observe(aboutSection);
+  counterObserver.observe(aboutSection);
 }
 
 // =============================================
@@ -75,7 +86,7 @@ function slide(id, dir) {
   const visible   = Math.floor(track.offsetWidth / cardWidth);
   const max       = Math.max(0, cards - visible);
   sliderOffsets[id] = Math.min(Math.max((sliderOffsets[id] || 0) + dir, 0), max);
-  track.style.transform = `translateX(-${sliderOffsets[id] * cardWidth}px)`;
+  track.style.transform  = `translateX(-${sliderOffsets[id] * cardWidth}px)`;
   track.style.transition = 'transform 0.4s ease';
   const wrapper = track.closest('.slider-wrapper');
   if (wrapper) {
@@ -93,8 +104,7 @@ function toggleItinerary(event, id) {
   if (!list) return;
   const isOpen = list.classList.contains('open');
   list.classList.toggle('open', !isOpen);
-  const btn = event.currentTarget;
-  btn.textContent = isOpen ? 'View Itinerary ›' : 'Close ×';
+  event.currentTarget.textContent = isOpen ? 'View Itinerary ›' : 'Close ×';
 }
 
 // =============================================
@@ -121,242 +131,254 @@ if (contactForm) {
 }
 
 // =============================================
-// SUPABASE CONFIGURATION
+// WISHLIST (localStorage)
 // =============================================
-const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
+function getWishlist() {
+  try { return JSON.parse(localStorage.getItem('cv_wishlist') || '[]'); } catch { return []; }
+}
+function toggleWishlist(slug, btn) {
+  let list = getWishlist();
+  const saved = list.includes(slug);
+  list = saved ? list.filter(s => s !== slug) : [...list, slug];
+  localStorage.setItem('cv_wishlist', JSON.stringify(list));
+  btn.classList.toggle('wishlisted', !saved);
+  btn.title = saved ? 'Save to wishlist' : 'Saved!';
+  showWishlistToast(!saved);
+}
+function showWishlistToast(added) {
+  let toast = document.getElementById('wishlist-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'wishlist-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = added ? '❤️ Added to wishlist' : '🗑 Removed from wishlist';
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 2500);
+}
 
+// =============================================
+// SHARE
+// =============================================
+function shareExperience(slug, title, btn) {
+  const url = window.location.origin + '/experience.html?slug=' + slug;
+  if (navigator.share) {
+    navigator.share({ title: title + ' — Crislynn Ventures', url });
+  } else {
+    navigator.clipboard.writeText(url).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '✓';
+      btn.title = 'Link copied!';
+      setTimeout(() => { btn.innerHTML = orig; btn.title = 'Share'; }, 2000);
+    });
+  }
+}
+
+// =============================================
+// RENDER ONE EXPERIENCE CARD
+// =============================================
+function renderCard(exp) {
+  const img      = exp.card_image || 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800';
+  const tagline  = exp.tagline || exp.description || '';
+  const itinerary = exp.itinerary || [];
+  const itinId   = 'itin-' + exp.slug;
+  const wishlisted = getWishlist().includes(exp.slug) ? 'wishlisted' : '';
+
+  const itinHtml = itinerary.length
+    ? `<button class="itinerary-toggle" onclick="toggleItinerary(event,'${itinId}')">View Itinerary ›</button>
+       <ul class="itinerary-preview" id="${itinId}">${itinerary.slice(0, 5).map(i => `<li>${i}</li>`).join('')}</ul>`
+    : '';
+
+  return `
+    <div class="exp-card" onclick="goToExperience('${exp.slug}')">
+      <div class="card-img" style="background-image:url('${img}')">
+        <span class="card-duration">${exp.duration_tag || ''}</span>
+        <div class="card-actions" onclick="event.stopPropagation()">
+          <button class="card-action-btn wishlist-btn ${wishlisted}"
+            onclick="toggleWishlist('${exp.slug}',this)" title="Save to wishlist">♡</button>
+          <button class="card-action-btn share-btn"
+            onclick="shareExperience('${exp.slug}','${exp.title.replace(/'/g, "\\'")}',this)" title="Share">↗</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <h4>${exp.title}</h4>
+        <p>${tagline}</p>
+        ${itinHtml}
+        <a class="card-cta" href="experience.html?slug=${exp.slug}" onclick="event.stopPropagation()">Explore →</a>
+      </div>
+    </div>`;
+}
+
+// =============================================
+// RENDER CATEGORY SLIDERS
+// =============================================
+function renderCategories(experiences) {
+  const container = document.getElementById('exp-categories');
+  if (!container) return;
+  CATEGORIES.forEach(cat => {
+    const catExps = experiences.filter(e => e.category === cat.key);
+    if (!catExps.length) return;
+    const section = document.createElement('div');
+    section.className = 'exp-category';
+    section.innerHTML =
+      `<h3 class="category-title">${cat.label}</h3>
+       <div class="slider-wrapper">
+         <button class="slider-btn prev" onclick="slide('${cat.id}',-1)">&#8249;</button>
+         <div class="cards-track" id="${cat.id}">${catExps.map(renderCard).join('')}</div>
+         <button class="slider-btn next" onclick="slide('${cat.id}',1)">&#8250;</button>
+       </div>`;
+    container.appendChild(section);
+  });
+}
+
+// =============================================
+// POPULATE CONTACT SELECT + FOOTER LINKS
+// =============================================
+function populateContactSelect(experiences) {
+  const select = document.getElementById('expSelect');
+  if (!select) return;
+  experiences.forEach(exp => {
+    const opt = document.createElement('option');
+    opt.value = exp.slug;
+    opt.textContent = exp.title;
+    select.appendChild(opt);
+  });
+  const custom = document.createElement('option');
+  custom.value = 'custom';
+  custom.textContent = 'Custom Journey';
+  select.appendChild(custom);
+}
+
+function populateFooterLinks(experiences) {
+  const container = document.getElementById('footer-exp-links');
+  if (!container) return;
+  experiences.slice(0, 5).forEach(exp => {
+    const a = document.createElement('a');
+    a.href = 'experience.html?slug=' + exp.slug;
+    a.textContent = exp.title;
+    container.appendChild(a);
+  });
+}
+
+// =============================================
+// FILTER TABS
+// =============================================
 let allExperiences = [];
+function initFilters(experiences) {
+  allExperiences = experiences;
+  document.querySelectorAll('.filter-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      const searchInput = document.getElementById('expSearch');
+      if (searchInput) searchInput.value = '';
+      const results = document.getElementById('exp-search-results');
+      const cats    = document.getElementById('exp-categories');
+      if (results) results.style.display = 'none';
+      if (filter === 'all') {
+        if (cats) cats.style.display = 'block';
+      } else {
+        if (cats) cats.style.display = 'none';
+        const filtered = allExperiences.filter(e => e.category === filter);
+        if (results) {
+          results.innerHTML = `<div class="search-results-grid">${filtered.map(renderCard).join('')}</div>`;
+          results.style.display = 'block';
+        }
+      }
+    });
+  });
+}
 
 // =============================================
-// FETCH EXPERIENCES FROM SUPABASE
-// FIX 1: Use `is.true` instead of `eq.true` for boolean columns in PostgREST
-// FIX 2: Added fallback — if `active` filter returns nothing, fetch all rows
-//         so you can verify data exists before debugging RLS/column issues
+// SEARCH
+// =============================================
+function initSearch() {
+  const input = document.getElementById('expSearch');
+  if (!input) return;
+  input.addEventListener('input', () => {
+    const q       = input.value.trim().toLowerCase();
+    const results = document.getElementById('exp-search-results');
+    const cats    = document.getElementById('exp-categories');
+    if (!q) {
+      if (results) results.style.display = 'none';
+      if (cats)    cats.style.display    = 'block';
+      document.querySelectorAll('.filter-tab').forEach((b, i) => b.classList.toggle('active', i === 0));
+      return;
+    }
+    if (cats)    cats.style.display = 'none';
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    const filtered = allExperiences.filter(e =>
+      e.title.toLowerCase().includes(q) ||
+      (e.tagline   || '').toLowerCase().includes(q) ||
+      (e.category  || '').toLowerCase().includes(q)
+    );
+    if (results) {
+      results.innerHTML = filtered.length
+        ? `<div class="search-results-grid">${filtered.map(renderCard).join('')}</div>`
+        : '<p class="no-results-msg">No experiences match your search.</p>';
+      results.style.display = 'block';
+    }
+  });
+}
+
+// =============================================
+// LOAD EXPERIENCES FROM SUPABASE
+// FIX: changed `active=eq.true` → `active=is.true`
+//      (PostgREST uses `is` for boolean comparisons, not `eq`)
 // =============================================
 async function loadExperiences() {
-    const container = document.getElementById('experiences-grid');
-    if (!container) return;
-
-    container.innerHTML = `
-        <div class="loading-container">
-            <div class="loading-spinner"></div>
-            <p class="loading-text">Loading experiences...</p>
-        </div>
-    `;
-
-    try {
-        // FIXED: PostgREST boolean syntax is `is.true`, not `eq.true`
-        const url = `${SUPABASE_URL}/rest/v1/experiences?select=*&active=is.true&order=created_at.asc`;
-
-        const response = await fetch(url, {
-            headers: {
-                'apikey': SUPABASE_ANON_KEY,
-                'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-                // ADDED: Tell PostgREST to return JSON
-                'Content-Type': 'application/json'
-            }
-        });
-
-        if (!response.ok) {
-            // Log the actual error body so you can diagnose it
-            const errorBody = await response.text();
-            console.error('Supabase error response:', response.status, errorBody);
-            throw new Error(`HTTP ${response.status}: ${errorBody}`);
-        }
-
-        allExperiences = await response.json();
-
-        // DEBUG HELPER: Log how many rows came back
-        console.log(`Loaded ${allExperiences.length} experience(s) from Supabase`);
-
-        // If active filter returned zero rows, try without the filter
-        // so you know whether the table is empty vs the filter is wrong
-        if (allExperiences.length === 0) {
-            console.warn('No active experiences found — checking if table has any rows at all...');
-            const fallbackResp = await fetch(
-                `${SUPABASE_URL}/rest/v1/experiences?select=id,title,active&limit=5`,
-                {
-                    headers: {
-                        'apikey': SUPABASE_ANON_KEY,
-                        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-                    }
-                }
-            );
-            const fallbackData = await fallbackResp.json();
-            console.log('Sample rows (no filter):', fallbackData);
-        }
-
-        renderExperiences(allExperiences);
-        setupExperienceFilters();
-        updateSliders();
-
-    } catch (error) {
-        console.error('Error loading experiences:', error);
-        container.innerHTML = `
-            <div class="error-message">
-                <p>Unable to load experiences. Please refresh the page or try again later.</p>
-                <button onclick="loadExperiences()" class="btn-outline">Retry</button>
-            </div>
-        `;
-    }
-}
-
-// =============================================
-// RENDER EXPERIENCES TO GRID
-// =============================================
-function renderExperiences(experiences) {
-    const container = document.getElementById('experiences-grid');
-    if (!container) return;
-
-    if (!experiences || experiences.length === 0) {
-        container.innerHTML = `
-            <div class="no-results">
-                <p>No experiences found. Check back soon for new adventures!</p>
-            </div>
-        `;
-        return;
-    }
-
-    container.innerHTML = experiences.map(exp => `
-        <div class="exp-card" data-category="${exp.category || ''}" onclick="goToExperience('${exp.slug}')">
-            <div class="exp-card-img" style="background-image: url('${exp.hero_image || 'https://images.pexels.com/photos/1287460/pexels-photo-1287460.jpeg?auto=compress&cs=tinysrgb&w=800'}')">
-                <span class="card-duration">${exp.duration_tag || 'Full Day'}</span>
-            </div>
-            <div class="exp-card-body">
-                <span class="exp-card-category">${exp.category || 'Experience'}</span>
-                <h3 class="exp-card-title">${escapeHtml(exp.title)}</h3>
-                <p class="exp-card-tagline">${escapeHtml(exp.tagline || exp.description || '')}</p>
-                <div class="exp-card-footer">
-                    <button class="btn-outline btn-small" onclick="event.stopPropagation(); toggleItinerary(event, 'itin-${exp.id}')">View Itinerary ›</button>
-                </div>
-                <div id="itin-${exp.id}" class="exp-card-itinerary" style="display: none;">
-                    <div class="itin-label">Your Journey</div>
-                    <ul>
-                        ${(exp.itinerary || ['Details available on booking']).map(item => `<li>${escapeHtml(item)}</li>`).join('')}
-                    </ul>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// =============================================
-// HELPER: Escape HTML to prevent XSS
-// =============================================
-function escapeHtml(str) {
-    if (!str) return '';
-    return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-}
-
-// =============================================
-// FILTER EXPERIENCES BY CATEGORY
-// =============================================
-function filterExperiences(category) {
-    if (category === 'All' || category === 'all') {
-        renderExperiences(allExperiences);
-    } else {
-        const filtered = allExperiences.filter(exp => exp.category === category);
-        renderExperiences(filtered);
-    }
-}
-
-// =============================================
-// SEARCH EXPERIENCES BY TITLE OR TAGLINE
-// =============================================
-function searchExperiences(keyword) {
-    if (!keyword || keyword.trim() === '') {
-        renderExperiences(allExperiences);
-        return;
-    }
-
-    const searchTerm = keyword.toLowerCase().trim();
-    const filtered = allExperiences.filter(exp =>
-        exp.title.toLowerCase().includes(searchTerm) ||
-        (exp.tagline && exp.tagline.toLowerCase().includes(searchTerm)) ||
-        (exp.description && exp.description.toLowerCase().includes(searchTerm))
+  const loadingEl = document.getElementById('exp-loading-indicator');
+  try {
+    const res = await fetch(
+      // FIXED: was active=eq.true — PostgREST boolean syntax requires `is.true`
+      SUPABASE_URL + '/rest/v1/experiences?active=is.true&select=slug,title,tagline,description,card_image,duration_tag,category,itinerary,price_from&order=sort_order.asc',
+      { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY } }
     );
-    renderExperiences(filtered);
-}
 
-// =============================================
-// SET UP FILTER AND SEARCH LISTENERS
-// =============================================
-function setupExperienceFilters() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            filterExperiences(btn.dataset.filter);
-        });
-    });
-
-    const searchInput = document.getElementById('experience-search');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            searchExperiences(e.target.value);
-        });
+    if (!res.ok) {
+      const errBody = await res.text();
+      throw new Error(`HTTP ${res.status}: ${errBody}`);
     }
+
+    const experiences = await res.json();
+    console.log(`Loaded ${experiences.length} experience(s)`);
+
+    if (loadingEl) loadingEl.style.display = 'none';
+    if (!experiences || experiences.length === 0) {
+      if (loadingEl) loadingEl.innerHTML = '<p style="color:#6b5d50;padding:2rem;">No experiences found yet — check back soon!</p>';
+      return;
+    }
+
+    renderCategories(experiences);
+    populateContactSelect(experiences);
+    populateFooterLinks(experiences);
+    initFilters(experiences);
+    initSearch();
+
+  } catch (err) {
+    console.error('loadExperiences error:', err);
+    if (loadingEl) loadingEl.innerHTML = '<p style="color:#6b5d50;padding:2rem;">Unable to load experiences. Please refresh.</p>';
+  }
 }
 
 // =============================================
-// UPDATE SLIDERS WITH LOADED EXPERIENCES
-// =============================================
-function updateSliders() {
-    const sliders = document.querySelectorAll('.slider-track');
-    sliders.forEach(slider => {
-        const category = slider.dataset.category;
-        if (category && allExperiences.length) {
-            const filtered = allExperiences.filter(exp => exp.category === category);
-            if (filtered.length) {
-                slider.innerHTML = filtered.map(exp => `
-                    <div class="exp-card" onclick="goToExperience('${exp.slug}')">
-                        <div class="exp-card-img" style="background-image: url('${exp.hero_image || ''}')">
-                            <span class="card-duration">${exp.duration_tag || ''}</span>
-                        </div>
-                        <div class="exp-card-body">
-                            <h3 class="exp-card-title">${escapeHtml(exp.title)}</h3>
-                            <p class="exp-card-tagline">${escapeHtml(exp.tagline || '')}</p>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-    });
-}
-
-// =============================================
-// INITIALIZE ON DOM READY
+// INIT ON DOM READY
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
-    if (document.getElementById('experiences-grid')) {
-        loadExperiences();
-        // Note: setupExperienceFilters() is now called inside loadExperiences()
-        // after data loads, so filters work on the actual data
-    }
-
-    if (document.querySelector('.slider-track')) {
-        if (!allExperiences.length) {
-            setTimeout(() => {
-                if (allExperiences.length) updateSliders();
-            }, 1000);
-        }
-    }
+  // Only run on pages that have the experiences section
+  if (document.getElementById('exp-categories')) {
+    loadExperiences();
+  }
 });
 
 // =============================================
-// EXPOSE FUNCTIONS TO GLOBAL SCOPE
+// GLOBAL SCOPE (for onclick= attributes in HTML)
 // =============================================
-window.goToExperience = goToExperience;
-window.toggleItinerary = toggleItinerary;
-window.slide = slide;
-window.filterExperiences = filterExperiences;
-window.searchExperiences = searchExperiences;
-window.loadExperiences = loadExperiences;
+window.slide             = slide;
+window.goToExperience    = goToExperience;
+window.toggleItinerary   = toggleItinerary;
+window.toggleWishlist    = toggleWishlist;
+window.shareExperience   = shareExperience;
+window.loadExperiences   = loadExperiences;
