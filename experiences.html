@@ -4,15 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>All Experiences — Crislynn Ventures</title>
-  <meta name="description" content="Browse all boutique travel experiences by Crislynn Ventures. Coastal escapes, cultural encounters, island hideaways, and signature safaris." />
+  <meta name="description" content="Browse all boutique travel experiences by Crislynn Ventures." />
   
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- Font Awesome 6 (free icons) -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <!-- Main Styles -->
+  <!-- CSS Files -->
   <link rel="stylesheet" href="styles.css" />
-  <!-- Experiences Page Specific Styles -->
   <link rel="stylesheet" href="experiences-page.css" />
 </head>
 <body class="all-experiences-page">
@@ -33,7 +32,7 @@
       <li><a href="index.html#contact">CONTACT</a></li>
     </ul>
     <a href="index.html#contact" class="nav-cta">START PLANNING</a>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">&#9776;</button>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">☰</button>
   </nav>
 
   <!-- PAGE HERO -->
@@ -42,7 +41,7 @@
     <div class="all-exp-hero-content">
       <span class="section-eyebrow">Our Experiences</span>
       <h1>Journeys That Stay With You</h1>
-      <p>Curated coastal escapes, cultural encounters, island hideaways, and signature safaris &mdash; each designed to balance discovery with comfort.</p>
+      <p>Curated coastal escapes, cultural encounters, island hideaways, and signature safaris — each designed to balance discovery with comfort.</p>
     </div>
   </div>
 
@@ -50,8 +49,8 @@
   <div class="all-exp-controls">
     <div class="all-exp-controls-inner">
       <div class="exp-search-bar">
-        <span class="search-icon">&#128269;</span>
-        <input type="text" id="expSearch" placeholder="Search experiences&hellip;" autocomplete="off" />
+        <span class="search-icon">🔍</span>
+        <input type="text" id="expSearch" placeholder="Search experiences…" autocomplete="off" />
       </div>
       <div class="exp-filter-tabs" id="expFilterTabs">
         <button class="filter-tab active" data-filter="all">All</button>
@@ -65,20 +64,22 @@
   <!-- LOADING -->
   <div id="exp-loading-indicator" class="exp-page-loading">
     <div class="loading-spinner"></div>
-    <p>Loading experiences&hellip;</p>
+    <p>Loading experiences…</p>
   </div>
 
   <!-- GRID -->
   <main class="all-exp-main" id="all-exp-main">
     <div class="all-exp-grid" id="all-exp-grid"></div>
-    <p class="no-results" id="no-results" style="display:none;">No experiences matched your search.</p>
+    <div class="no-results" id="no-results" style="display:none;">
+      <p>No experiences matched your search.</p>
+    </div>
   </main>
 
   <!-- BOTTOM CTA -->
   <section class="all-exp-cta">
     <div class="all-exp-cta-inner">
-      <h2>Can&rsquo;t find what you&rsquo;re looking for?</h2>
-      <p>We design fully custom journeys shaped around you &mdash; your pace, your interests, your story.</p>
+      <h2>Can't find what you're looking for?</h2>
+      <p>We design fully custom journeys shaped around you — your pace, your interests, your story.</p>
       <a href="index.html#contact" class="btn-primary">Design a Custom Journey</a>
     </div>
   </section>
@@ -88,7 +89,7 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <img class="footer-logo-img" src="https://placehold.co/120x40/3D0F10/C5A267?text=Crislynn+Ventures" alt="Crislynn Ventures" />
-        <p>Crislynn Ventures Ltd. &mdash; Malindi, Kenya. Journeys designed to be felt deeply, lived fully, and remembered always.</p>
+        <p>Crislynn Ventures Ltd. — Malindi, Kenya. Journeys designed to be felt deeply, lived fully, and remembered always.</p>
       </div>
       <div class="footer-links">
         <h5>Experiences</h5>
@@ -106,18 +107,19 @@
       <div class="footer-social">
         <h5>Follow Us</h5>
         <div class="social-icons">
-          <a href="https://instagram.com" target="_blank" rel="noopener"><i class="fab fa-instagram"></i> Instagram</a>
-          <a href="https://facebook.com" target="_blank" rel="noopener"><i class="fab fa-facebook"></i> Facebook</a>
-          <a href="https://tiktok.com" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i> TikTok</a>
-          <a href="https://x.com" target="_blank" rel="noopener"><i class="fab fa-twitter"></i> X</a>
+          <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+          <a href="https://tiktok.com" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+          <a href="https://x.com" target="_blank"><i class="fab fa-twitter"></i> X</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; Crislynn Ventures Ltd. &middot; <a href="#" style="color:inherit;opacity:0.6;">Privacy Policy</a> &middot; <a href="#" style="color:inherit;opacity:0.6;">Terms &amp; Conditions</a></p>
+      <p>&copy; Crislynn Ventures Ltd. · <a href="#">Privacy Policy</a> · <a href="#">Terms &amp; Conditions</a></p>
     </div>
   </footer>
 
+  <!-- JavaScript - Make sure this path is correct -->
   <script src="experiences.js"></script>
 </body>
 </html>
