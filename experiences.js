@@ -9,6 +9,70 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 let allExperiences = [];
 
+// FALLBACK DATA - This will show if Supabase fails
+const FALLBACK_EXPERIENCES = [
+  {
+    slug: "watamu-marine-explorer",
+    title: "Watamu Marine Explorer",
+    tagline: "Discover the pristine waters of Watamu Marine National Park",
+    description: "Snorkel through crystal clear waters and encounter sea turtles, tropical fish, and vibrant coral reefs.",
+    card_image: "https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&cs=tinysrgb&w=800",
+    duration_tag: "3 Days / 2 Nights",
+    category: "Coast & Islands",
+    itinerary: ["Boat safari in Watamu Marine Park", "Snorkeling at Coral Gardens", "Visit to Gede Ruins", "Sunset dhow cruise"]
+  },
+  {
+    slug: "lamu-cultural-heritage",
+    title: "Lamu Cultural Heritage",
+    tagline: "Step back in time on the magical Lamu Archipelago",
+    description: "Experience Swahili culture, traditional dhow sailing, and the UNESCO-listed Lamu Old Town.",
+    card_image: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800",
+    duration_tag: "4 Days / 3 Nights",
+    category: "Culture & Heritage",
+    itinerary: ["Lamu Old Town walking tour", "Dhow sailing experience", "Donkey sanctuary visit", "Swahili cooking class"]
+  },
+  {
+    slug: "tsavo-east-safari",
+    title: "Tsavo East Safari",
+    tagline: "Witness the legendary red elephants of Tsavo",
+    description: "Game drives through Kenya's largest national park, home to lions, leopards, and vast elephant herds.",
+    card_image: "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&w=800",
+    duration_tag: "3 Days / 2 Nights",
+    category: "Safari & Wildlife",
+    itinerary: ["Morning game drive", "Visit to Lugard Falls", "Sunset safari at Mudanda Rock", "Night game drive"]
+  },
+  {
+    slug: "malindi-coastal-retreat",
+    title: "Malindi Coastal Retreat",
+    tagline: "Relax in the historic coastal town of Malindi",
+    description: "Enjoy pristine beaches, Italian-influenced cuisine, and the famous Vasco da Gama Pillar.",
+    card_image: "https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?auto=compress&cs=tinysrgb&w=800",
+    duration_tag: "5 Days / 4 Nights",
+    category: "Coast & Islands",
+    itinerary: ["Malindi Marine Park visit", "Vasco da Gama Pillar tour", "Beach relaxation", "Local market exploration"]
+  },
+  {
+    slug: "mombasa-old-town",
+    title: "Mombasa Old Town",
+    tagline: "Explore the rich history of Kenya's oldest city",
+    description: "Walk through centuries of history in Mombasa's ancient streets, Fort Jesus, and vibrant markets.",
+    card_image: "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800",
+    duration_tag: "2 Days / 1 Night",
+    category: "Culture & Heritage",
+    itinerary: ["Fort Jesus guided tour", "Old Town walking tour", "Spice market visit", "Traditional Swahili lunch"]
+  },
+  {
+    slug: "amboseli-elephant-safari",
+    title: "Amboseli Elephant Safari",
+    tagline: "Elephants with Kilimanjaro as the backdrop",
+    description: "Iconic views of Mount Kilimanjaro and large elephant herds in one of Kenya's most scenic parks.",
+    card_image: "https://images.pexels.com/photos/815070/pexels-photo-815070.jpeg?auto=compress&cs=tinysrgb&w=800",
+    duration_tag: "3 Days / 2 Nights",
+    category: "Safari & Wildlife",
+    itinerary: ["Sunrise game drive", "Observation Hill hike", "Elephant research center visit", "Maasai cultural experience"]
+  }
+];
+
 // Wishlist functions
 function getWishlist() {
   try {
@@ -42,13 +106,12 @@ function showWishlistToast(added) {
     document.body.appendChild(toast);
   }
   
-  toast.textContent = added ? 'Added to wishlist' : 'Removed from wishlist';
+  toast.textContent = added ? '❤️ Added to wishlist' : '💔 Removed from wishlist';
   toast.classList.add('show');
   clearTimeout(toast._t);
   toast._t = setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-// Share experience
 function shareExperience(slug, title, btn) {
   const url = window.location.origin + '/experience.html?slug=' + slug;
   
@@ -56,30 +119,36 @@ function shareExperience(slug, title, btn) {
     navigator.share({
       title: title + ' - Crislynn Ventures',
       url: url
+    }).catch(() => {
+      copyToClipboard(url, btn);
     });
   } else {
-    navigator.clipboard.writeText(url).then(() => {
-      const orig = btn.innerHTML;
-      btn.innerHTML = 'Copied!';
-      setTimeout(() => { btn.innerHTML = orig; }, 2000);
-    });
+    copyToClipboard(url, btn);
   }
 }
 
-// Navigate to experience detail
+function copyToClipboard(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '✓ Copied!';
+    setTimeout(() => { btn.innerHTML = orig; }, 2000);
+  }).catch(() => {
+    alert('Press Ctrl+C to copy: ' + text);
+  });
+}
+
 function goToExp(slug) {
   window.location.href = 'experience.html?slug=' + slug;
 }
 
-// Create experience card HTML
 function makeCardHTML(exp) {
-  const img = exp.card_image || 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800';
+  const img = exp.card_image || exp.image || 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800';
   const tagline = exp.tagline || exp.description || '';
   const itinerary = exp.itinerary || [];
   const slug = exp.slug || '';
   const title = exp.title || '';
-  const duration = exp.duration_tag || '';
-  const category = exp.category || '';
+  const duration = exp.duration_tag || exp.duration || 'Flexible';
+  const category = exp.category || 'Experience';
   const wishlisted = getWishlist().indexOf(slug) > -1 ? 'wishlisted' : '';
 
   const card = document.createElement('div');
@@ -91,6 +160,8 @@ function makeCardHTML(exp) {
   const imgDiv = document.createElement('div');
   imgDiv.className = 'all-card-img';
   imgDiv.style.backgroundImage = `url(${img})`;
+  imgDiv.style.backgroundSize = 'cover';
+  imgDiv.style.backgroundPosition = 'center';
   imgDiv.onclick = () => goToExp(slug);
 
   // Duration tag
@@ -103,20 +174,20 @@ function makeCardHTML(exp) {
   catSpan.className = 'all-card-category';
   catSpan.textContent = category;
 
-  // Action buttons (wishlist + share)
+  // Action buttons
   const actions = document.createElement('div');
   actions.className = 'card-actions';
   actions.onclick = (e) => e.stopPropagation();
 
   const wishBtn = document.createElement('button');
   wishBtn.className = `card-action-btn wishlist-btn ${wishlisted}`;
-  wishBtn.innerHTML = '❤️';
+  wishBtn.innerHTML = wishlisted ? '❤️' : '🤍';
   wishBtn.title = 'Save to wishlist';
   wishBtn.onclick = () => toggleWishlist(slug, wishBtn);
 
   const shareBtn = document.createElement('button');
   shareBtn.className = 'card-action-btn share-btn';
-  shareBtn.innerHTML = '🔗';
+  shareBtn.innerHTML = '📤';
   shareBtn.title = 'Share';
   shareBtn.onclick = () => shareExperience(slug, title, shareBtn);
 
@@ -142,16 +213,16 @@ function makeCardHTML(exp) {
   body.appendChild(h3);
   body.appendChild(p);
 
-  // Itinerary section (if exists)
-  if (itinerary && itinerary.length) {
+  // Itinerary section
+  if (itinerary && itinerary.length > 0) {
     const itin = document.createElement('div');
     itin.className = 'all-card-itinerary';
     const label = document.createElement('h6');
     label.className = 'itin-label';
-    label.textContent = 'Itinerary';
+    label.textContent = 'Highlights';
     const ul = document.createElement('ul');
     
-    itinerary.slice(0, 6).forEach(item => {
+    itinerary.slice(0, 4).forEach(item => {
       const li = document.createElement('li');
       li.textContent = item;
       ul.appendChild(li);
@@ -164,9 +235,9 @@ function makeCardHTML(exp) {
 
   // CTA button
   const cta = document.createElement('a');
-  cta.className = 'all-card-cta btn-primary';
+  cta.className = 'all-card-cta';
   cta.href = 'experience.html?slug=' + slug;
-  cta.textContent = 'Explore Experience';
+  cta.textContent = 'Explore Experience →';
   body.appendChild(cta);
 
   card.appendChild(imgDiv);
@@ -174,22 +245,23 @@ function makeCardHTML(exp) {
   return card;
 }
 
-// Render grid with filtered experiences
 function renderGrid(list) {
   const grid = document.getElementById('all-exp-grid');
   const noRes = document.getElementById('no-results');
+  
+  if (!grid) return;
+  
   grid.innerHTML = '';
   
   if (!list || !list.length) {
-    noRes.style.display = 'block';
+    if (noRes) noRes.style.display = 'block';
     return;
   }
   
-  noRes.style.display = 'none';
+  if (noRes) noRes.style.display = 'none';
   list.forEach(exp => grid.appendChild(makeCardHTML(exp)));
 }
 
-// Initialize filter tabs
 function initFilters() {
   const tabs = document.querySelectorAll('.filter-tab');
   const searchInput = document.getElementById('expSearch');
@@ -208,7 +280,6 @@ function initFilters() {
   });
 }
 
-// Initialize search functionality
 function initSearch() {
   const searchInput = document.getElementById('expSearch');
   if (!searchInput) return;
@@ -216,7 +287,10 @@ function initSearch() {
   searchInput.addEventListener('input', function() {
     const q = this.value.trim().toLowerCase();
     const tabs = document.querySelectorAll('.filter-tab');
-    tabs.forEach((b, i) => b.classList.toggle('active', i === 0));
+    tabs.forEach((b, i) => {
+      if (i === 0) b.classList.add('active');
+      else b.classList.remove('active');
+    });
     
     if (!q) {
       renderGrid(allExperiences);
@@ -224,18 +298,18 @@ function initSearch() {
     }
     
     renderGrid(allExperiences.filter(e => {
-      return (e.title || '').toLowerCase().indexOf(q) > -1
-        || (e.tagline || '').toLowerCase().indexOf(q) > -1
-        || (e.category || '').toLowerCase().indexOf(q) > -1;
+      return (e.title || '').toLowerCase().includes(q)
+        || (e.tagline || '').toLowerCase().includes(q)
+        || (e.category || '').toLowerCase().includes(q);
     }));
   });
 }
 
-// Load experiences from Supabase
 function loadAllExperiences() {
   const loadingIndicator = document.getElementById('exp-loading-indicator');
   
-  fetch(`${SUPABASE_URL}/rest/v1/experiences?active=eq.true&select=slug,title,tagline,description,card_image,duration_tag,category,itinerary,price_from&order=sort_order.asc`, {
+  // Try to fetch from Supabase
+  fetch(`${SUPABASE_URL}/rest/v1/experiences?select=slug,title,tagline,description,card_image,duration_tag,category,itinerary&active=eq.true`, {
     headers: {
       'apikey': SUPABASE_ANON_KEY,
       'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
@@ -248,33 +322,39 @@ function loadAllExperiences() {
   .then(data => {
     if (loadingIndicator) loadingIndicator.style.display = 'none';
     
-    if (!data || !data.length) {
-      document.getElementById('no-results').style.display = 'block';
-      return;
+    if (data && data.length > 0) {
+      allExperiences = data;
+      console.log('Loaded from Supabase:', data.length, 'experiences');
+    } else {
+      console.log('No data from Supabase, using fallback data');
+      allExperiences = FALLBACK_EXPERIENCES;
     }
     
-    allExperiences = data;
-    renderGrid(data);
+    renderGrid(allExperiences);
     initFilters();
     initSearch();
   })
   .catch(err => {
-    console.error('Load error:', err);
-    if (loadingIndicator) {
-      loadingIndicator.innerHTML = '<p style="color:#6b5d50;padding:2rem;">Unable to load experiences. Please refresh.</p>';
-    }
+    console.warn('Supabase fetch failed:', err.message);
+    console.log('Using fallback data');
+    
+    if (loadingIndicator) loadingIndicator.style.display = 'none';
+    allExperiences = FALLBACK_EXPERIENCES;
+    renderGrid(allExperiences);
+    initFilters();
+    initSearch();
   });
 }
 
-// Mobile menu toggle
 function initMobileMenu() {
   const hamburger = document.getElementById('hamburger');
   const navLinks = document.getElementById('navLinks');
   
   if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
-      navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-      if (navLinks.style.display === 'flex') {
+      const isVisible = navLinks.style.display === 'flex';
+      navLinks.style.display = isVisible ? 'none' : 'flex';
+      if (!isVisible) {
         navLinks.style.flexDirection = 'column';
         navLinks.style.position = 'absolute';
         navLinks.style.top = '70px';
@@ -283,10 +363,10 @@ function initMobileMenu() {
         navLinks.style.backgroundColor = 'rgba(61,15,16,0.98)';
         navLinks.style.padding = '1.5rem';
         navLinks.style.gap = '1rem';
+        navLinks.style.zIndex = '1000';
       }
     });
     
-    // Close menu on window resize
     window.addEventListener('resize', () => {
       if (window.innerWidth > 768) {
         navLinks.style.display = '';
@@ -297,7 +377,7 @@ function initMobileMenu() {
   }
 }
 
-// Initialize everything when DOM is ready
+// Initialize when page loads
 document.addEventListener('DOMContentLoaded', () => {
   loadAllExperiences();
   initMobileMenu();
