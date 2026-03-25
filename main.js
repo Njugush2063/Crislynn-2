@@ -58,8 +58,8 @@ function animateCounters() {
   });
 }
 
-const aboutSection = document.querySelector('.about');
-if (aboutSection) {
+const whySection = document.querySelector('.why-us') || document.querySelector('.about');
+if (whySection) {
   let triggered = false;
   const counterObserver = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting && !triggered) {
@@ -69,7 +69,7 @@ if (aboutSection) {
       counterObserver.disconnect();
     }
   }, { threshold: 0.35 });
-  counterObserver.observe(aboutSection);
+  counterObserver.observe(whySection);
 }
 
 // =============================================
