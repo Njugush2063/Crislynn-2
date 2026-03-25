@@ -119,6 +119,15 @@
 
     var allExperiences = [];
 
+    var FALLBACK_EXPERIENCES = [
+      { slug:'watamu-marine-explorer', title:'Watamu Marine Explorer', tagline:'Discover the pristine waters of Watamu Marine National Park', description:'Snorkel through crystal clear waters and encounter sea turtles, tropical fish, and vibrant coral reefs.', card_image:'https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&cs=tinysrgb&w=800', duration_tag:'3 Days / 2 Nights', category:'Coast & Islands', itinerary:['Boat safari in Watamu Marine Park','Snorkeling at Coral Gardens','Visit to Gede Ruins','Sunset dhow cruise'] },
+      { slug:'lamu-cultural-heritage', title:'Lamu Cultural Heritage', tagline:'Step back in time on the magical Lamu Archipelago', description:'Experience Swahili culture, traditional dhow sailing, and the UNESCO-listed Lamu Old Town.', card_image:'https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800', duration_tag:'4 Days / 3 Nights', category:'Culture & Heritage', itinerary:['Lamu Old Town walking tour','Dhow sailing experience','Donkey sanctuary visit','Swahili cooking class'] },
+      { slug:'tsavo-east-safari', title:'Tsavo East Safari', tagline:'Witness the legendary red elephants of Tsavo', description:"Game drives through Kenya's largest national park, home to lions, leopards, and vast elephant herds.", card_image:'https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&w=800', duration_tag:'3 Days / 2 Nights', category:'Safari & Wildlife', itinerary:['Morning game drive','Visit to Lugard Falls','Sunset safari at Mudanda Rock','Night game drive'] },
+      { slug:'malindi-coastal-retreat', title:'Malindi Coastal Retreat', tagline:'Relax in the historic coastal town of Malindi', description:'Enjoy pristine beaches, Italian-influenced cuisine, and the famous Vasco da Gama Pillar.', card_image:'https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?auto=compress&cs=tinysrgb&w=800', duration_tag:'5 Days / 4 Nights', category:'Coast & Islands', itinerary:['Malindi Marine Park visit','Vasco da Gama Pillar tour','Beach relaxation','Local market exploration'] },
+      { slug:'mombasa-old-town', title:'Mombasa Old Town', tagline:"Explore the rich history of Kenya's oldest city", description:"Walk through centuries of history in Mombasa's ancient streets, Fort Jesus, and vibrant markets.", card_image:'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800', duration_tag:'2 Days / 1 Night', category:'Culture & Heritage', itinerary:['Fort Jesus guided tour','Old Town walking tour','Spice market visit','Traditional Swahili lunch'] },
+      { slug:'amboseli-elephant-safari', title:'Amboseli Elephant Safari', tagline:'Elephants with Kilimanjaro as the backdrop', description:'Iconic views of Mount Kilimanjaro and large elephant herds in one of Kenya\'s most scenic parks.', card_image:'https://images.pexels.com/photos/815070/pexels-photo-815070.jpeg?auto=compress&cs=tinysrgb&w=800', duration_tag:'3 Days / 2 Nights', category:'Safari & Wildlife', itinerary:['Sunrise game drive','Observation Hill hike','Elephant research center visit','Maasai cultural experience'] }
+    ];
+
     function getWishlist() {
       try { return JSON.parse(localStorage.getItem('cv_wishlist') || '[]'); } catch(e) { return []; }
     }
@@ -298,7 +307,13 @@
       })
       .then(function(data) {
         document.getElementById('exp-loading-indicator').style.display = 'none';
-        if (!data || !data.length) { document.getElementById('no-results').style.display = 'block'; return; }
+        if (!data || !data.length) {
+          allExperiences = FALLBACK_EXPERIENCES;
+          renderGrid(FALLBACK_EXPERIENCES);
+          initFilters();
+          initSearch();
+          return;
+        }
         allExperiences = data;
         renderGrid(data);
         initFilters();
@@ -306,7 +321,11 @@
       })
       .catch(function(err) {
         console.error('Load error:', err);
-        document.getElementById('exp-loading-indicator').innerHTML = '<p style="color:#6b5d50;padding:2rem;">Unable to load experiences. Please refresh.</p>';
+        document.getElementById('exp-loading-indicator').style.display = 'none';
+        allExperiences = FALLBACK_EXPERIENCES;
+        renderGrid(FALLBACK_EXPERIENCES);
+        initFilters();
+        initSearch();
       });
     }
 
