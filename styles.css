@@ -50,7 +50,9 @@ em { font-style: italic; }
 img { display: block; max-width: 100%; }
 a { text-decoration: none; color: inherit; }
 
-/* LOGO IMAGE */
+/* =============================================
+   LOGO
+   ============================================= */
 .nav-logo-img {
   height: 44px;
   width: auto;
@@ -59,16 +61,15 @@ a { text-decoration: none; color: inherit; }
   transition: opacity 0.3s ease;
 }
 .nav-logo-img:hover { opacity: 0.85; }
+
 .footer-logo-img {
   height: 52px;
   width: auto;
   display: block;
   margin-bottom: 1rem;
-  opacity: 0.92;
-  filter: brightness(1.1);
+  filter: brightness(0) invert(1) opacity(0.85);
 }
 
-/* LOGO TEXT */
 .logo-text {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.3rem;
@@ -77,9 +78,10 @@ a { text-decoration: none; color: inherit; }
   color: var(--white);
 }
 .logo-text em { color: var(--gold); font-style: italic; }
-.footer-logo { font-size: 1.1rem; }
 
-/* BUTTONS */
+/* =============================================
+   BUTTONS
+   ============================================= */
 .btn-primary {
   display: inline-block;
   padding: 0.85rem 2rem;
@@ -221,7 +223,6 @@ a { text-decoration: none; color: inherit; }
     rgba(61,15,16,0.82) 100%
   );
 }
-/* Extra darkening layer specifically behind the text area */
 .hero-overlay::after {
   content: '';
   position: absolute;
@@ -280,9 +281,7 @@ a { text-decoration: none; color: inherit; }
   text-transform: uppercase;
   cursor: pointer;
 }
-.scroll-label {
-  animation: scrollFade 1.6s ease-in-out infinite;
-}
+.scroll-label { animation: scrollFade 1.6s ease-in-out infinite; }
 @keyframes scrollFade {
   0%, 100% { opacity: 0.7; }
   50%       { opacity: 0.25; }
@@ -293,27 +292,13 @@ a { text-decoration: none; color: inherit; }
   background: var(--gold);
   animation: scrollBounce 1.6s ease-in-out infinite;
 }
-.scroll-track {
-  width: 1px;
-  height: 32px;
-  background: linear-gradient(to bottom, rgba(167,112,58,0.7), rgba(167,112,58,0.08));
-  margin-bottom: 0.2rem;
-  animation: scrollTrack 1.6s ease-in-out infinite;
-}
-@keyframes scrollTrack {
-  0%, 100% { opacity: 1; transform: scaleY(1); }
-  50%       { opacity: 0.4; transform: scaleY(0.8); }
-}
 @keyframes scrollBounce {
   0%, 100% { transform: translateY(0); opacity: 1; }
   50%       { transform: translateY(6px); opacity: 0.4; }
 }
 
 /* =============================================
-   ABOUT
-   ============================================= */
-/* =============================================
-   WHY US — dark full-bleed section
+   WHY US
    ============================================= */
 .why-us {
   padding: 7rem 3rem 6rem;
@@ -348,10 +333,7 @@ a { text-decoration: none; color: inherit; }
   text-align: center;
   margin-bottom: 5rem;
 }
-.why-eyebrow {
-  color: var(--gold) !important;
-  opacity: 0.85;
-}
+.why-eyebrow { color: var(--gold) !important; opacity: 0.85; }
 .why-us-header h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(2.4rem, 5vw, 4rem);
@@ -376,8 +358,7 @@ a { text-decoration: none; color: inherit; }
 }
 .why-card:last-child { border-right: none; }
 .why-icon {
-  width: 64px;
-  height: 64px;
+  width: 64px; height: 64px;
   border-radius: 50%;
   background: rgba(167,112,58,0.12);
   border: 1px solid rgba(167,112,58,0.25);
@@ -393,8 +374,7 @@ a { text-decoration: none; color: inherit; }
   transform: translateY(-3px);
 }
 .why-dot {
-  width: 5px;
-  height: 5px;
+  width: 5px; height: 5px;
   border-radius: 50%;
   background: var(--gold);
   opacity: 0.5;
@@ -408,11 +388,7 @@ a { text-decoration: none; color: inherit; }
   margin-bottom: 0.75rem;
   line-height: 1.3;
 }
-.why-card p {
-  font-size: 0.855rem;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.75;
-}
+.why-card p { font-size: 0.855rem; color: rgba(255,255,255,0.5); line-height: 1.75; }
 .why-stats {
   display: flex;
   justify-content: center;
@@ -480,19 +456,11 @@ a { text-decoration: none; color: inherit; }
 .strip-card .strip-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(61,15,16,0.82) 0%,
-    rgba(61,15,16,0.1) 60%
-  );
+  background: linear-gradient(to top, rgba(61,15,16,0.82) 0%, rgba(61,15,16,0.1) 60%);
   transition: background var(--transition);
 }
 .strip-card:hover .strip-overlay {
-  background: linear-gradient(
-    to top,
-    rgba(61,15,16,0.92) 0%,
-    rgba(61,15,16,0.35) 60%
-  );
+  background: linear-gradient(to top, rgba(61,15,16,0.92) 0%, rgba(61,15,16,0.35) 60%);
 }
 .strip-content {
   position: relative;
@@ -543,8 +511,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--maroon-deep);
   margin-bottom: 1.75rem;
 }
-
-/* Search bar */
 .exp-search-bar {
   position: relative;
   max-width: 420px;
@@ -575,8 +541,6 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--gold);
   box-shadow: 0 2px 12px rgba(167,112,58,0.2);
 }
-
-/* Filter tabs */
 .exp-filter-tabs {
   display: flex;
   gap: 0.5rem;
@@ -596,17 +560,12 @@ a { text-decoration: none; color: inherit; }
   cursor: pointer;
   transition: all var(--transition);
 }
-.filter-tab:hover {
-  border-color: var(--gold);
-  color: var(--gold);
-}
+.filter-tab:hover { border-color: var(--gold); color: var(--gold); }
 .filter-tab.active {
   background: var(--maroon);
   border-color: var(--maroon);
   color: var(--white);
 }
-
-/* View All Experiences button */
 .view-all-btn-wrap {
   text-align: center;
   margin-top: 3rem;
@@ -644,14 +603,12 @@ a { text-decoration: none; color: inherit; }
   max-width: 1200px;
   margin: 0 auto;
 }
-.no-results {
+.no-results-msg {
   text-align: center;
   color: var(--text-light);
   padding: 3rem;
   font-size: 0.95rem;
 }
-.no-results em { color: var(--gold); font-style: italic; }
-
 .exp-page-loading {
   display: flex;
   flex-direction: column;
@@ -660,7 +617,6 @@ a { text-decoration: none; color: inherit; }
   padding: 4rem;
   color: var(--text-light);
 }
-
 .exp-category { margin-bottom: 4rem; }
 .category-title {
   font-family: 'Cormorant Garamond', serif;
@@ -670,7 +626,6 @@ a { text-decoration: none; color: inherit; }
   padding-bottom: 0.75rem;
   border-bottom: 1px solid rgba(167,112,58,0.35);
 }
-
 .slider-wrapper {
   position: relative;
   display: flex;
@@ -698,8 +653,6 @@ a { text-decoration: none; color: inherit; }
   transform: translateY(-6px);
   box-shadow: 0 12px 32px rgba(85,21,22,0.16);
 }
-
-/* CARD IMAGE */
 .card-img {
   position: relative;
   width: 100%;
@@ -722,32 +675,9 @@ a { text-decoration: none; color: inherit; }
   padding: 0.3rem 0.7rem;
   border-radius: 2px;
 }
-.card-price {
-  position: absolute;
-  bottom: 0.85rem;
-  right: 0.85rem;
-  background: var(--maroon);
-  color: var(--white);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.3rem 0.75rem;
-  border-radius: 2px;
-  border: 1px solid rgba(167,112,58,0.4);
-}
-.card-body {
-  padding: 1.25rem 1.5rem 1.5rem;
-}
-.card-body h4 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--maroon-deep);
-}
-.card-body p {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  margin-bottom: 0.85rem;
-  line-height: 1.6;
-}
+.card-body { padding: 1.25rem 1.5rem 1.5rem; }
+.card-body h4 { font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--maroon-deep); }
+.card-body p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 0.85rem; line-height: 1.6; }
 .itinerary-toggle {
   background: none;
   border: none;
@@ -787,8 +717,6 @@ a { text-decoration: none; color: inherit; }
   transition: color var(--transition);
 }
 .card-cta:hover { color: var(--gold); }
-
-/* Card action buttons — wishlist + share */
 .card-actions {
   position: absolute;
   top: 0.75rem;
@@ -800,8 +728,7 @@ a { text-decoration: none; color: inherit; }
 }
 .exp-card:hover .card-actions { opacity: 1; }
 .card-action-btn {
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   border-radius: 50%;
   border: none;
   background: rgba(255,255,255,0.9);
@@ -818,10 +745,7 @@ a { text-decoration: none; color: inherit; }
 .card-action-btn:hover { background: var(--white); transform: scale(1.1); }
 .wishlist-btn { color: var(--text-light); }
 .wishlist-btn.wishlisted { background: var(--maroon); color: var(--white); }
-.wishlist-btn.wishlisted::after { content: ''; }
 .share-btn { color: var(--maroon); }
-
-/* Wishlist toast */
 #wishlist-toast {
   position: fixed;
   bottom: 2rem;
@@ -844,11 +768,11 @@ a { text-decoration: none; color: inherit; }
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+.slider-btn {
   background: var(--white);
   border: 1px solid var(--cream-mid);
   color: var(--maroon);
-  width: 40px;
-  height: 40px;
+  width: 40px; height: 40px;
   border-radius: 50%;
   font-size: 1.4rem;
   cursor: pointer;
@@ -859,25 +783,17 @@ a { text-decoration: none; color: inherit; }
   transition: all var(--transition);
   box-shadow: var(--shadow);
 }
-.slider-btn:hover {
-  background: var(--maroon);
-  color: var(--white);
-  border-color: var(--maroon);
-}
+.slider-btn:hover { background: var(--maroon); color: var(--white); border-color: var(--maroon); }
 .slider-btn:disabled { opacity: 0.3; cursor: default; }
 
 /* =============================================
-   SERVICES — Green section (Swahili/brand)
+   SERVICES
    ============================================= */
 .services { padding: 6rem 3rem; background: var(--green); }
 .services-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
 .services-inner h2 { color: var(--white); font-size: clamp(2rem,4vw,3rem); margin-bottom: 3rem; }
 .services-inner .section-eyebrow { color: var(--gold-pale); }
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
+.services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 .service-card {
   background: rgba(255,255,255,0.07);
   border: 1px solid rgba(167,112,58,0.25);
@@ -898,21 +814,9 @@ a { text-decoration: none; color: inherit; }
 /* =============================================
    TESTIMONIALS
    ============================================= */
-/* =============================================
-   TESTIMONIALS — cream bg, large quote marks, minimal cards
-   ============================================= */
-.testimonials {
-  padding: 7rem 3rem;
-  background: var(--cream);
-}
-.testimonials-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.testimonials-header {
-  text-align: center;
-  margin-bottom: 4rem;
-}
+.testimonials { padding: 7rem 3rem; background: var(--cream); }
+.testimonials-inner { max-width: 1200px; margin: 0 auto; }
+.testimonials-header { text-align: center; margin-bottom: 4rem; }
 .testimonials-header h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(2.2rem, 4.5vw, 3.4rem);
@@ -921,11 +825,7 @@ a { text-decoration: none; color: inherit; }
   margin-top: 0.5rem;
   line-height: 1.2;
 }
-.testimonials-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-}
+.testimonials-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
 .testimonial-card {
   background: var(--white);
   border-radius: 4px;
@@ -934,13 +834,11 @@ a { text-decoration: none; color: inherit; }
   flex-direction: column;
   box-shadow: 0 2px 16px rgba(85,21,22,0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
 }
 .testimonial-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 32px rgba(85,21,22,0.12);
 }
-/* Large decorative quote mark */
 .quote-mark {
   font-family: 'Cormorant Garamond', serif;
   font-size: 3.5rem;
@@ -948,7 +846,6 @@ a { text-decoration: none; color: inherit; }
   color: var(--gold);
   opacity: 0.55;
   margin-bottom: 1.25rem;
-  letter-spacing: -0.05em;
 }
 .testimonial-card p {
   font-family: 'Cormorant Garamond', serif;
@@ -969,7 +866,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* =============================================
-   CONTACT — Cream left, maroon right, fully readable
+   CONTACT
    ============================================= */
 .contact {
   padding: 6rem 3rem;
@@ -977,7 +874,6 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   overflow: hidden;
 }
-/* Left half = solid cream, right half fades to maroon */
 .contact::before {
   content: '';
   position: absolute;
@@ -1002,7 +898,6 @@ a { text-decoration: none; color: inherit; }
   position: relative;
   z-index: 1;
 }
-/* Left column text — dark on cream */
 .contact-text h2 {
   font-size: clamp(2rem,4vw,3rem);
   margin-bottom: 1rem;
@@ -1018,7 +913,13 @@ a { text-decoration: none; color: inherit; }
   align-items: center;
   gap: 0.5rem;
 }
-/* Right column form — sits on maroon bg */
+.contact-details a {
+  color: var(--maroon);
+  transition: color var(--transition);
+}
+.contact-details a:hover { color: var(--gold); }
+
+/* Right column form */
 .contact-form { display: flex; flex-direction: column; gap: 1rem; }
 .contact-form input,
 .contact-form select,
@@ -1034,15 +935,32 @@ a { text-decoration: none; color: inherit; }
   outline: none;
   transition: border-color var(--transition), background var(--transition);
 }
+
+/* ── GRADIENT PLACEHOLDER TEXT ── */
 .contact-form input::placeholder,
-.contact-form textarea::placeholder { color: rgba(255,255,255,0.5); }
+.contact-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Select placeholder colour */
+.contact-form select {
+  color: rgba(255, 255, 255, 0.65);
+}
+.contact-form select option {
+  background: var(--maroon-deep);
+  color: var(--white);
+}
+/* Once an option is chosen, make it full white */
+.contact-form select:not(:invalid) {
+  color: var(--white);
+}
+
 .contact-form input:focus,
 .contact-form select:focus,
 .contact-form textarea:focus {
   border-color: var(--gold);
   background: rgba(255,255,255,0.18);
 }
-.contact-form select option { background: var(--maroon-deep); color: var(--white); }
 .contact-form textarea { resize: vertical; }
 .contact-form .btn-primary {
   background: var(--gold);
@@ -1061,24 +979,8 @@ a { text-decoration: none; color: inherit; }
 }
 .form-success { color: var(--gold-pale); font-size: 0.88rem; margin-top: 0.5rem; font-weight: 500; }
 
-/* Mobile: stack vertically, both on cream */
-@media (max-width: 768px) {
-  .contact::before {
-    background: linear-gradient(
-      180deg,
-      var(--cream) 0%,
-      var(--cream) 45%,
-      var(--maroon-deep) 65%,
-      var(--maroon-deep) 100%
-    );
-  }
-  .contact-form input,
-  .contact-form select,
-  .contact-form textarea { background: rgba(255,255,255,0.1); }
-}
-
 /* =============================================
-   FOOTER — deep maroon, gold accents, balanced
+   FOOTER
    ============================================= */
 .footer {
   background: var(--maroon-deep);
@@ -1127,27 +1029,16 @@ a { text-decoration: none; color: inherit; }
   transition: color var(--transition), padding-left var(--transition);
 }
 .footer-links a:hover,
-.footer-social a:hover {
-  color: var(--gold-pale);
-  padding-left: 4px;
-}
+.footer-social a:hover { color: var(--gold-pale); padding-left: 4px; }
 .social-icons { display: flex; flex-direction: column; }
-.footer-bottom {
-  text-align: center;
-  padding: 1.5rem 0;
-}
-.footer-bottom p {
-  color: rgba(255,255,255,0.28);
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-}
+.footer-bottom { text-align: center; padding: 1.5rem 0; }
+.footer-bottom p { color: rgba(255,255,255,0.28); font-size: 0.75rem; letter-spacing: 0.05em; }
 
 /* =============================================
    LOADING SPINNER
    ============================================= */
 .loading-spinner {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   border: 3px solid rgba(167,112,58,0.2);
   border-top-color: var(--maroon);
   border-radius: 50%;
@@ -1156,10 +1047,9 @@ a { text-decoration: none; color: inherit; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* =============================================
-   EXPERIENCE PAGE — exp-nav
+   EXPERIENCE PAGE
    ============================================= */
 body.experience-page { background: var(--cream); }
-
 .exp-nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -1181,7 +1071,6 @@ body.experience-page { background: var(--cream); }
   transition: color var(--transition);
 }
 .back-link:hover { color: var(--gold); }
-
 .exp-loading, .exp-error {
   min-height: 100vh;
   display: flex;
@@ -1193,8 +1082,6 @@ body.experience-page { background: var(--cream); }
   padding: 2rem;
   text-align: center;
 }
-
-/* EXPERIENCE HERO */
 .exp-hero {
   height: 75vh;
   min-height: 480px;
@@ -1208,11 +1095,7 @@ body.experience-page { background: var(--cream); }
 .exp-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(61,15,16,0.88) 0%,
-    rgba(61,15,16,0.2) 60%
-  );
+  background: linear-gradient(to top, rgba(61,15,16,0.88) 0%, rgba(61,15,16,0.2) 60%);
 }
 .exp-hero-text {
   position: relative;
@@ -1229,13 +1112,8 @@ body.experience-page { background: var(--cream); }
   display: block;
   margin-bottom: 0.75rem;
 }
-.exp-hero-text h1 {
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  margin-bottom: 1rem;
-}
+.exp-hero-text h1 { font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 1rem; }
 .exp-hero-text p { font-size: 1.05rem; opacity: 0.85; }
-
-/* EXPERIENCE BODY */
 .exp-body {
   max-width: 1200px;
   margin: 0 auto;
@@ -1249,8 +1127,6 @@ body.experience-page { background: var(--cream); }
 .exp-section h2 { font-size: 1.8rem; margin: 0.5rem 0 1rem; color: var(--maroon-deep); }
 .exp-section h3 { font-size: 1.3rem; margin: 0.5rem 0 1rem; color: var(--maroon-deep); }
 .exp-section p { color: var(--text-light); line-height: 1.8; }
-
-/* Itinerary — green left border for Swahili-coast identity */
 .exp-itinerary { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
 .exp-itinerary li {
   padding: 0.75rem 1rem;
@@ -1261,13 +1137,7 @@ body.experience-page { background: var(--cream); }
   color: var(--text);
   box-shadow: 0 2px 8px rgba(2,66,62,0.06);
 }
-
-/* Gallery */
-.exp-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-}
+.exp-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
 .gallery-img {
   aspect-ratio: 4/3;
   background-size: cover;
@@ -1277,8 +1147,6 @@ body.experience-page { background: var(--cream); }
   transition: transform var(--transition);
 }
 .gallery-img:hover { transform: scale(1.02); }
-
-/* BOOKING CARD */
 .booking-card {
   background: var(--white);
   border-radius: 8px;
@@ -1299,16 +1167,8 @@ body.experience-page { background: var(--cream); }
   border-radius: 2px;
   margin-bottom: 0.75rem;
 }
-.booking-card h3 {
-  font-size: 1.3rem;
-  color: var(--maroon-deep);
-  margin-bottom: 1rem;
-}
-.booking-price {
-  font-size: 0.85rem;
-  color: var(--text-light);
-  margin-bottom: 1.25rem;
-}
+.booking-card h3 { font-size: 1.3rem; color: var(--maroon-deep); margin-bottom: 1rem; }
+.booking-price { font-size: 0.85rem; color: var(--text-light); margin-bottom: 1.25rem; }
 .booking-price strong {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2rem;
@@ -1334,23 +1194,9 @@ body.experience-page { background: var(--cream); }
   margin-bottom: 0.75rem;
   font-family: 'Inter', sans-serif;
 }
-.booking-includes ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-bottom: 1.5rem;
-}
-.booking-includes li {
-  font-size: 0.85rem;
-  color: var(--text);
-  padding-left: 0.25rem;
-}
-.booking-includes li::before {
-  content: '✓ ';
-  color: var(--green);
-  font-weight: 600;
-}
+.booking-includes ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.5rem; }
+.booking-includes li { font-size: 0.85rem; color: var(--text); padding-left: 0.25rem; }
+.booking-includes li::before { content: '✓ '; color: var(--green); font-weight: 600; }
 .booking-btn { width: 100%; text-align: center; }
 
 /* =============================================
@@ -1361,9 +1207,6 @@ body.experience-page { background: var(--cream); }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .exp-body { grid-template-columns: 1fr; }
   .booking-card { position: static; }
-  .about-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .about-image { grid-template-columns: 1fr 1fr; }
-  .about-image .img-main { grid-column: 1 / 3; aspect-ratio: 16/9; }
 }
 
 @media (max-width: 768px) {
@@ -1384,18 +1227,28 @@ body.experience-page { background: var(--cream); }
   .experience-strip { grid-template-columns: repeat(2, 1fr); height: auto; }
   .strip-card { height: 220px; }
   .experiences { padding: 4rem 1.5rem; }
-  .about { padding: 4rem 1.5rem; }
   .services { padding: 4rem 1.5rem; }
   .testimonials { padding: 4rem 1.5rem; }
   .testimonials-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
   .why-us { padding: 4rem 1.5rem; }
   .why-us-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 0; }
   .why-card { border-right: none; border-bottom: 1px solid rgba(167,112,58,0.15); padding-bottom: 2.5rem; }
-  .why-card:nth-child(even) { border-right: none; }
   .why-stats { gap: 3rem; }
   .why-us-header h2 { font-size: 2rem; }
   .contact { padding: 4rem 1.5rem; }
+  .contact::before {
+    background: linear-gradient(
+      180deg,
+      var(--cream) 0%,
+      var(--cream) 45%,
+      var(--maroon-deep) 65%,
+      var(--maroon-deep) 100%
+    );
+  }
   .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea { background: rgba(255,255,255,0.1); }
   .footer { padding: 3rem 1.5rem 0; }
   .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
   .exp-body { padding: 2rem 1.5rem; }
