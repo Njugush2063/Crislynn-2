@@ -936,22 +936,24 @@ a { text-decoration: none; color: inherit; }
   transition: border-color var(--transition), background var(--transition);
 }
 
-/* ── GRADIENT PLACEHOLDER TEXT ── */
+/* ── PLACEHOLDER TEXT — bright white for max visibility ── */
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 /* Select placeholder colour */
 .contact-form select {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.92);
 }
 .contact-form select option {
   background: var(--maroon-deep);
   color: var(--white);
 }
-/* Once an option is chosen, make it full white */
-.contact-form select:not(:invalid) {
+/* Once a real option is chosen, keep full white */
+.contact-form select:not([value=""]) {
   color: var(--white);
 }
 
