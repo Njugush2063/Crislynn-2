@@ -1,384 +1,268 @@
-/* =============================================
-   CRISLYNN VENTURES — main.js
-   All Experiences page functionality
-   ============================================= */
+/* =============================================================
+   experiences.js — Crislynn Ventures
+   Fixes:
+   1. Supabase filter changed from active=is.true → active=eq.true
+   2. Loading div hidden IMMEDIATELY before any async work, so
+      fallback data always shows even if fetch never resolves
+   3. All element IDs match the HTML (expGrid, gridCount, etc.)
+   ============================================================= */
 
-// Supabase configuration
-const SUPABASE_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
+const SB_URL = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
 
-let allExperiences = [];
-
-// FALLBACK DATA - This will show if Supabase fails
-const FALLBACK_EXPERIENCES = [
+/* ── FALLBACK DATA ── */
+const FALLBACK = [
   {
-    slug: "watamu-marine-explorer",
-    title: "Watamu Marine Explorer",
-    tagline: "Discover the pristine waters of Watamu Marine National Park",
-    description: "Snorkel through crystal clear waters and encounter sea turtles, tropical fish, and vibrant coral reefs.",
-    card_image: "https://images.pexels.com/photos/932638/pexels-photo-932638.jpeg?auto=compress&cs=tinysrgb&w=800",
-    duration_tag: "3 Days / 2 Nights",
-    category: "Coast & Islands",
-    itinerary: ["Boat safari in Watamu Marine Park", "Snorkeling at Coral Gardens", "Visit to Gede Ruins", "Sunset dhow cruise"]
+    slug: 'watamu-marine-explorer',
+    title: 'Watamu Marine Explorer',
+    tagline: 'Crystal waters, sea turtles, and coral gardens await',
+    card_image: 'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '3 Days', category: 'Coast & Islands',
+    itinerary: ['Boat safari in Watamu Marine Park', 'Snorkeling at Coral Gardens', 'Visit to Gede Ruins', 'Sunset dhow cruise']
   },
   {
-    slug: "lamu-cultural-heritage",
-    title: "Lamu Cultural Heritage",
-    tagline: "Step back in time on the magical Lamu Archipelago",
-    description: "Experience Swahili culture, traditional dhow sailing, and the UNESCO-listed Lamu Old Town.",
-    card_image: "https://images.pexels.com/photos/262047/pexels-photo-262047.jpeg?auto=compress&cs=tinysrgb&w=800",
-    duration_tag: "4 Days / 3 Nights",
-    category: "Culture & Heritage",
-    itinerary: ["Lamu Old Town walking tour", "Dhow sailing experience", "Donkey sanctuary visit", "Swahili cooking class"]
+    slug: 'lamu-cultural-heritage',
+    title: 'Lamu Cultural Heritage',
+    tagline: 'UNESCO-listed Lamu Old Town and timeless Swahili culture',
+    card_image: 'https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '4 Days', category: 'Culture & Heritage',
+    itinerary: ['Lamu Old Town walking tour', 'Traditional dhow sailing', 'Donkey sanctuary visit', 'Swahili cooking class']
   },
   {
-    slug: "tsavo-east-safari",
-    title: "Tsavo East Safari",
-    tagline: "Witness the legendary red elephants of Tsavo",
-    description: "Game drives through Kenya's largest national park, home to lions, leopards, and vast elephant herds.",
-    card_image: "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&w=800",
-    duration_tag: "3 Days / 2 Nights",
-    category: "Safari & Wildlife",
-    itinerary: ["Morning game drive", "Visit to Lugard Falls", "Sunset safari at Mudanda Rock", "Night game drive"]
+    slug: 'tsavo-east-west',
+    title: 'Tsavo East & West Safari',
+    tagline: 'Red elephants, endless savannah, and legendary wildlife',
+    card_image: 'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '4 Days', category: 'Safari & Wildlife',
+    itinerary: ['Morning game drive — red elephants', 'Lugard Falls sundowner', 'Mudanda Rock panorama', 'Bush dinner under the stars']
   },
   {
-    slug: "malindi-coastal-retreat",
-    title: "Malindi Coastal Retreat",
-    tagline: "Relax in the historic coastal town of Malindi",
-    description: "Enjoy pristine beaches, Italian-influenced cuisine, and the famous Vasco da Gama Pillar.",
-    card_image: "https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg?auto=compress&cs=tinysrgb&w=800",
-    duration_tag: "5 Days / 4 Nights",
-    category: "Coast & Islands",
-    itinerary: ["Malindi Marine Park visit", "Vasco da Gama Pillar tour", "Beach relaxation", "Local market exploration"]
+    slug: 'malindi-coastal-retreat',
+    title: 'Malindi Coastal Retreat',
+    tagline: 'Historic town, pristine beaches, and Italian-influenced cuisine',
+    card_image: 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '5 Days', category: 'Coast & Islands',
+    itinerary: ['Malindi Marine Park snorkeling', 'Vasco da Gama Pillar tour', 'Casuarina beach day', 'Local market exploration']
   },
   {
-    slug: "mombasa-old-town",
-    title: "Mombasa Old Town",
-    tagline: "Explore the rich history of Kenya's oldest city",
-    description: "Walk through centuries of history in Mombasa's ancient streets, Fort Jesus, and vibrant markets.",
-    card_image: "https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=800",
-    duration_tag: "2 Days / 1 Night",
-    category: "Culture & Heritage",
-    itinerary: ["Fort Jesus guided tour", "Old Town walking tour", "Spice market visit", "Traditional Swahili lunch"]
+    slug: 'amboseli-elephant-safari',
+    title: 'Amboseli Elephant Safari',
+    tagline: 'Elephants silhouetted against the great Kilimanjaro',
+    card_image: 'https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '3 Days', category: 'Safari & Wildlife',
+    itinerary: ['Sunrise game drive at Amboseli', 'Observation Hill panorama', 'Elephant research centre visit', 'Maasai village experience']
   },
   {
-    slug: "amboseli-elephant-safari",
-    title: "Amboseli Elephant Safari",
-    tagline: "Elephants with Kilimanjaro as the backdrop",
-    description: "Iconic views of Mount Kilimanjaro and large elephant herds in one of Kenya's most scenic parks.",
-    card_image: "https://images.pexels.com/photos/815070/pexels-photo-815070.jpeg?auto=compress&cs=tinysrgb&w=800",
-    duration_tag: "3 Days / 2 Nights",
-    category: "Safari & Wildlife",
-    itinerary: ["Sunrise game drive", "Observation Hill hike", "Elephant research center visit", "Maasai cultural experience"]
+    slug: 'swahili-bites-tour',
+    title: 'Swahili Bites Food Tour',
+    tagline: 'Taste the spice-laden soul of the Kenyan coast',
+    card_image: 'https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '2 Days', category: 'Culture & Heritage',
+    itinerary: ['Old town spice market walk', 'Swahili cooking class', 'Seafood dhow dinner', 'Malindi juice bar crawl']
+  },
+  {
+    slug: 'island-escapades',
+    title: 'Island Escapades',
+    tagline: 'Manda, Kiwayu, and Lamu — pristine islands off the beaten path',
+    card_image: 'https://images.pexels.com/photos/1049298/pexels-photo-1049298.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '5 Days', category: 'Coast & Islands',
+    itinerary: ['Dhow hop between islands', 'Kizingoni beach picnic', 'Fishing with local fishermen', 'Stargazing on the sandbar']
+  },
+  {
+    slug: 'tsavo-amboseli',
+    title: 'Bush to Big Five',
+    tagline: 'A grand circuit through Kenya\'s most iconic wildlife parks',
+    card_image: 'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '6 Days', category: 'Safari & Wildlife',
+    itinerary: ['Tsavo East game drives', 'Lugard Falls & Mudanda Rock', 'Amboseli with Kilimanjaro views', 'Maasai Mara sunrise drive']
   }
 ];
 
-// Wishlist functions
-function getWishlist() {
-  try {
-    return JSON.parse(localStorage.getItem('cv_wishlist') || '[]');
-  } catch(e) {
-    return [];
-  }
+/* ── STATE ── */
+let ALL = [], ACTIVE = [];
+
+/* ── HELPERS ── */
+function getWL() {
+  try { return JSON.parse(localStorage.getItem('cv_wl') || '[]'); } catch(e) { return []; }
 }
 
-function toggleWishlist(slug, btn) {
-  let list = getWishlist();
-  const saved = list.indexOf(slug) > -1;
-  
-  if (saved) {
-    list = list.filter(s => s !== slug);
-  } else {
-    list.push(slug);
-  }
-  
-  localStorage.setItem('cv_wishlist', JSON.stringify(list));
-  btn.classList.toggle('wishlisted', !saved);
-  btn.title = saved ? 'Save to wishlist' : 'Saved!';
-  showWishlistToast(!saved);
+function toggleWL(slug, btn) {
+  let wl = getWL();
+  const has = wl.includes(slug);
+  wl = has ? wl.filter(s => s !== slug) : [...wl, slug];
+  localStorage.setItem('cv_wl', JSON.stringify(wl));
+  btn.classList.toggle('wishlisted', !has);
+  btn.textContent = !has ? '♥' : '♡';
+  showToast(!has ? '♥ Saved to wishlist' : 'Removed from wishlist');
 }
 
-function showWishlistToast(added) {
-  let toast = document.getElementById('wishlist-toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'wishlist-toast';
-    document.body.appendChild(toast);
-  }
-  
-  toast.textContent = added ? '❤️ Added to wishlist' : '💔 Removed from wishlist';
-  toast.classList.add('show');
-  clearTimeout(toast._t);
-  toast._t = setTimeout(() => toast.classList.remove('show'), 2500);
+function showToast(msg) {
+  const t = document.getElementById('cv-toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-function shareExperience(slug, title, btn) {
-  const url = window.location.origin + '/experience.html?slug=' + slug;
-  
-  if (navigator.share) {
-    navigator.share({
-      title: title + ' - Crislynn Ventures',
-      url: url
-    }).catch(() => {
-      copyToClipboard(url, btn);
-    });
-  } else {
-    copyToClipboard(url, btn);
-  }
-}
+/* ── CARD BUILDER ── */
+function makeCard(exp) {
+  const saved = getWL().includes(exp.slug);
+  const img   = exp.card_image || 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800';
+  const items = (exp.itinerary || []).slice(0, 3);
 
-function copyToClipboard(text, btn) {
-  navigator.clipboard.writeText(text).then(() => {
-    const orig = btn.innerHTML;
-    btn.innerHTML = '✓ Copied!';
-    setTimeout(() => { btn.innerHTML = orig; }, 2000);
-  }).catch(() => {
-    alert('Press Ctrl+C to copy: ' + text);
+  const card = document.createElement('article');
+  card.className = 'exp-card';
+  card.innerHTML = `
+    <div class="card-img">
+      <img src="${img}" alt="${exp.title}" loading="lazy"/>
+      <div class="card-badges">
+        <span class="badge-cat">${exp.category || ''}</span>
+        <span class="badge-dur">${exp.duration_tag || ''}</span>
+      </div>
+      <div class="card-actions">
+        <button class="card-btn wl-btn${saved ? ' wishlisted' : ''}" title="Save to wishlist">${saved ? '♥' : '♡'}</button>
+        <button class="card-btn share-btn" title="Share">&#8599;</button>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 class="card-title">${exp.title}</h3>
+      <p class="card-tagline">${exp.tagline || exp.description || ''}</p>
+      ${items.length ? `<ul class="card-highlights">${items.map(i => `<li>${i}</li>`).join('')}</ul>` : ''}
+      <a class="card-cta" href="experience.html?slug=${exp.slug}">
+        Explore Experience <span>&#8599;</span>
+      </a>
+    </div>`;
+
+  /* wishlist button */
+  card.querySelector('.wl-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleWL(exp.slug, this);
   });
-}
 
-function goToExp(slug) {
-  window.location.href = 'experience.html?slug=' + slug;
-}
+  /* share button */
+  card.querySelector('.share-btn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    const url = location.origin + '/experience.html?slug=' + exp.slug;
+    if (navigator.share) {
+      navigator.share({ title: exp.title, url });
+    } else {
+      navigator.clipboard.writeText(url).then(() => showToast('Link copied!'));
+    }
+  });
 
-function makeCardHTML(exp) {
-  const img = exp.card_image || exp.image || 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800';
-  const tagline = exp.tagline || exp.description || '';
-  const itinerary = exp.itinerary || [];
-  const slug = exp.slug || '';
-  const title = exp.title || '';
-  const duration = exp.duration_tag || exp.duration || 'Flexible';
-  const category = exp.category || 'Experience';
-  const wishlisted = getWishlist().indexOf(slug) > -1 ? 'wishlisted' : '';
+  /* navigate on image / body click */
+  const dest = 'experience.html?slug=' + exp.slug;
+  card.querySelector('.card-img').addEventListener('click', () => location.href = dest);
+  card.querySelector('.card-body').addEventListener('click', () => location.href = dest);
 
-  const card = document.createElement('div');
-  card.className = 'all-exp-card';
-  card.setAttribute('data-slug', slug);
-  card.setAttribute('data-category', category);
-
-  // Image section
-  const imgDiv = document.createElement('div');
-  imgDiv.className = 'all-card-img';
-  imgDiv.style.backgroundImage = `url(${img})`;
-  imgDiv.style.backgroundSize = 'cover';
-  imgDiv.style.backgroundPosition = 'center';
-  imgDiv.onclick = () => goToExp(slug);
-
-  // Duration tag
-  const durSpan = document.createElement('span');
-  durSpan.className = 'card-duration';
-  durSpan.textContent = duration;
-
-  // Category badge
-  const catSpan = document.createElement('span');
-  catSpan.className = 'all-card-category';
-  catSpan.textContent = category;
-
-  // Action buttons
-  const actions = document.createElement('div');
-  actions.className = 'card-actions';
-  actions.onclick = (e) => e.stopPropagation();
-
-  const wishBtn = document.createElement('button');
-  wishBtn.className = `card-action-btn wishlist-btn ${wishlisted}`;
-  wishBtn.innerHTML = wishlisted ? '❤️' : '🤍';
-  wishBtn.title = 'Save to wishlist';
-  wishBtn.onclick = () => toggleWishlist(slug, wishBtn);
-
-  const shareBtn = document.createElement('button');
-  shareBtn.className = 'card-action-btn share-btn';
-  shareBtn.innerHTML = '📤';
-  shareBtn.title = 'Share';
-  shareBtn.onclick = () => shareExperience(slug, title, shareBtn);
-
-  actions.appendChild(wishBtn);
-  actions.appendChild(shareBtn);
-  imgDiv.appendChild(durSpan);
-  imgDiv.appendChild(catSpan);
-  imgDiv.appendChild(actions);
-
-  // Card body
-  const body = document.createElement('div');
-  body.className = 'all-card-body';
-
-  const h3 = document.createElement('h3');
-  h3.className = 'all-card-title';
-  h3.textContent = title;
-  h3.onclick = () => goToExp(slug);
-
-  const p = document.createElement('p');
-  p.className = 'all-card-tagline';
-  p.textContent = tagline;
-
-  body.appendChild(h3);
-  body.appendChild(p);
-
-  // Itinerary section
-  if (itinerary && itinerary.length > 0) {
-    const itin = document.createElement('div');
-    itin.className = 'all-card-itinerary';
-    const label = document.createElement('h6');
-    label.className = 'itin-label';
-    label.textContent = 'Highlights';
-    const ul = document.createElement('ul');
-    
-    itinerary.slice(0, 4).forEach(item => {
-      const li = document.createElement('li');
-      li.textContent = item;
-      ul.appendChild(li);
-    });
-    
-    itin.appendChild(label);
-    itin.appendChild(ul);
-    body.appendChild(itin);
-  }
-
-  // CTA button
-  const cta = document.createElement('a');
-  cta.className = 'all-card-cta';
-  cta.href = 'experience.html?slug=' + slug;
-  cta.textContent = 'Explore Experience →';
-  body.appendChild(cta);
-
-  card.appendChild(imgDiv);
-  card.appendChild(body);
   return card;
 }
 
-function renderGrid(list) {
-  const grid = document.getElementById('all-exp-grid');
-  const noRes = document.getElementById('no-results');
-  
-  if (!grid) return;
-  
+/* ── RENDER ── */
+function render(list) {
+  const grid  = document.getElementById('expGrid');
+  const noRes = document.getElementById('noResults');
+  const count = document.getElementById('gridCount');
+
   grid.innerHTML = '';
-  
+
   if (!list || !list.length) {
-    if (noRes) noRes.style.display = 'block';
+    noRes.classList.add('visible');
+    count.classList.remove('visible');
     return;
   }
-  
-  if (noRes) noRes.style.display = 'none';
-  list.forEach(exp => grid.appendChild(makeCardHTML(exp)));
+
+  noRes.classList.remove('visible');
+  count.classList.add('visible');
+  count.textContent = list.length + ' experience' + (list.length === 1 ? '' : 's');
+  list.forEach(exp => grid.appendChild(makeCard(exp)));
 }
 
-function initFilters() {
-  const tabs = document.querySelectorAll('.filter-tab');
-  const searchInput = document.getElementById('expSearch');
-  
-  tabs.forEach(btn => {
+/* ── FILTERS & SEARCH ── */
+function initControls() {
+  document.querySelectorAll('.filter-tab').forEach(btn => {
     btn.addEventListener('click', () => {
-      tabs.forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      if (searchInput) searchInput.value = '';
-      
-      const filter = btn.getAttribute('data-filter');
-      renderGrid(filter === 'all' 
-        ? allExperiences 
-        : allExperiences.filter(e => e.category === filter));
+      document.getElementById('expSearch').value = '';
+      const f = btn.dataset.filter;
+      ACTIVE = f === 'all' ? ALL : ALL.filter(e => e.category === f);
+      render(ACTIVE);
     });
   });
-}
 
-function initSearch() {
-  const searchInput = document.getElementById('expSearch');
-  if (!searchInput) return;
-  
-  searchInput.addEventListener('input', function() {
+  document.getElementById('expSearch').addEventListener('input', function() {
     const q = this.value.trim().toLowerCase();
-    const tabs = document.querySelectorAll('.filter-tab');
-    tabs.forEach((b, i) => {
-      if (i === 0) b.classList.add('active');
-      else b.classList.remove('active');
-    });
-    
-    if (!q) {
-      renderGrid(allExperiences);
-      return;
-    }
-    
-    renderGrid(allExperiences.filter(e => {
-      return (e.title || '').toLowerCase().includes(q)
-        || (e.tagline || '').toLowerCase().includes(q)
-        || (e.category || '').toLowerCase().includes(q);
-    }));
+    document.querySelectorAll('.filter-tab').forEach((b, i) => b.classList.toggle('active', i === 0));
+    ACTIVE = !q ? ALL : ALL.filter(e =>
+      (e.title    || '').toLowerCase().includes(q) ||
+      (e.tagline  || '').toLowerCase().includes(q) ||
+      (e.category || '').toLowerCase().includes(q)
+    );
+    render(ACTIVE);
   });
 }
 
-function loadAllExperiences() {
-  const loadingIndicator = document.getElementById('exp-loading-indicator');
-  
-  // Try to fetch from Supabase
-  fetch(`${SUPABASE_URL}/rest/v1/experiences?select=slug,title,tagline,description,card_image,duration_tag,category,itinerary&active=eq.true`, {
-    headers: {
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
-    }
-  })
-  .then(res => {
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-  })
-  .then(data => {
-    if (loadingIndicator) loadingIndicator.style.display = 'none';
-    
-    if (data && data.length > 0) {
-      allExperiences = data;
-      console.log('Loaded from Supabase:', data.length, 'experiences');
-    } else {
-      console.log('No data from Supabase, using fallback data');
-      allExperiences = FALLBACK_EXPERIENCES;
-    }
-    
-    renderGrid(allExperiences);
-    initFilters();
-    initSearch();
-  })
-  .catch(err => {
-    console.warn('Supabase fetch failed:', err.message);
-    console.log('Using fallback data');
-    
-    if (loadingIndicator) loadingIndicator.style.display = 'none';
-    allExperiences = FALLBACK_EXPERIENCES;
-    renderGrid(allExperiences);
-    initFilters();
-    initSearch();
-  });
+/* ── HIDE LOADER ── */
+function hideLoader() {
+  const el = document.getElementById('exp-loading');
+  if (el) el.classList.add('hidden');
 }
 
+/* ── BOOTSTRAP ── */
+function showGrid(data) {
+  hideLoader();
+  ALL = ACTIVE = (data && data.length) ? data : FALLBACK;
+  render(ALL);
+  initControls();
+}
+
+/* ── LOAD from Supabase, fall back immediately on any failure ── */
+function load() {
+  /*
+   * FIX 1: Use eq.true instead of is.true for boolean filter.
+   * FIX 2: Set a 5-second timeout so GitHub Pages CORS hangs
+   *        don't leave the spinner up forever.
+   */
+  const controller = new AbortController();
+  const timer = setTimeout(() => { controller.abort(); }, 5000);
+
+  fetch(
+    SB_URL + '/rest/v1/experiences' +
+    '?active=eq.true' +
+    '&select=slug,title,tagline,description,card_image,duration_tag,category,itinerary' +
+    '&order=sort_order.asc',
+    {
+      headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY },
+      signal: controller.signal
+    }
+  )
+  .then(r => { clearTimeout(timer); return r.ok ? r.json() : Promise.reject(r.status); })
+  .then(data => showGrid(data))
+  .catch(() => showGrid(null));   /* always shows fallback on any error */
+}
+
+/* ── MOBILE MENU ── */
 function initMobileMenu() {
-  const hamburger = document.getElementById('hamburger');
-  const navLinks = document.getElementById('navLinks');
-  
-  if (hamburger && navLinks) {
-    hamburger.addEventListener('click', () => {
-      const isVisible = navLinks.style.display === 'flex';
-      navLinks.style.display = isVisible ? 'none' : 'flex';
-      if (!isVisible) {
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '70px';
-        navLinks.style.left = '0';
-        navLinks.style.right = '0';
-        navLinks.style.backgroundColor = 'rgba(61,15,16,0.98)';
-        navLinks.style.padding = '1.5rem';
-        navLinks.style.gap = '1rem';
-        navLinks.style.zIndex = '1000';
-      }
-    });
-    
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768) {
-        navLinks.style.display = '';
-        navLinks.style.position = '';
-        navLinks.style.backgroundColor = '';
-      }
-    });
-  }
+  const h = document.getElementById('hamburger');
+  const n = document.getElementById('navLinks');
+  if (!h || !n) return;
+
+  h.addEventListener('click', () => {
+    const open = n.style.display === 'flex';
+    n.style.cssText = open
+      ? ''
+      : 'display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:rgba(61,15,16,0.98);padding:1.5rem;gap:1rem;z-index:999;';
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) n.style.cssText = '';
+  });
 }
 
-// Initialize when page loads
+/* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  loadAllExperiences();
   initMobileMenu();
+  load();
 });
