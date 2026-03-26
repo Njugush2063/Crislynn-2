@@ -7,7 +7,7 @@
 // =============================================
 // SUPABASE CONFIGURATION
 // =============================================
-const SUPABASE_URL      = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
+const SUPABASE_URL     = 'https://hcalcyyzwtwbupkxpwkn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjYWxjeXl6d3R3YnVwa3hwd2tuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1NzM2NjksImV4cCI6MjA4OTE0OTY2OX0.-VkzGML-CQIuWhH49iybrxwxnX1ClCeOSim_mjfZ4gM';
 
 const CATEGORIES = [
@@ -30,7 +30,7 @@ if (navbar) {
 // HAMBURGER MENU
 // =============================================
 const hamburger = document.getElementById('hamburger');
-const navLinks  = document.getElementById('navLinks');
+const navLinks   = document.getElementById('navLinks');
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
   navLinks.querySelectorAll('a').forEach(link =>
@@ -125,19 +125,8 @@ if (contactForm) {
     if (success) {
       success.style.display = 'block';
       contactForm.reset();
-      // Reset select colour after reset
-      const sel = document.getElementById('expSelect');
-      if (sel) sel.style.color = 'rgba(255,255,255,0.65)';
       setTimeout(() => { success.style.display = 'none'; }, 5000);
     }
-  });
-}
-
-// Keep select text white once a real option is chosen
-const expSelectEl = document.getElementById('expSelect');
-if (expSelectEl) {
-  expSelectEl.addEventListener('change', function () {
-    this.style.color = this.value ? 'var(--white)' : 'rgba(255,255,255,0.65)';
   });
 }
 
@@ -190,10 +179,10 @@ function shareExperience(slug, title, btn) {
 // RENDER ONE EXPERIENCE CARD
 // =============================================
 function renderCard(exp) {
-  const img       = exp.card_image || 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800';
-  const tagline   = exp.tagline || exp.description || '';
+  const img      = exp.card_image || 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800';
+  const tagline  = exp.tagline || exp.description || '';
   const itinerary = exp.itinerary || [];
-  const itinId    = 'itin-' + exp.slug;
+  const itinId   = 'itin-' + exp.slug;
   const wishlisted = getWishlist().includes(exp.slug) ? 'wishlisted' : '';
 
   const itinHtml = itinerary.length
@@ -318,12 +307,12 @@ function initSearch() {
       document.querySelectorAll('.filter-tab').forEach((b, i) => b.classList.toggle('active', i === 0));
       return;
     }
-    if (cats) cats.style.display = 'none';
+    if (cats)    cats.style.display = 'none';
     document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
     const filtered = allExperiences.filter(e =>
       e.title.toLowerCase().includes(q) ||
-      (e.tagline  || '').toLowerCase().includes(q) ||
-      (e.category || '').toLowerCase().includes(q)
+      (e.tagline   || '').toLowerCase().includes(q) ||
+      (e.category  || '').toLowerCase().includes(q)
     );
     if (results) {
       results.innerHTML = filtered.length
@@ -336,11 +325,14 @@ function initSearch() {
 
 // =============================================
 // LOAD EXPERIENCES FROM SUPABASE
+// FIX: changed `active=eq.true` → `active=is.true`
+//      (PostgREST uses `is` for boolean comparisons, not `eq`)
 // =============================================
 async function loadExperiences() {
   const loadingEl = document.getElementById('exp-loading-indicator');
   try {
     const res = await fetch(
+      // FIXED: was active=eq.true — PostgREST boolean syntax requires `is.true`
       SUPABASE_URL + '/rest/v1/experiences?active=is.true&select=slug,title,tagline,description,card_image,duration_tag,category,itinerary,price_from&order=sort_order.asc',
       { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY } }
     );
@@ -375,6 +367,7 @@ async function loadExperiences() {
 // INIT ON DOM READY
 // =============================================
 document.addEventListener('DOMContentLoaded', () => {
+  // Only run on pages that have the experiences section
   if (document.getElementById('exp-categories')) {
     loadExperiences();
   }
@@ -383,9 +376,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // =============================================
 // GLOBAL SCOPE (for onclick= attributes in HTML)
 // =============================================
-window.slide           = slide;
-window.goToExperience  = goToExperience;
-window.toggleItinerary = toggleItinerary;
-window.toggleWishlist  = toggleWishlist;
-window.shareExperience = shareExperience;
-window.loadExperiences = loadExperiences;
+window.slide             = slide;
+window.goToExperience    = goToExperience;
+window.toggleItinerary   = toggleItinerary;
+window.toggleWishlist    = toggleWishlist;
+window.shareExperience   = shareExperience;
+window.loadExperiences   = loadExperiences;
