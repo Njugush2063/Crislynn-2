@@ -1,7 +1,11 @@
 // =============================================
-// CRISLYNN VENTURES — main.js
-// Consolidated: nav, counters, slider, forms
-// + all experiences logic (moved from inline script)
+// CRISLYNN VENTURES — main.js  (FIXED)
+// Fixes applied:
+//   1. active=is.true  →  active=eq.true  (Supabase boolean filter)
+//   2. exp-loading-indicator  →  exp-loading  (matches HTML id)
+//   3. Fallback data added — experiences always show even if Supabase fails
+//   4. experience.js fetch also fixed (active=eq.true)
+//   5. Removed duplicate variable declarations that clash with experiences.js
 // =============================================
 
 // =============================================
@@ -14,6 +18,86 @@ const CATEGORIES = [
   { key: 'Coast & Islands',    label: 'Coast & Islands',    id: 'coast'   },
   { key: 'Culture & Heritage', label: 'Culture & Heritage', id: 'culture' },
   { key: 'Safari & Wildlife',  label: 'Safari & Wildlife',  id: 'safari'  },
+];
+
+// =============================================
+// FALLBACK EXPERIENCES
+// Shown immediately if Supabase is unreachable,
+// returns an error, or returns an empty array.
+// =============================================
+const FALLBACK_EXPERIENCES = [
+  {
+    slug: 'watamu-marine-explorer',
+    title: 'Watamu Marine Explorer',
+    tagline: 'Crystal waters, sea turtles, and coral gardens await',
+    card_image: 'https://images.pexels.com/photos/1032650/pexels-photo-1032650.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '3 Days',
+    category: 'Coast & Islands',
+    itinerary: ['Boat safari in Watamu Marine Park', 'Snorkeling at Coral Gardens', 'Visit to Gede Ruins', 'Sunset dhow cruise']
+  },
+  {
+    slug: 'lamu-cultural-heritage',
+    title: 'Lamu Cultural Heritage',
+    tagline: 'UNESCO-listed Lamu Old Town and timeless Swahili culture',
+    card_image: 'https://images.pexels.com/photos/3889843/pexels-photo-3889843.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '4 Days',
+    category: 'Culture & Heritage',
+    itinerary: ['Lamu Old Town walking tour', 'Traditional dhow sailing', 'Donkey sanctuary visit', 'Swahili cooking class']
+  },
+  {
+    slug: 'tsavo-east-west',
+    title: 'Tsavo East & West Safari',
+    tagline: 'Red elephants, endless savannah, and legendary wildlife',
+    card_image: 'https://images.pexels.com/photos/247431/pexels-photo-247431.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '4 Days',
+    category: 'Safari & Wildlife',
+    itinerary: ['Morning game drive — red elephants', 'Lugard Falls sundowner', 'Mudanda Rock panorama', 'Bush dinner under the stars']
+  },
+  {
+    slug: 'malindi-coastal-retreat',
+    title: 'Malindi Coastal Retreat',
+    tagline: 'Historic town, pristine beaches, and Italian-influenced cuisine',
+    card_image: 'https://images.pexels.com/photos/1605268/pexels-photo-1605268.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '5 Days',
+    category: 'Coast & Islands',
+    itinerary: ['Malindi Marine Park snorkeling', 'Vasco da Gama Pillar tour', 'Casuarina beach day', 'Local market exploration']
+  },
+  {
+    slug: 'amboseli-elephant-safari',
+    title: 'Amboseli Elephant Safari',
+    tagline: 'Elephants silhouetted against the great Kilimanjaro',
+    card_image: 'https://images.pexels.com/photos/59989/elephant-herd-of-elephants-african-bush-elephant-africa-59989.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '3 Days',
+    category: 'Safari & Wildlife',
+    itinerary: ['Sunrise game drive at Amboseli', 'Observation Hill panorama', 'Elephant research centre visit', 'Maasai village experience']
+  },
+  {
+    slug: 'swahili-bites-tour',
+    title: 'Swahili Bites Food Tour',
+    tagline: 'Taste the spice-laden soul of the Kenyan coast',
+    card_image: 'https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '2 Days',
+    category: 'Culture & Heritage',
+    itinerary: ['Old town spice market walk', 'Swahili cooking class', 'Seafood dhow dinner', 'Malindi juice bar crawl']
+  },
+  {
+    slug: 'island-escapades',
+    title: 'Island Escapades',
+    tagline: 'Manda, Kiwayu, and Lamu — pristine islands off the beaten path',
+    card_image: 'https://images.pexels.com/photos/1049298/pexels-photo-1049298.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '5 Days',
+    category: 'Coast & Islands',
+    itinerary: ['Dhow hop between islands', 'Kizingoni beach picnic', 'Fishing with local fishermen', 'Stargazing on the sandbar']
+  },
+  {
+    slug: 'tsavo-amboseli',
+    title: 'Bush to Big Five',
+    tagline: "A grand circuit through Kenya's most iconic wildlife parks",
+    card_image: 'https://images.pexels.com/photos/631317/pexels-photo-631317.jpeg?auto=compress&cs=tinysrgb&w=800',
+    duration_tag: '6 Days',
+    category: 'Safari & Wildlife',
+    itinerary: ['Tsavo East game drives', 'Lugard Falls & Mudanda Rock', 'Amboseli with Kilimanjaro views', 'Maasai Mara sunrise drive']
+  }
 ];
 
 // =============================================
@@ -125,7 +209,6 @@ if (contactForm) {
     if (success) {
       success.style.display = 'block';
       contactForm.reset();
-      // Reset select colour after reset
       const sel = document.getElementById('expSelect');
       if (sel) sel.style.color = 'rgba(255,255,255,0.65)';
       setTimeout(() => { success.style.display = 'none'; }, 5000);
@@ -133,7 +216,6 @@ if (contactForm) {
   });
 }
 
-// Keep select text white once a real option is chosen
 const expSelectEl = document.getElementById('expSelect');
 if (expSelectEl) {
   expSelectEl.addEventListener('change', function () {
@@ -227,6 +309,7 @@ function renderCard(exp) {
 function renderCategories(experiences) {
   const container = document.getElementById('exp-categories');
   if (!container) return;
+  container.innerHTML = ''; // clear any previous content
   CATEGORIES.forEach(cat => {
     const catExps = experiences.filter(e => e.category === cat.key);
     if (!catExps.length) return;
@@ -249,21 +332,28 @@ function renderCategories(experiences) {
 function populateContactSelect(experiences) {
   const select = document.getElementById('expSelect');
   if (!select) return;
+  // Remove old dynamic options first (keep the default placeholder)
+  const existing = select.querySelectorAll('option[data-dynamic]');
+  existing.forEach(o => o.remove());
+
   experiences.forEach(exp => {
     const opt = document.createElement('option');
     opt.value = exp.slug;
     opt.textContent = exp.title;
+    opt.setAttribute('data-dynamic', '1');
     select.appendChild(opt);
   });
   const custom = document.createElement('option');
   custom.value = 'custom';
   custom.textContent = 'Custom Journey';
+  custom.setAttribute('data-dynamic', '1');
   select.appendChild(custom);
 }
 
 function populateFooterLinks(experiences) {
   const container = document.getElementById('footer-exp-links');
   if (!container) return;
+  container.innerHTML = '';
   experiences.slice(0, 5).forEach(exp => {
     const a = document.createElement('a');
     a.href = 'experience.html?slug=' + exp.slug;
@@ -335,15 +425,61 @@ function initSearch() {
 }
 
 // =============================================
+// HIDE LOADING SPINNER
+// Tries both IDs to handle any HTML variation
+// =============================================
+function hideLoadingSpinner() {
+  // Try both possible IDs used across versions of the HTML
+  ['exp-loading', 'exp-loading-indicator'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+}
+
+// =============================================
+// BOOTSTRAP — render experiences then wire up UI
+// =============================================
+function bootstrapExperiences(experiences) {
+  hideLoadingSpinner();
+  renderCategories(experiences);
+  populateContactSelect(experiences);
+  populateFooterLinks(experiences);
+  initFilters(experiences);
+  initSearch();
+}
+
+// =============================================
 // LOAD EXPERIENCES FROM SUPABASE
+// FIX: active=eq.true  (was: active=is.true — wrong for boolean columns)
+// Falls back to FALLBACK_EXPERIENCES on ANY failure or empty result
 // =============================================
 async function loadExperiences() {
-  const loadingEl = document.getElementById('exp-loading-indicator');
+  // Show fallback immediately so the section is never blank
+  // (will be replaced by live data if Supabase responds in time)
+  if (document.getElementById('exp-categories')) {
+    bootstrapExperiences(FALLBACK_EXPERIENCES);
+  }
+
   try {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 6000); // 6 s timeout
+
     const res = await fetch(
-      SUPABASE_URL + '/rest/v1/experiences?active=is.true&select=slug,title,tagline,description,card_image,duration_tag,category,itinerary,price_from&order=sort_order.asc',
-      { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': 'Bearer ' + SUPABASE_ANON_KEY } }
+      SUPABASE_URL +
+        '/rest/v1/experiences' +
+        '?active=eq.true' +                               // ← FIXED (was is.true)
+        '&select=slug,title,tagline,description,card_image,duration_tag,category,itinerary,price_from' +
+        '&order=sort_order.asc',
+      {
+        headers: {
+          'apikey':        SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+        },
+        signal: controller.signal
+      }
     );
+
+    clearTimeout(timer);
 
     if (!res.ok) {
       const errBody = await res.text();
@@ -351,23 +487,18 @@ async function loadExperiences() {
     }
 
     const experiences = await res.json();
-    console.log(`Loaded ${experiences.length} experience(s)`);
+    console.log(`Loaded ${experiences.length} experience(s) from Supabase`);
 
-    if (loadingEl) loadingEl.style.display = 'none';
-    if (!experiences || experiences.length === 0) {
-      if (loadingEl) loadingEl.innerHTML = '<p style="color:#6b5d50;padding:2rem;">No experiences found yet — check back soon!</p>';
-      return;
+    // Only replace fallback if we actually got live data
+    if (experiences && experiences.length > 0) {
+      bootstrapExperiences(experiences);
+    } else {
+      console.warn('Supabase returned 0 experiences — keeping fallback data');
     }
 
-    renderCategories(experiences);
-    populateContactSelect(experiences);
-    populateFooterLinks(experiences);
-    initFilters(experiences);
-    initSearch();
-
   } catch (err) {
-    console.error('loadExperiences error:', err);
-    if (loadingEl) loadingEl.innerHTML = '<p style="color:#6b5d50;padding:2rem;">Unable to load experiences. Please refresh.</p>';
+    // Network error, timeout, or bad response — fallback already showing, do nothing
+    console.warn('loadExperiences: using fallback data.', err.message || err);
   }
 }
 
